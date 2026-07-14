@@ -7,7 +7,7 @@ function stratus_env($key, $default = null) {
     static $vars = null;
     if ($vars === null) {
         $vars = [];
-        $path = '/home/jurgsw/private/.env';
+        $path = '/home/jurgsw/web/stratusnet.co.za/private/.env';
         if (is_readable($path)) {
             foreach (file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
                 $line = trim($line);

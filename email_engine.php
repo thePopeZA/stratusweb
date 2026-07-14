@@ -28,7 +28,7 @@ function send_stratus_email($subject, $body_content, $reply_to = null) {
     }
 
     $payload = [
-        'from'    => 'Stratus Net <noreply@send.stratusnet.co.za>',
+        'from'    => 'Stratus Net <noreply@stratusnet.co.za>',
         'to'      => ['info@stratusnet.co.za'],
         'subject' => $subject,
         'text'    => $body_content,

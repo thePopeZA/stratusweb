@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Privacy Policy | Stratus Net</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Privacy Policy for Stratus Net (Pty) Ltd — POPIA-compliant data protection notice covering stratusnet.co.za and payment.stratusnet.co.za.">
+    <link rel="canonical" href="https://stratusnet.co.za/privacy.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .logo-arc {
+            width: 22px;
+            height: 22px;
+            border: 3px solid var(--accent-cyan);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        header nav .logo { color: var(--primary-navy); }
+
+        .page-hero {
+            background: var(--primary-navy);
+            padding: 8rem 0 3.5rem;
+            text-align: center;
+        }
+        .page-hero .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.6rem;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -1px;
+        }
+        .page-hero .meta {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.88rem;
+        }
+
+        .doc-layout {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            gap: 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem 7rem;
+            align-items: start;
+        }
+
+        .toc {
+            position: sticky;
+            top: 100px;
+        }
+        .toc-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            border-left: 2px solid #E2E8F0;
+            padding-left: 1rem;
+        }
+        .toc ul li { margin-bottom: 0.55rem; }
+        .toc ul li a {
+            color: var(--text-light);
+            font-size: 0.83rem;
+            transition: color 0.2s;
+            display: block;
+            line-height: 1.4;
+        }
+        .toc ul li a:hover { color: var(--primary-navy); }
+
+        .doc-content section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 110px;
+        }
+        .doc-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+            display: inline-block;
+            letter-spacing: -0.3px;
+        }
+        .doc-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: var(--primary-navy);
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .doc-content p {
+            color: var(--text-light);
+            font-size: 0.96rem;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+        .doc-content ul {
+            margin: 0.5rem 0 1.2rem 1.2rem;
+        }
+        .doc-content ul li {
+            margin-bottom: 0.55rem;
+            font-size: 0.96rem;
+            color: var(--text-light);
+            line-height: 1.65;
+        }
+        .doc-content ul li::marker { color: var(--accent-cyan); }
+        .doc-content a { color: var(--primary-navy); font-weight: 600; }
+        .doc-content a:hover { color: var(--accent-cyan); }
+
+        .callout {
+            background: var(--bg-gray);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        .callout strong { color: var(--primary-navy); }
+        .callout a { color: var(--primary-navy); font-weight: 600; }
+
+        .popia-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #E8F8FF;
+            border: 1px solid var(--accent-cyan);
+            color: var(--primary-navy);
+            font-size: 0.78rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.5px;
+        }
+        .popia-badge::before { content: '🔒'; font-size: 0.85rem; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-cyan); }
+
+        .doc-timestamp {
+            font-size: 0.78rem;
+            color: #94A3B8;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        @media (max-width: 768px) {
+            .doc-layout {
+                grid-template-columns: 1fr;
+                padding: 2rem 1.2rem 4rem;
+                gap: 2rem;
+            }
+            .toc { position: static; }
+            .page-hero h1 { font-size: 1.9rem; }
+            .page-hero { padding: 7rem 1.2rem 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="/" class="logo" aria-label="Stratus Net Home">
+                <div class="logo-arc" aria-hidden="true"></div>
+                Stratus
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/#services">What We Do</a></li>
+                <li><a href="/#about">Why Stratus</a></li>
+                <li><a href="infrastructure.html" style="color:var(--accent-cyan);">Get a Quote</a></li>
+                <li><a href="/#contact">Start a Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="page-hero">
+    <span class="breadcrumb">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective Date: 29 June 2026 &nbsp;&bull;&nbsp; Stratus Net (Pty) Ltd &nbsp;&bull;&nbsp; Reg. 2016/418098/07</p>
+</div>
+
+<div class="doc-layout">
+
+    <aside class="toc" aria-label="Table of contents">
+        <p class="toc-title">Contents</p>
+        <ul>
+            <li><a href="#p1">1. Introduction</a></li>
+            <li><a href="#p2">2. What We Collect</a></li>
+            <li><a href="#p3">3. Why We Collect It</a></li>
+            <li><a href="#p4">4. Legal Basis</a></li>
+            <li><a href="#p5">5. Storage &amp; Security</a></li>
+            <li><a href="#p6">6. Sharing</a></li>
+            <li><a href="#p7">7. Cookies</a></li>
+            <li><a href="#p8">8. Your Rights (POPIA)</a></li>
+            <li><a href="#p9">9. Information Regulator</a></li>
+            <li><a href="#p10">10. Direct Marketing</a></li>
+            <li><a href="#p11">11. Third-Party Sites</a></li>
+            <li><a href="#p12">12. Changes</a></li>
+            <li><a href="#p13">13. Contact</a></li>
+        </ul>
+    </aside>
+
+    <main class="doc-content" id="main-content">
+
+        <div class="popia-badge">POPIA Compliant — Protection of Personal Information Act 4 of 2013</div>
+
+        <section id="p1">
+            <h2>1. Introduction</h2>
+            <p><strong>Stratus Net (Pty) Ltd</strong> ("Stratus Net", "we", "us", or "our") is committed to protecting your personal information and respecting your right to privacy. This Privacy Policy explains how we collect, use, store, share, and protect personal information in connection with our website <a href="https://stratusnet.co.za">stratusnet.co.za</a>, our payment portal <a href="https://payment.stratusnet.co.za">payment.stratusnet.co.za</a>, and our services.</p>
+            <p>This Policy is prepared in compliance with the <strong>Protection of Personal Information Act 4 of 2013 (POPIA)</strong> and the Electronic Communications and Transactions Act 25 of 2002 (ECT Act). Stratus Net is the Responsible Party in terms of POPIA.</p>
+        </section>
+
+        <section id="p2">
+            <h2>2. Personal Information We Collect</h2>
+            <h3>2.1 Information You Provide Directly</h3>
+            <p>When you contact us, request a quote, sign a service agreement, or make a payment, we may collect:</p>
+            <ul>
+                <li>Full name and identity number (where required for compliance)</li>
+                <li>Company name and registration details (for business clients)</li>
+                <li>Email address and telephone number</li>
+                <li>Physical and postal address</li>
+                <li>Banking or payment card details (processed through PayFast — we do not store card numbers)</li>
+                <li>Login credentials for client portals or hosted services</li>
+                <li>Project briefs, content, images, and materials you supply for service delivery</li>
+            </ul>
+            <h3>2.2 Information Collected Automatically</h3>
+            <p>When you visit our websites, we may automatically collect:</p>
+            <ul>
+                <li>IP address and browser type</li>
+                <li>Pages visited and time spent on site</li>
+                <li>Referring URLs</li>
+                <li>Device type and operating system</li>
+                <li>Cookies and similar tracking technologies (see Section 7)</li>
+            </ul>
+            <h3>2.3 Information from Third Parties</h3>
+            <p>We may receive information about you from third parties such as PayFast (payment confirmation data), Google Analytics (anonymised usage data), and advertising platforms (campaign performance data) in connection with services we provide.</p>
+        </section>
+
+        <section id="p3">
+            <h2>3. Why We Collect and Use Your Information</h2>
+            <p>We collect and process personal information only for the following lawful purposes:</p>
+            <ul>
+                <li>To deliver the services you have requested or contracted for</li>
+                <li>To process payments and issue invoices through payment.stratusnet.co.za</li>
+                <li>To communicate with you regarding your account, services, or queries</li>
+                <li>To manage our contractual relationship with you</li>
+                <li>To comply with legal and regulatory obligations, including SARS tax requirements and POPIA</li>
+                <li>To send service-related notifications, including renewal reminders and maintenance alerts</li>
+                <li>To improve our website, services, and customer experience</li>
+                <li>To manage and optimise digital advertising campaigns on your behalf (where applicable)</li>
+            </ul>
+            <p>We will not process your personal information for any purpose incompatible with the above without your prior consent.</p>
+        </section>
+
+        <section id="p4">
+            <h2>4. Legal Basis for Processing</h2>
+            <p>Under POPIA, we process your personal information on one or more of the following grounds:</p>
+            <ul>
+                <li><strong>Performance of a contract</strong> — processing is necessary to deliver services you have requested</li>
+                <li><strong>Legal obligation</strong> — processing is required to comply with applicable law</li>
+                <li><strong>Legitimate interest</strong> — processing is necessary for our legitimate business interests, provided these do not override your rights</li>
+                <li><strong>Consent</strong> — where you have given specific consent, for example for marketing communications</li>
+            </ul>
+        </section>
+
+        <section id="p5">
+            <h2>5. Storage, Security, and Retention</h2>
+            <h3>5.1 Where Your Information Is Stored</h3>
+            <p>Personal information is stored on servers located in South Africa or in jurisdictions with adequate data protection standards. We take reasonable technical and organisational measures to protect your information against unauthorised access, loss, destruction, or disclosure.</p>
+            <h3>5.2 Security Measures</h3>
+            <ul>
+                <li>SSL/TLS encryption for all data transmitted via our websites</li>
+                <li>Secure, password-protected access to client management systems</li>
+                <li>PayFast PCI-DSS compliant payment processing — we do not store payment card details</li>
+                <li>Access controls limiting staff access to personal information on a need-to-know basis</li>
+            </ul>
+            <h3>5.3 Retention Period</h3>
+            <p>We retain personal information for as long as necessary to fulfil the purpose for which it was collected, or as required by law. Client records are retained for a minimum of 5 years following the end of the service relationship to comply with tax and financial record-keeping obligations under South African law. Upon expiry of the retention period, personal information is securely deleted or anonymised.</p>
+        </section>
+
+        <section id="p6">
+            <h2>6. Sharing of Personal Information</h2>
+            <p>We do not sell, rent, or trade your personal information. We may share it with the following parties only as necessary:</p>
+            <ul>
+                <li><strong>PayFast (Pty) Ltd</strong> — to process payments made via payment.stratusnet.co.za</li>
+                <li><strong>Domain registrars and hosting infrastructure providers</strong> — to register domains and deliver hosting services on your behalf</li>
+                <li><strong>Google LLC and Meta Platforms Inc</strong> — where you have engaged us for digital advertising services, limited information is shared as required to manage campaigns</li>
+                <li><strong>Our accountants, auditors, or legal advisors</strong> — subject to professional confidentiality obligations</li>
+                <li><strong>Law enforcement or regulatory authorities</strong> — where required by law or court order</li>
+            </ul>
+            <p>Any third party with whom we share your information is required to handle it with equivalent levels of protection and only for the purposes for which it was shared.</p>
+        </section>
+
+        <section id="p7">
+            <h2>7. Cookies and Tracking</h2>
+            <p>Our websites use cookies and similar tracking technologies to enhance your browsing experience and collect usage data. Types of cookies we use:</p>
+            <ul>
+                <li><strong>Essential cookies</strong> — required for the website and payment portal to function correctly</li>
+                <li><strong>Analytics cookies</strong> — used to understand how visitors interact with our sites (e.g., Google Analytics)</li>
+                <li><strong>Preference cookies</strong> — used to remember your settings and preferences</li>
+            </ul>
+            <p>You may disable cookies through your browser settings; however, doing so may affect the functionality of our websites. By continuing to use our websites, you consent to our use of cookies as described in this Policy.</p>
+        </section>
+
+        <section id="p8">
+            <h2>8. Your Rights Under POPIA</h2>
+            <p>As a data subject under POPIA, you have the right to:</p>
+            <ul>
+                <li>Request access to the personal information we hold about you</li>
+                <li>Request correction of inaccurate or incomplete personal information</li>
+                <li>Request deletion of your personal information, subject to our legal obligations to retain certain records</li>
+                <li>Object to the processing of your personal information</li>
+                <li>Withdraw consent where processing is based on your consent</li>
+                <li>Lodge a complaint with the Information Regulator of South Africa</li>
+            </ul>
+            <div class="callout">
+                To exercise any of these rights, contact our Information Officer at <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>. We will respond within <strong>30 days</strong> in accordance with POPIA.
+            </div>
+        </section>
+
+        <section id="p9">
+            <h2>9. Information Regulator</h2>
+            <p>You have the right to submit a complaint to the Information Regulator of South Africa if you believe we have handled your personal information unlawfully:</p>
+            <div class="callout">
+                <strong>Information Regulator (South Africa)</strong><br>
+                Website: <a href="https://www.inforegulator.org.za" target="_blank" rel="noopener">www.inforegulator.org.za</a><br>
+                Email: <a href="mailto:inforeg@justice.gov.za">inforeg@justice.gov.za</a><br>
+                Address: JD House, 27 Stiemens Street, Braamfontein, Johannesburg, 2001
+            </div>
+        </section>
+
+        <section id="p10">
+            <h2>10. Direct Marketing</h2>
+            <p>We will only send you marketing communications with your consent or where permitted by applicable law. You may opt out at any time by clicking the unsubscribe link in any email or by contacting us at <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>. Opting out of marketing does not affect service-related communications.</p>
+        </section>
+
+        <section id="p11">
+            <h2>11. Third-Party Websites</h2>
+            <p>Our website may contain links to third-party websites, including client websites we have built or manage. We are not responsible for the privacy practices of those websites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+        </section>
+
+        <section id="p12">
+            <h2>12. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. When we do, we will update the effective date at the top of this document and, where the changes are material, notify you by email or via a notice on <a href="https://stratusnet.co.za">stratusnet.co.za</a>.</p>
+        </section>
+
+        <section id="p13">
+            <h2>13. Contact and Information Officer</h2>
+            <div class="callout">
+                <strong>Information Officer:</strong> Jurgen Wohlberg<br>
+                <strong>Email:</strong> <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a><br>
+                <strong>Website:</strong> <a href="https://stratusnet.co.za">stratusnet.co.za</a><br>
+                <strong>Address:</strong> 30 Mitchell Street, Meyerton, Gauteng, 1961, South Africa<br>
+                <strong>Reg:</strong> 2016/418098/07
+            </div>
+        </section>
+
+        <p class="doc-timestamp">Last updated: 29 June 2026 &nbsp;|&nbsp; Protection of Personal Information Act 4 of 2013</p>
+
+    </main>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-arc" aria-hidden="true"></div>
+            Stratus
+        </div>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="engineering.html">We Build It</a>
+            <a href="performance.html">We Grow It</a>
+            <a href="presence.html">Digital Presence</a>
+            <a href="infrastructure.html">Get a Quote</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            <a href="https://payment.stratusnet.co.za">Pay an Invoice</a>
+        </div>
+        <p>&copy; 2026 Stratus Net (Pty) Ltd &nbsp;|&nbsp; Reg. 2016/418098/07 &nbsp;|&nbsp; Gauteng, South Africa</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Build Your Bundle | Stratus Net</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Tell us what your business needs. Our AI scoping tool builds your exact Stratus Net bundle — or select products directly if you know what you want.">
+    <link rel="canonical" href="https://stratusnet.co.za/infrastructure.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        :root {
+            --navy:   #0A1C35;
+            --cyan:   #00D2FF;
+            --bg:     #F8FAFC;
+            --white:  #ffffff;
+            --border: #E2E8F0;
+            --muted:  #64748B;
+            --text:   #1A2B44;
+        }
+
+        header nav .logo { color: var(--navy); }
+
+        /* ── Page hero ── */
+        .page-hero {
+            background: var(--navy);
+            padding: 9rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: ''; position: absolute;
+            top: -60px; right: -60px;
+            width: 360px; height: 360px;
+            border: 1px solid rgba(0,210,255,0.08);
+            border-radius: 50%; pointer-events: none;
+        }
+        .page-hero::after {
+            content: ''; position: absolute;
+            top: 20px; right: 20px;
+            width: 200px; height: 200px;
+            border: 1px solid rgba(0,210,255,0.13);
+            border-radius: 50%; pointer-events: none;
+        }
+        .page-hero-inner {
+            max-width: 800px; margin: 0 auto;
+            position: relative; z-index: 1; text-align: center;
+        }
+        .breadcrumb {
+            font-size: 0.72rem; color: var(--cyan);
+            letter-spacing: 2.5px; text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            margin-bottom: 1.2rem; display: block;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem; color: #fff;
+            letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem;
+        }
+        .page-hero h1 span { color: var(--cyan); }
+        .page-hero .sub {
+            color: rgba(255,255,255,0.5); font-size: 1.05rem;
+            line-height: 1.7; max-width: 540px; margin: 0 auto;
+        }
+
+        /* ── Main section ── */
+        #scoper { max-width: 940px; margin: 0 auto; padding: 2.5rem 2rem 6rem; }
+
+        /* ── Mode toggle ── */
+        .mode-toggle {
+            display: flex; gap: 0; margin-bottom: 2rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px; overflow: hidden;
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(10,28,53,0.05);
+        }
+        .mode-btn {
+            flex: 1; padding: 1rem 1.5rem;
+            border: none; background: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem; font-weight: 700;
+            color: var(--muted); cursor: pointer;
+            transition: all 0.2s; text-align: center;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .mode-btn:first-child { border-right: 1.5px solid var(--border); }
+        .mode-btn.active {
+            background: var(--navy); color: var(--cyan);
+        }
+        .mode-btn .mode-icon { font-size: 1.1rem; }
+        .mode-btn .mode-sub {
+            display: block; font-size: 0.7rem;
+            font-weight: 500; color: inherit; opacity: 0.65;
+            font-family: 'Inter', sans-serif; margin-top: 1px;
+        }
+
+        /* ── AI Chat Window ── */
+        .ai-window {
+            background: var(--white); border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(10,28,53,0.08); overflow: hidden;
+        }
+        .ai-chrome {
+            background: var(--navy); padding: 0.9rem 1.5rem;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .chrome-dots { display: flex; gap: 6px; }
+        .chrome-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+        .chrome-dots span:first-child { background: #FF5F57; }
+        .chrome-dots span:nth-child(2) { background: #FFBD2E; }
+        .chrome-dots span:nth-child(3) { background: #28CA41; }
+        .chrome-title {
+            color: rgba(255,255,255,0.5); font-size: 0.8rem;
+            font-family: 'Montserrat', sans-serif; font-weight: 600;
+            letter-spacing: 1px; flex: 1; text-align: center;
+        }
+        .chrome-badge {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 0.68rem; color: var(--cyan);
+            font-weight: 600; font-family: 'Montserrat', sans-serif; letter-spacing: 1px;
+        }
+        .chrome-badge::before {
+            content: ''; width: 6px; height: 6px;
+            background: var(--cyan); border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        .chat-messages {
+            padding: 2rem 2rem 1rem; min-height: 280px;
+            max-height: 480px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 1.2rem;
+            scroll-behavior: smooth;
+        }
+        .msg {
+            display: flex; gap: 12px; align-items: flex-start;
+            animation: fadeUp 0.35s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .msg.user { flex-direction: row-reverse; }
+        .msg-avatar {
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+        }
+        .msg-avatar.ai { background: var(--navy); color: var(--cyan); border: 2px solid var(--cyan); letter-spacing: 0.5px; }
+        .msg-avatar.user-av { background: var(--cyan); color: var(--navy); font-size: 0.8rem; }
+        .msg-bubble {
+            max-width: 78%; padding: 0.85rem 1.1rem;
+            border-radius: 12px; font-size: 0.95rem; line-height: 1.6;
+        }
+        .msg.ai .msg-bubble {
+            background: var(--bg); color: var(--text);
+            border: 1px solid var(--border); border-top-left-radius: 3px;
+        }
+        .msg.user .msg-bubble {
+            background: var(--navy); color: #fff; border-top-right-radius: 3px;
+        }
+        .msg-bubble strong { color: var(--navy); }
+        .msg.user .msg-bubble strong { color: var(--cyan); }
+        .typing-indicator { display: none; gap: 12px; align-items: center; }
+        .typing-indicator.show { display: flex; }
+        .typing-dots {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 12px; border-top-left-radius: 3px;
+            padding: 0.75rem 1rem; display: flex; gap: 5px; align-items: center;
+        }
+        .typing-dots span {
+            width: 7px; height: 7px; background: var(--muted);
+            border-radius: 50%; animation: bounce 1.2s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+        .quick-replies { padding: 0.75rem 2rem 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .qr-chip {
+            padding: 0.5rem 1rem; border-radius: 20px;
+            border: 1.5px solid var(--border); background: var(--white);
+            font-size: 0.88rem; color: var(--text); cursor: pointer;
+            transition: all 0.2s; font-family: 'Inter', sans-serif; font-weight: 500;
+        }
+        .qr-chip:hover { border-color: var(--navy); background: var(--navy); color: #fff; transform: translateY(-1px); }
+        .qr-chip.selected { border-color: var(--cyan); background: rgba(0,210,255,0.08); color: var(--navy); font-weight: 600; }
+        .chat-input-area {
+            padding: 1rem 1.5rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 0.75rem; align-items: center;
+        }
+        .chat-input {
+            flex: 1; padding: 0.8rem 1rem;
+            border: 1.5px solid var(--border); border-radius: 24px;
+            font-family: 'Inter', sans-serif; font-size: 0.92rem;
+            color: var(--text); background: var(--bg); outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input:focus { border-color: var(--cyan); background: var(--white); }
+        .chat-input::placeholder { color: #94A3B8; }
+        .send-btn {
+            width: 42px; height: 42px; background: var(--navy);
+            border: none; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; flex-shrink: 0;
+        }
+        .send-btn:hover { background: var(--cyan); transform: scale(1.05); }
+        .send-btn svg { fill: #fff; width: 16px; height: 16px; }
+        .send-btn:hover svg { fill: var(--navy); }
+
+        /* ── Direct selection panel ── */
+        #direct-panel { display: none; }
+        #direct-panel.show { display: block; }
+
+        .direct-intro {
+            background: var(--white); border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(10,28,53,0.08);
+            padding: 2rem;
+        }
+        .direct-intro h3 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.1rem;
+            color: var(--navy); margin-bottom: 0.4rem;
+        }
+        .direct-intro p { color: var(--muted); font-size: 0.9rem; margin: 0 0 1.5rem; }
+
+        .product-category { margin-bottom: 2rem; }
+        .cat-title {
+            font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; color: var(--muted); margin-bottom: 0.75rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .cat-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.75rem;
+        }
+        .product-tile {
+            border: 1.5px solid var(--border); border-radius: 8px;
+            padding: 1rem 1.2rem; cursor: pointer;
+            transition: all 0.2s; background: var(--white);
+            display: flex; align-items: flex-start; gap: 10px;
+            position: relative;
+        }
+        .product-tile:hover { border-color: var(--navy); box-shadow: 0 4px 12px rgba(10,28,53,0.08); }
+        .product-tile.selected { border-color: var(--cyan); background: rgba(0,210,255,0.05); }
+        .product-tile.selected::after {
+            content: '✓'; position: absolute; top: 8px; right: 10px;
+            font-size: 0.85rem; color: var(--cyan); font-weight: 700;
+        }
+        .product-tile input[type="checkbox"] { display: none; }
+        .tile-info { flex: 1; min-width: 0; }
+        .tile-name { font-weight: 600; color: var(--navy); font-size: 0.9rem; margin-bottom: 2px; }
+        .tile-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+        .tile-price {
+            font-weight: 700; color: var(--navy); font-size: 0.9rem;
+            white-space: nowrap; text-align: right; flex-shrink: 0;
+        }
+        .tile-billing { font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+        .tile-promo { font-size: 0.7rem; color: var(--cyan); font-weight: 600; }
+
+        /* Quantity input for M365 */
+        .qty-row {
+            display: flex; align-items: center; gap: 8px;
+            margin-top: 0.5rem; padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .qty-row label { font-size: 0.78rem; color: var(--muted); flex: 1; }
+        .qty-input {
+            width: 60px; padding: 0.3rem 0.5rem;
+            border: 1px solid var(--border); border-radius: 4px;
+            font-size: 0.88rem; text-align: center;
+        }
+
+        /* Direct selection total bar */
+        .direct-total-bar {
+            position: sticky; bottom: 0;
+            background: var(--navy); border-radius: 8px;
+            padding: 1.2rem 1.5rem; margin-top: 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1rem; flex-wrap: wrap;
+            box-shadow: 0 -4px 20px rgba(10,28,53,0.15);
+        }
+        .direct-total-bar .totals { display: flex; gap: 2rem; flex-wrap: wrap; }
+        .direct-total-bar .total-item { text-align: center; }
+        .direct-total-bar .total-item .t-label {
+            font-size: 0.65rem; text-transform: uppercase;
+            letter-spacing: 1.5px; color: rgba(255,255,255,0.4);
+            font-family: 'Montserrat', sans-serif; font-weight: 600;
+            display: block; margin-bottom: 2px;
+        }
+        .direct-total-bar .total-item .t-amount {
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 1.2rem; color: #fff;
+        }
+        .direct-total-bar .total-item .t-amount.cyan { color: var(--cyan); }
+        .btn-build-bundle {
+            padding: 0.85rem 1.8rem; background: var(--cyan);
+            color: var(--navy); border: none; border-radius: 6px;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-build-bundle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,210,255,0.3); }
+        .btn-build-bundle:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+        /* ── Bundle summary (shared by both paths) ── */
+        #bundle-section { display: none; margin-top: 2rem; animation: fadeUp 0.4s ease-out; }
+        #bundle-section.show { display: block; }
+        .bundle-card {
+            background: var(--white); border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(10,28,53,0.08); overflow: hidden;
+        }
+        .bundle-header {
+            background: var(--navy); padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .bundle-header h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.1rem;
+            color: #fff; font-weight: 700;
+        }
+        .bundle-header .bundle-ref {
+            font-size: 0.72rem; color: rgba(255,255,255,0.4);
+            font-family: 'Montserrat', sans-serif; letter-spacing: 1px;
+        }
+        .bundle-body { padding: 2rem; }
+        .bundle-section-title {
+            font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; color: var(--muted); margin-bottom: 0.75rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .bundle-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .bundle-items { margin-bottom: 1.5rem; }
+        .bundle-item {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg); gap: 1rem;
+        }
+        .bundle-item:last-child { border-bottom: none; }
+        .bundle-item-name { font-weight: 600; color: var(--navy); font-size: 0.92rem; margin-bottom: 2px; }
+        .bundle-item-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+        .bundle-item-price { font-weight: 700; color: var(--navy); font-size: 0.95rem; white-space: nowrap; text-align: right; }
+        .bundle-item-billing { font-size: 0.72rem; color: var(--muted); font-weight: 400; }
+        .excludes-note {
+            background: var(--bg); border-radius: 6px; padding: 0.9rem 1rem;
+            margin: 1rem 0; font-size: 0.82rem; color: var(--muted);
+            border-left: 3px solid var(--border);
+        }
+        .excludes-note strong {
+            color: var(--navy); display: block; margin-bottom: 4px;
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .payment-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .split-card {
+            border: 1.5px solid var(--border); border-radius: 8px;
+            padding: 1.2rem; transition: border-color 0.2s;
+        }
+        .split-card.has-amount { border-color: rgba(0,210,255,0.4); }
+        .split-card .split-label {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            color: var(--muted); margin-bottom: 0.5rem;
+        }
+        .split-card .split-amount {
+            font-family: 'Montserrat', sans-serif; font-size: 1.5rem;
+            font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 0.25rem;
+        }
+        .split-card .split-amount.cyan { color: var(--cyan); }
+        .split-card .split-note { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+        .bundle-totals { border-top: 2px solid var(--border); padding-top: 1.2rem; margin-top: 0.5rem; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; font-size: 0.92rem; }
+        .total-row .label { color: var(--muted); }
+        .total-row .amount { font-weight: 700; color: var(--navy); }
+        .total-row.highlight {
+            background: var(--navy); margin: 0.75rem -2rem -2rem;
+            padding: 1.2rem 2rem; border-radius: 0 0 12px 12px;
+        }
+        .total-row.highlight .label { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+        .total-row.highlight .amount { color: var(--cyan); font-size: 1.3rem; }
+
+        /* ── Signing modal ── */
+        .modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 200;
+            display: none; align-items: center; justify-content: center;
+            padding: 1rem;
+        }
+        .modal-backdrop.show { display: flex; }
+        .sign-modal {
+            background: var(--white); border-radius: 12px;
+            width: 520px; max-width: 100%;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+            overflow: hidden; animation: fadeUp 0.3s ease-out;
+        }
+        .sign-modal-head {
+            background: var(--navy); padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .sign-modal-head h3 {
+            font-family: 'Montserrat', sans-serif; font-size: 1rem;
+            color: #fff; font-weight: 700;
+        }
+        .sign-modal-close {
+            background: none; border: none; color: rgba(255,255,255,0.5);
+            font-size: 1.4rem; cursor: pointer; line-height: 1;
+        }
+        .sign-modal-body { padding: 1.8rem 2rem; }
+        .sign-summary {
+            background: var(--bg); border-radius: 6px; padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem; border-left: 3px solid var(--cyan);
+        }
+        .sign-summary .ss-label {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--muted); font-family: 'Montserrat', sans-serif;
+            font-weight: 700; margin-bottom: 0.4rem; display: block;
+        }
+        .sign-summary .ss-amount {
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 1.4rem; color: var(--navy);
+        }
+        .sign-summary .ss-note { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+        .form-group { margin-bottom: 1.1rem; }
+        .form-group label {
+            display: block; font-size: 0.78rem; font-weight: 600;
+            color: var(--navy); margin-bottom: 0.4rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-group input {
+            width: 100%; padding: 0.8rem 1rem;
+            border: 1.5px solid var(--border); border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.92rem;
+            color: var(--text); background: var(--bg); outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: var(--cyan); background: var(--white); }
+        .sign-agreement {
+            background: var(--bg); border-radius: 6px;
+            padding: 1rem 1.2rem; margin: 1.2rem 0;
+            font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+            max-height: 120px; overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+        .sign-agreement a { color: var(--navy); font-weight: 600; }
+        .checkbox-row {
+            display: flex; gap: 10px; align-items: flex-start;
+            margin: 1rem 0; cursor: pointer;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 18px; height: 18px; margin-top: 1px;
+            accent-color: var(--cyan); flex-shrink: 0; cursor: pointer;
+        }
+        .checkbox-row label {
+            font-size: 0.85rem; color: var(--text);
+            line-height: 1.5; cursor: pointer; font-weight: 400;
+            text-transform: none; letter-spacing: 0;
+        }
+        .checkbox-row label a { color: var(--navy); font-weight: 600; }
+        .sign-error {
+            background: #FEF2F2; border: 1px solid #FECACA;
+            color: #991B1B; padding: 0.75rem 1rem;
+            border-radius: 6px; font-size: 0.85rem; margin-top: 0.5rem;
+            display: none;
+        }
+        .sign-error.show { display: block; }
+        .sign-modal-foot {
+            padding: 1rem 2rem 1.5rem;
+            display: flex; gap: 0.75rem;
+        }
+        .btn-sign {
+            flex: 1; padding: 0.9rem;
+            background: var(--cyan); color: var(--navy);
+            border: none; border-radius: 6px;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.92rem; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-sign:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,210,255,0.3); }
+        .btn-sign:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-cancel-sign {
+            padding: 0.9rem 1.2rem; border: 1.5px solid var(--border);
+            background: var(--white); color: var(--muted);
+            border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+        .btn-cancel-sign:hover { border-color: var(--navy); color: var(--navy); }
+
+        /* ── Bundle action buttons ── */
+        .bundle-actions { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .btn-pay {
+            flex: 1; padding: 1rem 1.5rem;
+            background: var(--cyan); color: var(--navy);
+            border: none; border-radius: 6px;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+            min-width: 200px; text-align: center;
+        }
+        .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,210,255,0.3); }
+        .btn-talk {
+            padding: 1rem 1.5rem; border: 2px solid var(--border);
+            background: var(--white); color: var(--navy);
+            border-radius: 6px; font-family: 'Montserrat', sans-serif;
+            font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            transition: all 0.2s; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-talk:hover { border-color: var(--navy); background: var(--navy); color: #fff; }
+        .bundle-actions .btn-restart {
+            padding: 1rem 1.5rem;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .bundle-actions .btn-restart:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        /* ── Product detail tooltip ── */
+
+        .tile-hover-hint {
+            font-size: 0.68rem;
+            color: #CBD5E1;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .product-tile:hover .tile-hover-hint { color: var(--muted); }
+        .product-popup {
+            position: fixed;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: 0 12px 40px rgba(10,28,53,0.15);
+            padding: 1.2rem 1.4rem;
+            width: 290px;
+            z-index: 500;
+            pointer-events: none;
+            opacity: 0;
+
+            transition: opacity 0.15s;
+        }
+        .product-popup.show {
+            opacity: 1;
+
+
+        }
+        .popup-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700; font-size: 0.88rem;
+            color: var(--navy); margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--cyan);
+            display: inline-block;
+        }
+        .popup-section-label {
+            font-size: 0.65rem; text-transform: uppercase;
+            letter-spacing: 1.5px; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; color: var(--muted);
+            margin: 0.6rem 0 0.3rem;
+        }
+        .popup-list {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .popup-list li {
+            font-size: 0.8rem; color: var(--text);
+            padding: 2px 0; display: flex; gap: 6px; align-items: flex-start;
+            line-height: 1.4;
+        }
+        .popup-list.includes li::before { content: '✓'; color: var(--cyan); font-weight: 700; flex-shrink: 0; }
+        .popup-list.excludes li::before { content: '✕'; color: #94A3B8; font-weight: 700; flex-shrink: 0; }
+
+        /* ── Footer ── */
+        .footer-links {
+            display: flex; justify-content: center; gap: 2rem;
+            margin: 0.75rem 0 1rem; flex-wrap: wrap;
+        }
+        .footer-links a { color: rgba(255,255,255,0.45); font-size: 0.83rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--cyan); }
+
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%;
+                height: 100vh; width: 80%; max-width: 300px;
+                background: var(--white); flex-direction: column;
+                justify-content: center; align-items: center;
+                box-shadow: -10px 0 30px rgba(10,28,53,0.1);
+                transition: right 0.4s cubic-bezier(0.25,0.8,0.25,1);
+                z-index: 1000; gap: 2rem;
+            }
+            .nav-links.active { right: 0; }
+            .page-hero h1 { font-size: 2.1rem; }
+            .mode-btn { flex-direction: column; gap: 2px; padding: 0.8rem; font-size: 0.8rem; }
+            .chat-messages { max-height: 360px; padding: 1.2rem 1rem 0.5rem; }
+            .quick-replies { padding: 0.5rem 1rem 0.75rem; }
+            .chat-input-area { padding: 0.75rem 1rem 1rem; }
+            .bundle-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .bundle-body { padding: 1.2rem; }
+            .payment-split { grid-template-columns: 1fr; }
+            .bundle-actions { flex-direction: column; }
+            .btn-pay { min-width: 0; }
+            .total-row.highlight { margin: 0.75rem -1.2rem -1.2rem; padding: 1rem 1.2rem; }
+            .product-grid { grid-template-columns: 1fr; }
+            .direct-total-bar { flex-direction: column; align-items: stretch; }
+            .direct-total-bar .totals { justify-content: space-around; }
+            .sign-modal-body { padding: 1.2rem 1.2rem; }
+            .sign-modal-foot { padding: 0.75rem 1.2rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="/" class="logo" aria-label="Stratus Net Home">
+                <div class="logo-arc" aria-hidden="true"></div>
+                Stratus
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/#services">What We Do</a></li>
+                <li><a href="/#about">Why Stratus</a></li>
+                <li><a href="/#contact">Start a Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <span class="breadcrumb">Stratus Net → Get a Quote</span>
+            <h1>Tell Us What You Need.<br>We'll <span>Build The Bundle.</span></h1>
+            <p class="sub">Use our AI to scope the right package — or select products directly if you know exactly what you want. Full pricing, clear inclusions, digital sign-off before you pay.</p>
+        </div>
+    </div>
+
+    <section id="scoper">
+
+        <!-- Mode toggle -->
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="btn-ai-mode" onclick="setMode('ai')">
+                <span class="mode-icon">🤖</span>
+                <span>
+                    Let AI Scope It
+                    <span class="mode-sub">Not sure what you need? Answer a few questions.</span>
+                </span>
+            </button>
+            <button class="mode-btn" id="btn-direct-mode" onclick="setMode('direct')">
+                <span class="mode-icon">📋</span>
+                <span>
+                    I Know What I Want
+                    <span class="mode-sub">Pick products directly from the catalogue.</span>
+                </span>
+            </button>
+        </div>
+
+        <!-- AI Mode -->
+        <div id="ai-panel">
+            <div class="ai-window" id="chat-window">
+                <div class="ai-chrome">
+                    <div class="chrome-dots"><span></span><span></span><span></span></div>
+                    <div class="chrome-title">STRATUS NET · AI SCOPING TOOL</div>
+                    <div class="chrome-badge">AI ONLINE</div>
+                </div>
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="typing-indicator" id="typing">
+                    <div class="msg-avatar ai">AI</div>
+                    <div class="typing-dots"><span></span><span></span><span></span></div>
+                </div>
+                <div class="quick-replies" id="quick-replies"></div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chat-input"
+                        placeholder="Type your answer or pick an option above..."
+                        autocomplete="off"/>
+                    <button class="send-btn" id="send-btn" aria-label="Send">
+                        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direct Mode -->
+        <div id="direct-panel">
+            <div class="direct-intro">
+                <h3>Select Your Services</h3>
+                <p>Tick what you need. Pricing updates live. When you're ready, click "Build My Bundle" to see the full breakdown before paying.</p>
+                <div id="product-catalogue">
+                    <div style="text-align:center;padding:3rem;color:var(--muted);">Loading catalogue...</div>
+                </div>
+                <div class="direct-total-bar">
+                    <div class="totals">
+                        <div class="total-item">
+                            <span class="t-label">Once-off today</span>
+                            <span class="t-amount" id="d-onceoff">R0</span>
+                        </div>
+                        <div class="total-item">
+                            <span class="t-label">Monthly recurring</span>
+                            <span class="t-amount cyan" id="d-monthly">R0/mo</span>
+                        </div>
+                        <div class="total-item">
+                            <span class="t-label">Total due today</span>
+                            <span class="t-amount" id="d-today">R0</span>
+                        </div>
+                    </div>
+                    <button class="btn-build-bundle" id="btn-build" onclick="buildDirectBundle()" disabled>
+                        Build My Bundle →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bundle Result (shared) -->
+        <div id="bundle-section">
+            <div class="bundle-card" id="bundle-card"></div>
+            <div class="bundle-actions" id="bundle-actions"></div>
+        </div>
+
+    </section>
+</main>
+
+<!-- Digital Signing Modal -->
+<div class="modal-backdrop" id="sign-modal-backdrop">
+    <div class="sign-modal">
+        <div class="sign-modal-head">
+            <h3>✍️ Sign Your Service Agreement</h3>
+            <button class="sign-modal-close" onclick="closeSignModal()">×</button>
+        </div>
+        <div class="sign-modal-body">
+            <div class="sign-summary">
+                <span class="ss-label">Monthly Commitment</span>
+                <div class="ss-amount" id="sign-amount"></div>
+                <div class="ss-note" id="sign-summary-text"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Your Full Name</label>
+                <input type="text" id="sign-name" placeholder="Type your full name as your signature" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="sign-email" placeholder="your@email.com" autocomplete="email">
+            </div>
+
+            <div class="sign-agreement">
+                By signing below, I agree to the <a href="terms.html" target="_blank">Stratus Net Terms & Conditions</a> and confirm that:
+                <ul style="margin:0.5rem 0 0 1rem;">
+                    <li>The monthly amount shown will be debited via PayFast subscription</li>
+                    <li>30 calendar days written notice is required to cancel</li>
+                    <li>Services will be activated within 1–3 business days of payment</li>
+                    <li>I have read and understood what is included and excluded in my bundle</li>
+                </ul>
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="sign-agree">
+                <label for="sign-agree">
+                    I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and the monthly billing arrangement described above. I understand this is a recurring subscription.
+                </label>
+            </div>
+
+            <div class="sign-error" id="sign-error"></div>
+        </div>
+        <div class="sign-modal-foot">
+            <button class="btn-cancel-sign" onclick="closeSignModal()">Cancel</button>
+            <button class="btn-sign" id="btn-sign-submit" onclick="submitSignature()">
+                Sign &amp; Proceed to Payment →
+            </button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="justify-content:center;color:#fff;margin-bottom:1rem;">
+            <div class="logo-arc" aria-hidden="true"></div>
+            Stratus
+        </div>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="engineering.html">We Build It</a>
+            <a href="performance.html">We Grow It</a>
+            <a href="presence.html">Digital Presence</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            <a href="https://payment.stratusnet.co.za">Pay an Invoice</a>
+        </div>
+        <p style="color:#64748B;font-size:0.85rem;margin:0;">
+            &copy; 2026 Stratus Net (Pty) Ltd &nbsp;|&nbsp; Reg. 2016/418098/07 &nbsp;|&nbsp; Gauteng, South Africa
+        </p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════════════
+// STRATUS NET — INFRASTRUCTURE PAGE
+// Two paths: AI Scoping | Direct Selection
+// Both output the same bundle card + signing modal + PayFast handoff
+// ════════════════════════════════════════════════════════════════════════════
+
+const PRODUCTS_API = 'https://payment.stratusnet.co.za/api/products.php';
+const PRICING_API  = 'https://payment.stratusnet.co.za/api/pricing.php';
+const SIGN_API     = 'https://payment.stratusnet.co.za/sign.php';
+const CLAUDE_API   = 'https://payment.stratusnet.co.za/api/claude.php'; // PHP proxy — keeps API key server-side
+const CHECKOUT_URL = 'https://payment.stratusnet.co.za/checkout.php';
+
+// ── State ─────────────────────────────────────────────────────────────────
+let mode                = 'ai';
+let conversationHistory = [];
+let productCatalogue    = {};
+let allProducts         = [];
+let productDataMap      = {}; // id → { name, includes, excludes, billing_note }
+let currentBundle       = null;
+let scopingComplete     = false;
+let bundleRef           = 'SN-' + Date.now().toString(36).toUpperCase();
+let pendingPayment      = null; // { mode, amount, summary } waiting for signature
+
+// ── DOM ───────────────────────────────────────────────────────────────────
+const messagesEl    = document.getElementById('chat-messages');
+const typingEl      = document.getElementById('typing');
+const quickRepliesEl= document.getElementById('quick-replies');
+const inputEl       = document.getElementById('chat-input');
+const sendBtn       = document.getElementById('send-btn');
+const bundleSection = document.getElementById('bundle-section');
+const bundleCard    = document.getElementById('bundle-card');
+const bundleActions = document.getElementById('bundle-actions');
+
+// ── Mobile nav ────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav    = document.querySelector('.nav-links');
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            const open = nav.classList.toggle('active');
+            toggle.classList.toggle('active', open);
+            toggle.setAttribute('aria-expanded', open);
+        });
+    }
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// MODE SWITCHING
+// ════════════════════════════════════════════════════════════════════════════
+function setMode(m) {
+    mode = m;
+    document.getElementById('btn-ai-mode').classList.toggle('active', m === 'ai');
+    document.getElementById('btn-direct-mode').classList.toggle('active', m === 'direct');
+    document.getElementById('ai-panel').style.display    = m === 'ai'     ? 'block' : 'none';
+    document.getElementById('direct-panel').style.display = m === 'direct' ? 'block' : 'none';
+    bundleSection.style.display = 'none';
+    if (m === 'direct') {
+        loadProductsForDirect();
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// PRODUCT LOADING
+// ════════════════════════════════════════════════════════════════════════════
+async function loadProducts() {
+    try {
+        const res  = await fetch(PRODUCTS_API);
+        const data = await res.json();
+        if (data.grouped) { productCatalogue = data.grouped; }
+        if (data.products) { allProducts = data.products; }
+    } catch(e) {
+        productCatalogue = { _fallback: true };
+    }
+}
+
+async function loadProductsForDirect() {
+    const el = document.getElementById('product-catalogue');
+
+    // If already loaded, just re-render
+    if (productCatalogue && !productCatalogue._fallback && Object.keys(productCatalogue).length > 0) {
+        renderDirectCatalogue();
+        return;
+    }
+
+    el.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted);">Loading catalogue...</div>';
+    try {
+        const res = await fetch(PRODUCTS_API);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.grouped) { productCatalogue = data.grouped; }
+        if (data.products) { allProducts = data.products; }
+        renderDirectCatalogue();
+    } catch(e) {
+        console.error('Products API error:', e);
+        el.innerHTML = `
+            <div style="text-align:center;padding:2rem;color:var(--muted);">
+                <p style="margin-bottom:1rem;">Could not load the product catalogue right now.</p>
+                <p>Please <a href="/#contact" style="color:var(--navy);font-weight:600;">contact us directly</a> or try the AI mode instead.</p>
+                <p style="font-size:0.78rem;margin-top:0.5rem;color:#94A3B8;">Error: ${e.message}</p>
+            </div>`;
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// DIRECT SELECTION — CATALOGUE RENDER
+// ════════════════════════════════════════════════════════════════════════════
+const CAT_LABELS = {
+    hosting:     '🖥️  Web Hosting',
+    m365:        '📧  Microsoft 365',
+    domain:      '🌐  Domain Registration',
+    development: '⚙️  Website & App Development',
+    marketing:   '📈  Digital Marketing',
+    support:     '🛠️  Support Retainers',
+};
+
+const SHOW_CATS = ['hosting','m365','domain','development','marketing','support'];
+
+function renderDirectCatalogue() {
+    const el = document.getElementById('product-catalogue');
+    if (productCatalogue._fallback) {
+        el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:2rem;">Product catalogue unavailable. Please use AI mode or <a href="/#contact">contact us directly</a>.</p>';
+        return;
+    }
+
+    let html = '';
+    SHOW_CATS.forEach(cat => {
+        const items = productCatalogue[cat];
+        if (!items || items.length === 0) return;
+
+        // Filter out retainer sub-products from direct selection
+        // (they're included automatically with dev packages)
+        const showItems = items.filter(p =>
+            !(p.subcategory === 'retainer' && cat === 'development')
+        );
+        if (showItems.length === 0) return;
+
+        html += `<div class="product-category" data-cat="${cat}">
+            <div class="cat-title">${CAT_LABELS[cat] || cat}</div>
+            <div class="product-grid">`;
+
+        showItems.forEach(p => {
+            const price      = p.on_promo ? p.promo_price : p.price_zar;
+            const hasQty     = cat === 'm365';
+            const billingLbl = p.billing === 'monthly' ? '/mo' : p.billing === 'once-off' ? ' once-off' : ' deposit';
+            const perUnit    = p.per_unit ? `/${p.per_unit}` : '';
+
+            // Store full product data in JS map — no fragile HTML attribute encoding
+            productDataMap[p.id] = {
+                name:     p.name,
+                tagline:  p.tagline || '',
+                includes: p.includes || [],
+                excludes: p.excludes || [],
+                billing_note: p.billing_note || '',
+            };
+
+            html += `
+            <div class="product-tile" id="tile-${p.id}"
+                onclick="toggleProduct('${p.id}')"
+                onmouseenter="schedulePopup(event, '${p.id}')"
+                onmouseleave="cancelPopup()">
+                <input type="checkbox" id="chk-${p.id}" data-id="${p.id}"
+                    data-price="${price}" data-billing="${p.billing}"
+                    data-name="${p.name.replace(/"/g,"'").replace(/'/g,"\\'")}  "
+                    data-note="${(p.tagline||'').replace(/"/g,"'")}"
+                    ${hasQty ? 'data-per-user="1"' : ''}>
+                <div class="tile-info">
+                    <div class="tile-name">${p.name}</div>
+                    <div class="tile-desc">${p.tagline || ''}</div>
+                    <div class="tile-hover-hint">Hover to see what's included</div>
+                    ${p.on_promo ? `<div class="tile-promo">🎉 ${p.promo_label || 'Special price'}</div>` : ''}
+                    ${hasQty ? `
+                    <div class="qty-row" onclick="event.stopPropagation()">
+                        <label for="qty-${p.id}">Users:</label>
+                        <input type="number" class="qty-input" id="qty-${p.id}"
+                            min="1" max="300" value="1"
+                            oninput="updateTotals()">
+                    </div>` : ''}
+                </div>
+                <div style="text-align:right;flex-shrink:0;min-width:80px;">
+                    <div class="tile-price">R${price.toLocaleString('en-ZA')}</div>
+                    <div class="tile-billing">${perUnit}${billingLbl}</div>
+                    ${p.on_promo ? `<div class="tile-billing" style="text-decoration:line-through;color:#94A3B8">R${p.price_zar}</div>` : ''}
+                </div>
+            </div>`;
+        });
+
+        html += `</div></div>`;
+    });
+
+    el.innerHTML = html;
+    updateTotals();
+}
+
+function toggleProduct(id) {
+    const chk  = document.getElementById('chk-' + id);
+    const tile = document.getElementById('tile-' + id);
+    if (!chk) return;
+
+    const catEl   = chk.closest('.product-category');
+    const catClass = catEl?.dataset.cat;
+    const newState = !chk.checked;
+
+    // ── Single-select categories ──
+    if (catClass === 'hosting' || catClass === 'm365' || catClass === 'support') {
+        catEl.querySelectorAll('.product-tile input[type="checkbox"]').forEach(other => {
+            other.checked = false;
+            document.getElementById('tile-' + other.dataset.id)?.classList.remove('selected');
+        });
+        chk.checked = newState;
+    }
+
+    // ── Marketing — special logic ──
+    else if (catClass === 'marketing') {
+        const FULL_STACK = 'marketing-fullstack';
+
+        if (id === FULL_STACK) {
+            // Selecting Full Stack deselects individual services
+            catEl.querySelectorAll('.product-tile input[type="checkbox"]').forEach(other => {
+                other.checked = false;
+                document.getElementById('tile-' + other.dataset.id)?.classList.remove('selected');
+            });
+            chk.checked = newState;
+        } else {
+            // Selecting an individual service deselects Full Stack
+            const fullStackChk = document.getElementById('chk-' + FULL_STACK);
+            if (fullStackChk) {
+                fullStackChk.checked = false;
+                document.getElementById('tile-' + FULL_STACK)?.classList.remove('selected');
+            }
+            chk.checked = newState;
+        }
+    }
+
+    // ── Everything else — free multi-select ──
+    else {
+        chk.checked = newState;
+    }
+
+    tile.classList.toggle('selected', chk.checked);
+    updateTotals();
+}
+
+// ── Product detail popup — hover based ───────────────────────────────────
+let popupTimer  = null;
+let activePopup = null;
+let trackingActive = false;
+
+function schedulePopup(e, productId) {
+    cancelPopup();
+    popupTimer = setTimeout(() => {
+        showProductPopup(productId);
+    }, 500);
+}
+
+function cancelPopup() {
+    clearTimeout(popupTimer);
+    popupTimer = null;
+    trackingActive = false;
+    closeProductPopup();
+}
+
+function showProductPopup(productId) {
+    closeProductPopup();
+
+    const p = productDataMap[productId];
+    if (!p) return;
+
+    const popup = document.createElement('div');
+    popup.className = 'product-popup';
+    popup.id = 'product-popup';
+
+    let html = `<div class="popup-name">${p.name}</div>`;
+
+    if (p.tagline) {
+        html += `<div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.4;">${p.tagline}</div>`;
+    }
+
+    if (p.includes.length) {
+        html += `<div class="popup-section-label">What's included</div>
+        <ul class="popup-list includes">
+            ${p.includes.map(i => `<li>${i}</li>`).join('')}
+        </ul>`;
+    }
+
+    if (p.excludes.length) {
+        html += `<div class="popup-section-label">Not included</div>
+        <ul class="popup-list excludes">
+            ${p.excludes.map(i => `<li>${i}</li>`).join('')}
+        </ul>`;
+    }
+
+    if (p.billing_note) {
+        html += `<div style="margin-top:0.75rem;padding-top:0.6rem;border-top:1px solid var(--border);font-size:0.75rem;color:var(--muted);line-height:1.5;">${p.billing_note}</div>`;
+    }
+
+    popup.innerHTML = html;
+    // Fixed position so it moves with mouse without scroll offset issues
+    popup.style.position = 'fixed';
+    document.body.appendChild(popup);
+    activePopup = popup;
+    trackingActive = true;
+
+    requestAnimationFrame(() => popup.classList.add('show'));
+}
+
+function positionPopup(mx, my) {
+    if (!activePopup || !trackingActive) return;
+    const pw = activePopup.offsetWidth  || 290;
+    const ph = activePopup.offsetHeight || 200;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    let left = mx + 18;
+    let top  = my - 10;
+
+    // Flip left if overflows right edge
+    if (left + pw > vw - 16) left = mx - pw - 18;
+    // Keep from going below viewport
+    if (top + ph > vh - 16) top = vh - ph - 16;
+    // Keep from going above viewport
+    if (top < 8) top = 8;
+    // Keep from going off left edge
+    if (left < 8) left = 8;
+
+    activePopup.style.left = left + 'px';
+    activePopup.style.top  = top + 'px';
+}
+
+// Track mouse and update popup position in real time
+document.addEventListener('mousemove', e => {
+    if (trackingActive && activePopup) {
+        positionPopup(e.clientX, e.clientY);
+    }
+});
+
+function closeProductPopup() {
+    const existing = document.getElementById('product-popup');
+    if (existing) existing.remove();
+    activePopup = null;
+    trackingActive = false;
+}
+
+window.addEventListener('scroll', () => { cancelPopup(); }, { passive: true });
+
+function updateTotals() {
+    let onceOff = 0, monthly = 0, deposit = 0;
+    document.querySelectorAll('.product-tile input[type="checkbox"]:checked').forEach(chk => {
+        const price = parseFloat(chk.dataset.price) || 0;
+        const qty   = chk.dataset.perUser
+            ? parseInt(document.getElementById('qty-' + chk.dataset.id)?.value || 1)
+            : 1;
+        const total = price * qty;
+        if (chk.dataset.billing === 'monthly')  monthly  += total;
+        else if (chk.dataset.billing === 'once-off') onceOff += total;
+        else if (chk.dataset.billing === 'deposit')  deposit += total;
+    });
+
+    const today = onceOff + deposit + monthly;
+    const fmtR  = n => 'R' + n.toLocaleString('en-ZA');
+
+    document.getElementById('d-onceoff').textContent = fmtR(onceOff + deposit);
+    document.getElementById('d-monthly').textContent = fmtR(monthly) + '/mo';
+    document.getElementById('d-today').textContent   = fmtR(today);
+
+    const hasSelection = document.querySelectorAll('.product-tile input[type="checkbox"]:checked').length > 0;
+    document.getElementById('btn-build').disabled = !hasSelection;
+}
+
+function buildDirectBundle() {
+    const onceOffItems = [], monthlyItems = [], depositItems = [];
+    const excludes = ['Items not selected above'];
+
+    document.querySelectorAll('.product-tile input[type="checkbox"]:checked').forEach(chk => {
+        const id    = chk.dataset.id;
+        const name  = chk.dataset.name;
+        const note  = chk.dataset.note;
+        const price = parseFloat(chk.dataset.price) || 0;
+        const qty   = chk.dataset.perUser
+            ? parseInt(document.getElementById('qty-' + id)?.value || 1)
+            : 1;
+        const total = price * qty;
+
+        const item = {
+            id,
+            name: qty > 1 ? `${name} (×${qty})` : name,
+            price: total,
+            note: qty > 1 ? `${qty} users × R${price.toLocaleString('en-ZA')}` : (note || ''),
+        };
+
+        if (chk.dataset.billing === 'monthly')      monthlyItems.push(item);
+        else if (chk.dataset.billing === 'once-off') onceOffItems.push(item);
+        else if (chk.dataset.billing === 'deposit')  depositItems.push(item);
+    });
+
+    const bundle = {
+        ready: true,
+        summary: 'Custom bundle — direct selection',
+        once_off: onceOffItems,
+        monthly:  monthlyItems,
+        deposit:  depositItems,
+        excludes: excludes,
+        consultation_needed: false,
+    };
+
+    currentBundle = bundle;
+    renderBundle(bundle);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// AI MODE — CLAUDE CONVERSATION
+// ════════════════════════════════════════════════════════════════════════════
+function buildProductContext() {
+    if (productCatalogue._fallback) {
+        return `
+HOSTING: Silver R250/mo, Gold R299/mo, Platinum R349/mo, Bronze Pro R450/mo, Silver Pro R599/mo, Gold Pro R799/mo, Cloud VPS R900+/mo.
+MICROSOFT 365: Basic R149/user/mo, Standard R285/user/mo, Premium R520/user/mo.
+DOMAINS: .co.za R199, .com R349, Custom R399 (all once-off annual).
+DEVELOPMENT: Starter site deposit R4,750 + R800/mo retainer. Business site R9,500 + R1,200/mo. E-commerce R18,000 + R1,800/mo. Web app scoped.
+MARKETING: SEO R2,500/mo. Google Ads R2,500/mo. Meta Ads R2,500/mo. Full stack R6,500/mo.
+SUPPORT: Basic 2hrs R500/mo. Standard 4hrs R900/mo. Premium 8hrs R1,600/mo.`;
+    }
+    let ctx = '\nAVAILABLE PRODUCTS:\n';
+    for (const [cat, items] of Object.entries(productCatalogue)) {
+        ctx += `\n${cat.toUpperCase()}:\n`;
+        items.forEach(p => {
+            const price = p.on_promo ? `R${p.promo_price} (promo)` : `R${p.price_zar}`;
+            const unit  = p.per_unit ? ` ${p.per_unit}` : '';
+            const bill  = p.billing === 'monthly' ? '/mo' : p.billing === 'once-off' ? ' once-off' : ' deposit';
+            ctx += `  - [${p.id}] ${p.name}: ${price}${unit}${bill}`;
+            if (p.tagline) ctx += ` — ${p.tagline}`;
+            ctx += '\n';
+        });
+    }
+    return ctx;
+}
+
+function buildSystemPrompt() {
+    return `You are the Stratus Net AI scoping assistant — friendly, direct, and fast.
+Your job is to understand what a business needs and recommend the right Stratus Net bundle.
+
+STRATUS NET is a South African software house building websites, web apps, and custom software for SA, AU, US, and EU businesses. We also provide managed hosting, Microsoft 365, domains, SEO, and digital advertising.
+
+${buildProductContext()}
+
+RULES:
+- POP/IMAP email is INCLUDED FREE in all hosting packages. Never charge extra for basic email.
+- Microsoft 365 is SEPARATE — only recommend if client needs Exchange, Teams, OneDrive, or desktop Office apps. Ask how many users.
+- Web app and mobile app development is ALWAYS custom scoped — never give a fixed price.
+- Development packages have a deposit (once-off) PLUS a monthly retainer. Always explain both.
+- Marketing retainers do NOT include ad spend — billed separately at cost + 10%.
+
+FLOW: Ask one question at a time. Max 6 exchanges before outputting the bundle.
+1. What kind of business? — get the SPECIFIC industry (e.g. "law firm", "panel beater", "dental practice", "logistics company"), not a vague size/category label. Knowing the actual industry tells you what they'll need — a law firm needs Exchange Plan 2 for compliance archiving, a restaurant needs a booking-capable website, a manufacturer may need an inventory web app.
+2. What do they currently have online?
+3. What do they need (website / webapp / email / M365 / marketing)?
+4. Team size if M365 relevant?
+5. Do they have a domain or need one?
+6. Rough monthly budget (optional)?
+
+When ready: say "Great — let me build your bundle." then output JSON in <bundle> tags.
+
+BUNDLE JSON FORMAT:
+<bundle>
+{
+  "ready": true,
+  "summary": "One-line summary",
+  "once_off": [{"id":"domain-co-za","name":".co.za Domain","price":199,"note":"Annual registration"}],
+  "monthly": [{"id":"hosting-silver","name":"Silver Hosting","price":250,"note":"2GB, 50 emails, SSL"}],
+  "deposit": [{"id":"dev-starter","name":"Starter Website Deposit","price":4750,"note":"50% deposit. Balance R4,750 on completion."}],
+  "excludes": ["Microsoft 365","SEO or advertising"],
+  "consultation_needed": false,
+  "consultation_reason": ""
+}
+</bundle>
+
+After each message, suggest 2-4 quick reply options in <replies> tags. CRITICAL: quick replies must always be specific and concrete, never vague categories.
+- WRONG (too vague): "Small business or startup", "Established company", "Professional services"
+- RIGHT (specific): "Law firm", "Panel beater / auto body shop", "Dental practice", "Logistics company"
+For the industry question specifically, suggest 5 genuinely different, real industries — not variations on "small/medium/large business". For later questions (what they need, team size, budget), keep replies equally concrete and grounded in real numbers or named services rather than fuzzy buckets.
+<replies>["Option 1","Option 2","Option 3"]</replies>
+
+Keep it friendly and under 6 exchanges before bundling.`;
+}
+
+function addMessage(role, text) {
+    const msg    = document.createElement('div');
+    msg.className = `msg ${role === 'assistant' ? 'ai' : 'user'}`;
+    const avatar  = document.createElement('div');
+    avatar.className = `msg-avatar ${role === 'assistant' ? 'ai' : 'user-av'}`;
+    avatar.textContent = role === 'assistant' ? 'AI' : 'You';
+    const bubble  = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    bubble.innerHTML = text.replace(/\n/g, '<br>');
+    msg.appendChild(avatar);
+    msg.appendChild(bubble);
+    messagesEl.appendChild(msg);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function setQuickReplies(replies) {
+    quickRepliesEl.innerHTML = '';
+    replies.forEach(reply => {
+        const chip = document.createElement('button');
+        chip.className = 'qr-chip';
+        chip.textContent = reply;
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.qr-chip').forEach(c => c.classList.remove('selected'));
+            chip.classList.add('selected');
+            sendMessage(reply);
+        });
+        quickRepliesEl.appendChild(chip);
+    });
+}
+
+function showTyping(show) {
+    typingEl.classList.toggle('show', show);
+    if (show) messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function parseAIResponse(content) {
+    let text = content, bundle = null, replies = [];
+    const bm = text.match(/<bundle>([\s\S]*?)<\/bundle>/);
+    if (bm) {
+        try { bundle = JSON.parse(bm[1].trim()); } catch(e) {}
+        text = text.replace(/<bundle>[\s\S]*?<\/bundle>/, '').trim();
+    }
+    const rm = text.match(/<replies>([\s\S]*?)<\/replies>/);
+    if (rm) {
+        try { replies = JSON.parse(rm[1].trim()); } catch(e) {}
+        text = text.replace(/<replies>[\s\S]*?<\/replies>/, '').trim();
+    }
+    return { text, bundle, replies };
+}
+
+async function callClaude(userMessage) {
+    conversationHistory.push({ role: 'user', content: userMessage });
+    showTyping(true);
+    inputEl.disabled = true;
+    sendBtn.disabled = true;
+    try {
+        const res = await fetch(CLAUDE_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                system:   buildSystemPrompt(),
+                messages: conversationHistory,
+            })
+        });
+
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || `HTTP ${res.status}`);
+        }
+
+        const data  = await res.json();
+        const raw   = data.content?.[0]?.text || '';
+        conversationHistory.push({ role: 'assistant', content: raw });
+        const { text, bundle, replies } = parseAIResponse(raw);
+        showTyping(false);
+        if (text) addMessage('assistant', text);
+        if (replies.length) setQuickReplies(replies);
+        if (bundle && bundle.ready) {
+            scopingComplete = true;
+            currentBundle   = bundle;
+            quickRepliesEl.innerHTML = '';
+            inputEl.disabled = true;
+            sendBtn.disabled = true;
+            setTimeout(() => renderBundle(bundle), 600);
+        } else {
+            inputEl.disabled = false;
+            sendBtn.disabled = false;
+            inputEl.focus();
+        }
+    } catch(err) {
+        showTyping(false);
+        console.error('Claude API error:', err);
+        addMessage('assistant', `Sorry, I hit a connection issue (${err.message}). Please try again or <a href='/#contact' style='color:var(--cyan)'>contact us directly</a>.`);
+        inputEl.disabled = false;
+        sendBtn.disabled = false;
+    }
+}
+
+function sendMessage(text) {
+    const msg = text || inputEl.value.trim();
+    if (!msg || scopingComplete) return;
+    quickRepliesEl.innerHTML = '';
+    addMessage('user', msg);
+    inputEl.value = '';
+    callClaude(msg);
+}
+
+sendBtn.addEventListener('click', () => sendMessage());
+inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+async function startConversation() {
+    await loadProducts();
+    showTyping(true);
+    await new Promise(r => setTimeout(r, 900));
+    showTyping(false);
+    addMessage('assistant', `Hi! I'm the Stratus Net AI scoping tool. I'll ask you a few quick questions and build your exact service bundle — with full pricing, clear inclusions, and a digital sign-off before you pay anything.\n\nLet's start: <strong>what kind of business are you running?</strong> Pick what's closest, or just type it.`);
+    setQuickReplies(['Law firm','Accounting / bookkeeping','Manufacturing or industrial','Retail or e-commerce','Medical or healthcare practice']);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// BUNDLE RENDERING (shared by AI + Direct paths)
+// ════════════════════════════════════════════════════════════════════════════
+function renderBundle(bundle) {
+    bundleSection.style.display = 'block';
+    bundleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const onceOffTotal = bundle.once_off?.reduce((s,i) => s + i.price, 0) || 0;
+    const depositTotal = bundle.deposit?.reduce((s,i)  => s + i.price, 0) || 0;
+    const monthlyTotal = bundle.monthly?.reduce((s,i)  => s + i.price, 0) || 0;
+    const todayTotal   = onceOffTotal + depositTotal + monthlyTotal;
+    const fmtR = n => 'R' + n.toLocaleString('en-ZA');
+
+    let html = `
+        <div class="bundle-header">
+            <h2>Your Stratus Net Bundle</h2>
+            <span class="bundle-ref">Ref: ${bundleRef}</span>
+        </div>
+        <div class="bundle-body">
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6;">${bundle.summary}</p>`;
+
+    if (onceOffTotal + depositTotal > 0) {
+        html += `<div class="bundle-section-title">Once-off Payments</div><div class="bundle-items">`;
+        [...(bundle.once_off||[]),...(bundle.deposit||[])].forEach(item => {
+            html += `<div class="bundle-item">
+                <div class="bundle-item-left">
+                    <div class="bundle-item-name">${item.name}</div>
+                    <div class="bundle-item-desc">${item.note||''}</div>
+                </div>
+                <div class="bundle-item-price">${fmtR(item.price)}<div class="bundle-item-billing">once-off</div></div>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+
+    if (monthlyTotal > 0) {
+        html += `<div class="bundle-section-title">Monthly Recurring</div><div class="bundle-items">`;
+        bundle.monthly.forEach(item => {
+            html += `<div class="bundle-item">
+                <div class="bundle-item-left">
+                    <div class="bundle-item-name">${item.name}</div>
+                    <div class="bundle-item-desc">${item.note||''}</div>
+                </div>
+                <div class="bundle-item-price">${fmtR(item.price)}<div class="bundle-item-billing">/mo</div></div>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+
+    if (bundle.excludes?.length) {
+        html += `<div class="excludes-note"><strong>Not included in this bundle</strong>${bundle.excludes.join(' &nbsp;·&nbsp; ')}</div>`;
+    }
+
+    html += `<div class="payment-split">`;
+    if (onceOffTotal + depositTotal > 0) {
+        html += `<div class="split-card has-amount">
+            <div class="split-label">Pay Today (once-off)</div>
+            <div class="split-amount">${fmtR(onceOffTotal + depositTotal)}</div>
+            <div class="split-note">Domains, deposits, or once-off services. Standard payment — no subscription.</div>
+        </div>`;
+    }
+    if (monthlyTotal > 0) {
+        html += `<div class="split-card has-amount">
+            <div class="split-label">Monthly From Next Month</div>
+            <div class="split-amount cyan">${fmtR(monthlyTotal)}/mo</div>
+            <div class="split-note">Recurring services via PayFast subscription. You sign the agreement before this is set up.</div>
+        </div>`;
+    }
+    html += `</div>`;
+
+    html += `<div class="bundle-totals">`;
+    if (onceOffTotal + depositTotal > 0) {
+        html += `<div class="total-row"><span class="label">Once-off today</span><span class="amount">${fmtR(onceOffTotal+depositTotal)}</span></div>`;
+    }
+    if (monthlyTotal > 0) {
+        html += `<div class="total-row"><span class="label">Monthly ongoing</span><span class="amount">${fmtR(monthlyTotal)}/mo</span></div>`;
+    }
+    html += `<div class="total-row highlight">
+        <span class="label">Total due today (first month included)</span>
+        <span class="amount">${fmtR(todayTotal)}</span>
+    </div></div></div>`; // close totals, bundle-body
+
+    bundleCard.innerHTML = html;
+
+    // Action buttons
+    let actionsHtml = '';
+    if (bundle.consultation_needed) {
+        actionsHtml = `
+            <a href="/#contact" class="btn-talk" style="flex:1;justify-content:center;">💬 Let's Talk — This Needs a Scope Call</a>
+            <button class="btn-restart" onclick="restartScoper()">Start Over</button>`;
+    } else {
+        if (onceOffTotal + depositTotal > 0) {
+            actionsHtml += `<button class="btn-pay" onclick="proceedToPayment('once_off',${onceOffTotal+depositTotal},'${escJs(buildSummary(bundle,'once_off'))}')">
+                Pay ${fmtR(onceOffTotal+depositTotal)} Now →
+            </button>`;
+        }
+        if (monthlyTotal > 0) {
+            actionsHtml += `<button class="btn-pay" style="background:var(--navy);color:#fff;"
+                onclick="openSignModal(${monthlyTotal},'${escJs(buildSummary(bundle,'recurring'))}')">
+                Sign &amp; Set Up ${fmtR(monthlyTotal)}/mo Subscription →
+            </button>`;
+        }
+        actionsHtml += `
+            <a href="mailto:info@stratusnet.co.za?subject=Bundle ${bundleRef}" class="btn-talk">✉ Email This Bundle</a>
+            <button class="btn-restart" onclick="restartScoper()">Start Over</button>`;
+    }
+    bundleActions.innerHTML = actionsHtml;
+}
+
+function buildSummary(bundle, type) {
+    if (type === 'once_off') {
+        const items = [...(bundle.once_off||[]),...(bundle.deposit||[])];
+        return 'Stratus Net: ' + items.map(i => i.name).join(' + ');
+    }
+    return 'Stratus Net Monthly: ' + (bundle.monthly||[]).map(i => i.name).join(' + ');
+}
+
+function escJs(str) {
+    return str.replace(/'/g,"\\'").replace(/"/g,'\\"');
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ONCE-OFF PAYMENT (no signing needed)
+// ════════════════════════════════════════════════════════════════════════════
+function proceedToPayment(mode, amount, summary) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = CHECKOUT_URL;
+    const fields = {
+        total_amount: amount,
+        monthly_commitment: 0,
+        order_summary: summary,
+        billing_mode: mode,
+        bundle_ref: bundleRef,
+    };
+    Object.entries(fields).forEach(([k,v]) => {
+        const inp = document.createElement('input');
+        inp.type  = 'hidden'; inp.name = k; inp.value = v;
+        form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SIGNING MODAL (for recurring subscriptions)
+// ════════════════════════════════════════════════════════════════════════════
+function openSignModal(amount, summary) {
+    pendingPayment = { amount, summary };
+    document.getElementById('sign-amount').textContent = 'R' + amount.toLocaleString('en-ZA') + '/mo';
+    document.getElementById('sign-summary-text').textContent = summary.replace('Stratus Net Monthly: ','');
+    document.getElementById('sign-name').value  = '';
+    document.getElementById('sign-email').value = '';
+    document.getElementById('sign-agree').checked = false;
+    document.getElementById('sign-error').classList.remove('show');
+    document.getElementById('sign-error').textContent = '';
+    document.getElementById('sign-modal-backdrop').classList.add('show');
+    document.getElementById('sign-name').focus();
+}
+
+function closeSignModal() {
+    document.getElementById('sign-modal-backdrop').classList.remove('show');
+    pendingPayment = null;
+}
+
+async function submitSignature() {
+    const name    = document.getElementById('sign-name').value.trim();
+    const email   = document.getElementById('sign-email').value.trim();
+    const agreed  = document.getElementById('sign-agree').checked;
+    const errEl   = document.getElementById('sign-error');
+    const submitBtn = document.getElementById('btn-sign-submit');
+
+    errEl.classList.remove('show');
+
+    if (!name || name.length < 3) {
+        errEl.textContent = 'Please enter your full name.';
+        errEl.classList.add('show'); return;
+    }
+    if (!email || !email.includes('@')) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.classList.add('show'); return;
+    }
+    if (!agreed) {
+        errEl.textContent = 'Please read and agree to the Terms & Conditions to continue.';
+        errEl.classList.add('show'); return;
+    }
+    if (!pendingPayment) {
+        errEl.textContent = 'Something went wrong. Please try again.';
+        errEl.classList.add('show'); return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing...';
+
+    try {
+        const formData = new FormData();
+        formData.append('client_name',    name);
+        formData.append('client_email',   email);
+        formData.append('bundle_ref',     bundleRef);
+        formData.append('bundle_summary', pendingPayment.summary);
+        formData.append('bundle_json',    JSON.stringify(currentBundle || {}));
+        formData.append('monthly_amount', pendingPayment.amount);
+        formData.append('billing_mode',   'recurring');
+
+        const res  = await fetch(SIGN_API, { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (data.success) {
+            // Signature logged — now proceed to PayFast
+            closeSignModal();
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = CHECKOUT_URL;
+            const fields = {
+                total_amount:       pendingPayment.amount,
+                monthly_commitment: pendingPayment.amount,
+                order_summary:      pendingPayment.summary,
+                billing_mode:       'recurring',
+                bundle_ref:         bundleRef,
+                client_name:        name,
+                client_email:       email,
+            };
+            Object.entries(fields).forEach(([k,v]) => {
+                const inp = document.createElement('input');
+                inp.type = 'hidden'; inp.name = k; inp.value = v;
+                form.appendChild(inp);
+            });
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            errEl.textContent = data.error || 'Signature could not be recorded. Please try again.';
+            errEl.classList.add('show');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Sign & Proceed to Payment →';
+        }
+    } catch(e) {
+        errEl.textContent = 'Network error. Please check your connection and try again.';
+        errEl.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign & Proceed to Payment →';
+    }
+}
+
+// Close modal on backdrop click
+document.getElementById('sign-modal-backdrop').addEventListener('click', e => {
+    if (e.target === document.getElementById('sign-modal-backdrop')) closeSignModal();
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// RESTART
+// ════════════════════════════════════════════════════════════════════════════
+function restartScoper() {
+    conversationHistory = [];
+    currentBundle       = null;
+    scopingComplete     = false;
+    bundleRef           = 'SN-' + Date.now().toString(36).toUpperCase();
+    messagesEl.innerHTML = '';
+    quickRepliesEl.innerHTML = '';
+    bundleSection.style.display = 'none';
+    bundleCard.innerHTML    = '';
+    bundleActions.innerHTML = '';
+    inputEl.disabled  = false;
+    sendBtn.disabled  = false;
+    document.querySelectorAll('.product-tile.selected').forEach(t => t.classList.remove('selected'));
+    document.querySelectorAll('.product-tile input[type="checkbox"]').forEach(c => c.checked = false);
+    updateTotals();
+    if (mode === 'ai') startConversation();
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════════════════
+setMode('ai');
+startConversation();
+</script>
+</body>
+</html>

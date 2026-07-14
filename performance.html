@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>We Grow It | Stratus Net</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Stratus Net runs SEO, Google Ads, and Meta campaigns for businesses in South Africa, Australia, the US, and Europe. We market what we build — no agency handoffs, no disconnect.">
+    <meta name="keywords" content="SEO South Africa, Google Ads management Johannesburg, Meta Ads South Africa, digital marketing Gauteng, performance marketing South Africa">
+    <link rel="canonical" href="https://stratusnet.co.za/performance.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ── Header fix ── */
+        header nav .logo { color: var(--primary-navy); }
+
+        /* ── Page hero ── */
+        .page-hero {
+            background: var(--primary-navy);
+            padding: 9rem 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(0,210,255,0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(0,210,255,0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .page-hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .breadcrumb {
+            font-size: 0.72rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            max-width: 720px;
+        }
+        .page-hero h1 span { color: var(--accent-cyan); }
+        .page-hero .sub {
+            color: rgba(255,255,255,0.55);
+            font-size: 1.1rem;
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-ghost {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .btn-ghost:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        /* ── Hero stats bar ── */
+        .hero-stats {
+            display: flex;
+            gap: 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat {
+            flex: 1;
+            min-width: 160px;
+            padding-right: 2rem;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            margin-right: 2rem;
+        }
+        .hero-stat:last-child { border-right: none; margin-right: 0; }
+        .hero-stat .num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .hero-stat .lbl {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ── Shared section styles ── */
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .eyebrow {
+            font-size: 0.72rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            max-width: 640px;
+        }
+        .section-sub {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 580px;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ── Why it matters ── */
+        #why {
+            padding: 7rem 0;
+            background: var(--bg-white);
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .why-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .why-text h2 span { color: var(--accent-cyan); }
+        .why-text p {
+            color: var(--text-light);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .why-points {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0 0;
+        }
+        .why-points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.97rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .why-points li::before {
+            content: '✓';
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+        .why-points li strong { color: var(--primary-navy); }
+        .why-callout {
+            background: var(--primary-navy);
+            border-radius: 8px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .why-callout::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(0,210,255,0.12);
+            border-radius: 50%;
+        }
+        .why-callout .qmark {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            color: rgba(0,210,255,0.15);
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .why-callout h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .why-callout p {
+            color: #94A3B8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Services ── */
+        #services {
+            padding: 7rem 0;
+            background: var(--bg-gray);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .service-card {
+            background: var(--bg-white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(10,28,53,0.04);
+        }
+        .service-card:hover {
+            border-bottom-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(10,28,53,0.08);
+        }
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0,210,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.3rem;
+            font-size: 1.4rem;
+        }
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin-bottom: 1.2rem;
+        }
+        .service-includes {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-top: 1px solid #F0F0F0;
+            padding-top: 1rem;
+        }
+        .service-includes li {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .service-includes li::before {
+            content: '→';
+            color: var(--accent-cyan);
+            font-size: 0.75rem;
+        }
+
+        /* ── The difference ── */
+        #difference {
+            padding: 7rem 0;
+            background: var(--primary-navy);
+        }
+        .difference-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .difference-inner .eyebrow { color: var(--accent-cyan); }
+        .difference-inner .section-title { color: #fff; }
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .diff-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .diff-card:hover {
+            border-color: rgba(0,210,255,0.25);
+            background: rgba(0,210,255,0.03);
+        }
+        .diff-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+        .diff-card p {
+            color: #94A3B8;
+            font-size: 0.93rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+        .diff-card .diff-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* ── AI strip ── */
+        #ai-strip {
+            padding: 5rem 0;
+            background: var(--bg-white);
+            border-top: 1px solid #F0F0F0;
+        }
+        .ai-strip-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+        .ai-strip-inner h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.9rem;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+        .ai-strip-inner h2 span { color: var(--accent-cyan); }
+        .ai-strip-inner p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0;
+        }
+
+        /* ── CTA ── */
+        #cta {
+            padding: 7rem 0;
+            background: var(--bg-gray);
+            text-align: center;
+        }
+        .cta-inner {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .cta-inner h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        .cta-inner p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .cta-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Footer ── */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 0.75rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.83rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-cyan); }
+
+        /* ── Mobile ── */
+        @media (max-width: 992px) {
+            .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .diff-grid { grid-template-columns: 1fr; }
+            .ai-strip-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .page-hero h1 { font-size: 2.4rem; }
+            .hero-stats { gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                height: 100vh; width: 80%;
+                max-width: 300px;
+                background-color: var(--bg-white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -10px 0 30px rgba(10,28,53,0.1);
+                transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                z-index: 1000; gap: 2rem;
+            }
+            .nav-links.active { right: 0; }
+            .services-grid { grid-template-columns: 1fr; }
+            .page-hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.9rem; }
+            .hero-stat { min-width: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="/" class="logo" aria-label="Stratus Net Home">
+                <div class="logo-arc" aria-hidden="true"></div>
+                Stratus
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/#services">What We Do</a></li>
+                <li><a href="/#about">Why Stratus</a></li>
+                <li><a href="infrastructure.html" style="color:var(--accent-cyan);">Get a Quote</a></li>
+                <li><a href="/#contact">Start a Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- ── HERO ── -->
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <span class="breadcrumb">What We Do → We Grow It</span>
+            <h1>Traffic Is Worthless<br>Without <span>Conversion</span>.</h1>
+            <p class="sub">We run SEO, Google Ads, and Meta campaigns — and because we also built your site, there's no gap between your marketing and your product. One team, aligned from the ground up.</p>
+            <div class="hero-btns">
+                <a href="/#contact" class="btn" style="background:var(--accent-cyan);color:var(--primary-navy);border-color:var(--accent-cyan);">Grow My Business</a>
+                <a href="#services" class="btn-ghost">See What We Run &darr;</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="num">SA · AU</div>
+                    <div class="lbl">US · EU Markets</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">Daily</div>
+                    <div class="lbl">Performance Monitoring</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">Zero</div>
+                    <div class="lbl">Agency Handoffs</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">1</div>
+                    <div class="lbl">Team. Build + Market.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── WHY IT MATTERS ── -->
+    <section id="why">
+        <div class="section-inner">
+            <div class="why-grid">
+                <div class="why-text">
+                    <span class="eyebrow">The Problem With Most Agencies</span>
+                    <h2>Your <span>Developer</span> and Your<br>Marketer Don't Talk.</h2>
+                    <p>Most businesses deal with a web developer who built the site, and a separate marketing agency running the ads — and neither of them fully understand what the other did. So when something isn't converting, nobody owns the problem.</p>
+                    <p>We built your site. We know exactly how it works, what it tracks, and where users drop off. That's not something a separate agency can replicate from a briefing document.</p>
+                    <ul class="why-points">
+                        <li><strong>No briefing documents.</strong> We already know the product.</li>
+                        <li><strong>No finger-pointing.</strong> If the landing page isn't converting, we fix it.</li>
+                        <li><strong>No disconnect.</strong> Your ads and your site speak the same language.</li>
+                        <li><strong>No surprises.</strong> Daily monitoring, weekly reporting, plain English.</li>
+                    </ul>
+                </div>
+                <div class="why-callout">
+                    <div class="qmark">"</div>
+                    <h3>We market what we build. That's the whole point.</h3>
+                    <p>When the team running your Google Ads is the same team that wrote your site's conversion logic, the results are measurably better. We track CPA and ROAS daily and adjust until the numbers make sense.</p>
+                    <a href="/#contact" class="btn" style="background:var(--accent-cyan);color:var(--primary-navy);border-color:var(--accent-cyan);">Let's Talk Growth</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services">
+        <div class="section-inner">
+            <span class="eyebrow">Growth Services</span>
+            <h2 class="section-title">What We Run For You.</h2>
+            <p class="section-sub">Every growth service is built around your specific business, your market, and what your customers are actually searching for.</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>Search Engine Optimisation</h3>
+                    <p>Technical SEO that actually moves the needle. We fix the fundamentals, build content structure, and get your site ranking for terms your customers are searching — not vanity keywords.</p>
+                    <ul class="service-includes">
+                        <li>Technical SEO audit & fixes</li>
+                        <li>Keyword research & content strategy</li>
+                        <li>On-page optimisation</li>
+                        <li>Local SEO & Google Business Profile</li>
+                        <li>Monthly ranking reports</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h3>Google Ads Management</h3>
+                    <p>Search and display campaigns built for conversion, not clicks. We set up proper tracking, monitor CPA daily, and adjust bids and copy until the numbers work for your business.</p>
+                    <ul class="service-includes">
+                        <li>Campaign setup & structure</li>
+                        <li>Conversion tracking (server-side)</li>
+                        <li>Daily bid & budget management</li>
+                        <li>Ad copy testing</li>
+                        <li>Weekly performance reporting</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Meta Ads Management</h3>
+                    <p>Facebook and Instagram campaigns that reach the right people and actually convert. We build the audiences, run the creative, and track every rand or dollar back to a result.</p>
+                    <ul class="service-includes">
+                        <li>Audience research & targeting</li>
+                        <li>Creative strategy & copy</li>
+                        <li>Conversion API integration</li>
+                        <li>Retargeting campaigns</li>
+                        <li>ROAS-focused optimisation</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Analytics & Tracking</h3>
+                    <p>You can't improve what you can't measure. We set up proper server-side tracking so your data is accurate, your attribution is clean, and your decisions are based on reality.</p>
+                    <ul class="service-includes">
+                        <li>Google Analytics 4 setup</li>
+                        <li>Server-side tagging (GTM)</li>
+                        <li>Conversion event configuration</li>
+                        <li>Custom dashboard & reporting</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📍</div>
+                    <h3>Local SEO</h3>
+                    <p>For businesses that serve a specific area — Gauteng, Johannesburg, or anywhere globally — we build local search visibility that drives real foot traffic and enquiries.</p>
+                    <ul class="service-includes">
+                        <li>Google Business Profile optimisation</li>
+                        <li>Local citation building</li>
+                        <li>Review strategy</li>
+                        <li>Local keyword targeting</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌍</div>
+                    <h3>International Campaigns</h3>
+                    <p>Running campaigns for SA businesses targeting AU, US, or EU markets — or international businesses targeting SA. We handle multi-currency, multi-timezone, and cross-border compliance.</p>
+                    <ul class="service-includes">
+                        <li>Cross-border campaign setup</li>
+                        <li>Multi-currency tracking</li>
+                        <li>Market-specific audience targeting</li>
+                        <li>Timezone-adjusted scheduling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── THE DIFFERENCE ── -->
+    <section id="difference">
+        <div class="difference-inner">
+            <span class="eyebrow">Why It Works</span>
+            <h2 class="section-title" style="color:#fff;">We Build It.<br>We Know How to Sell It.</h2>
+
+            <div class="diff-grid">
+                <div class="diff-card">
+                    <span class="diff-icon">⚡</span>
+                    <h3>No Handoff Delay</h3>
+                    <p>A separate marketing agency needs weeks to understand your product before they can write a single ad. We already know it — we built it. Campaigns go live faster and perform better from day one.</p>
+                </div>
+                <div class="diff-card">
+                    <span class="diff-icon">🎯</span>
+                    <h3>Accurate Attribution</h3>
+                    <p>We use server-side tracking so your data isn't polluted by ad blockers or cookie consent drop-off. You see exactly where your leads are coming from and what they cost.</p>
+                </div>
+                <div class="diff-card">
+                    <span class="diff-icon">🔧</span>
+                    <h3>We Fix the Funnel, Not Just the Ads</h3>
+                    <p>If your ads are performing but your site isn't converting, most agencies shrug. We fix the landing page, the form, the load speed — whatever's breaking the funnel.</p>
+                </div>
+                <div class="diff-card">
+                    <span class="diff-icon">💬</span>
+                    <h3>Plain English Reporting</h3>
+                    <p>No vanity metrics, no jargon-filled dashboards. Weekly reports that tell you what happened, what it cost, what it generated, and what we're doing next week.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── AI STRIP ── -->
+    <section id="ai-strip">
+        <div class="ai-strip-inner">
+            <div>
+                <span class="eyebrow">Built Different</span>
+                <h2>We Use <span>AI</span> to Move Faster.<br>You Get the Results Sooner.</h2>
+                <p>From campaign setup to content creation and reporting automation — AI-assisted workflows mean we spend our time on strategy and optimisation, not admin. You see results faster and pay less for the overhead.</p>
+            </div>
+            <div style="flex-shrink:0;">
+                <a href="/#contact" class="btn" style="white-space:nowrap;">Start Growing &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section id="cta">
+        <div class="cta-inner">
+            <span class="eyebrow" style="text-align:center; display:block;">Ready to Grow?</span>
+            <h2>Let's Talk About Your Numbers.</h2>
+            <p>Tell us what you're currently doing to get customers online and what's not working. We'll give you an honest assessment and a clear plan — no sales pitch, no retainer before you're ready.</p>
+            <div class="cta-btns">
+                <a href="infrastructure.html" class="btn">See Pricing &amp; Get a Quote</a>
+                <a href="/#contact" class="btn btn-outline">Talk to Us First</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="justify-content:center; color:var(--bg-white); margin-bottom:1rem;">
+            <div class="logo-arc" aria-hidden="true"></div>
+            Stratus
+        </div>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="engineering.html">We Build It</a>
+            <a href="performance.html">We Grow It</a>
+            <a href="presence.html">Digital Presence</a>
+            <a href="infrastructure.html">Get a Quote</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            <a href="https://payment.stratusnet.co.za">Pay an Invoice</a>
+        </div>
+        <p style="color:#64748B;font-size:0.85rem;margin:0;">&copy; 2026 Stratus Net (Pty) Ltd &nbsp;|&nbsp; Reg. 2016/418098/07 &nbsp;|&nbsp; Gauteng, South Africa</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (toggle && navLinks) {
+        toggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen);
+        });
+    }
+});
+</script>
+
+</body>
+</html>

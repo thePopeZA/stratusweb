@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation | Stratus</title>
+    <style>
+        body { background-color: #0B1D3A; color: #FFFFFF; font-family: 'Inter', sans-serif; display: flex; justify-content: center; padding: 40px 20px; }
+        .container { width: 100%; max-width: 500px; border: 1px solid #00E5FF; padding: 40px; }
+        h1 { font-family: 'Courier New', monospace; color: #00E5FF; font-size: 24px; margin-bottom: 30px; border-bottom: 1px solid #00E5FF; padding-bottom: 10px; }
+        label { display: block; margin-top: 20px; font-size: 12px; text-transform: uppercase; color: #A0AABF; }
+        input, select, textarea { width: 100%; background: #0B1D3A; border: 1px solid #4A5568; color: white; padding: 12px; margin-top: 8px; box-sizing: border-box; font-family: inherit; }
+        /* Style the date picker icon to be cyan */
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+        button { width: 100%; background: #00E5FF; border: none; padding: 15px; margin-top: 30px; font-weight: 800; cursor: pointer; text-transform: uppercase; color: #0B1D3A; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>[SYS.INIT] CONSULTATION</h1>
+    
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Select Date</label>
+        <input type="date" name="date" required>
+
+        <label>Preferred Window</label>
+        <select name="slot">
+            <option value="10-11">10:00 – 11:00 SAST</option>
+            <option value="11-12">11:00 – 12:00 SAST</option>
+            <option value="custom">Propose Custom Time</option>
+        </select>
+
+        <label>Topic / Requirements</label>
+        <textarea name="message" rows="4"></textarea>
+
+        <button type="submit">Initialize Request</button>
+    </form>
+</div>
+
+</body>
+</html>

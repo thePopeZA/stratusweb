@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /jm/
+
+Sitemap: https://stratusnet.co.za/sitemap.xml

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow, all">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Stratus Net | Precision Software & Infrastructure</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Stratus Net engineers high-performance digital environments. From managed infrastructure to full-stack application deployments, we build systems that scale.">
+    <meta name="keywords" content="managed infrastructure, full-stack development, devops, saas deployment, remote software engineering, cloud architecture">
+    <meta name="author" content="Stratus Net">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Animation Canvas Setup */
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-slider { position: relative; overflow: hidden; }
+        .hero-overlay { position: relative; z-index: 1; pointer-events: none; }
+        .hero-overlay * { pointer-events: auto; }
+
+        /* --- Interactive Tabs Component Styles --- */
+        .tabs-container { margin-top: 40px; }
+        .tabs-nav { display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 2px solid #E2E8F0; padding-bottom: 5px; margin-bottom: 30px; }
+        .tab-btn { background: none; border: none; font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: #64748B; padding: 12px 24px; cursor: pointer; transition: all 0.3s ease; border-radius: 6px 6px 0 0; position: relative; }
+        .tab-btn:hover { color: #0A1C35; background: #F8FAFC; }
+        .tab-btn.active { color: #0A1C35; }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -7px; left: 0; width: 100%; height: 4px; background: #00D2FF; border-radius: 2px 2px 0 0; }
+        .tab-panel { display: none; animation: fadeInTab 0.4s ease-in-out; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeInTab { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
+        .tab-desc h3 { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; color: #0A1C35; margin-top: 0; margin-bottom: 15px;}
+        .tab-desc p { color: #4A5568; font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; }
+        .tech-stack { background: #F8FAFC; padding: 25px; border-radius: 8px; border-left: 4px solid #00D2FF; }
+        .tech-stack h4 { margin-top: 0; font-size: 0.85rem; color: #64748B; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; }
+        .tech-list { list-style: none; padding: 0; margin: 0; }
+        .tech-list li { margin-bottom: 10px; font-weight: 600; color: #0A1C35; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .tech-list li::before { content: '✓'; color: #00D2FF; font-weight: bold; font-size: 1.1rem; }
+        .btn-link { display: inline-flex; align-items: center; gap: 8px; color: #0A1C35; font-weight: 600; text-decoration: none; border: 2px solid #E2E8F0; padding: 10px 20px; border-radius: 4px; transition: 0.3s; }
+        .btn-link:hover { border-color: #0A1C35; background: #F8FAFC; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav aria-label="Main Navigation">
+                <a href="#" class="logo" aria-label="Stratus Net Home">
+                    <div class="logo-arc" aria-hidden="true"></div>
+                    Stratus
+                </a>
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false"><span class="hamburger"></span></button>
+                <ul class="nav-links">
+                    <li><a href="#services">Capabilities</a></li>
+                    <li><a href="#about">The Engineering</a></li>
+                    <li><a href="#contact">Deploy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-slider" aria-label="Featured Services">
+            <canvas id="network-canvas"></canvas>
+            <div class="hero-overlay">
+                <span class="hero-tagline">Precision-Engineered Software & Infrastructure.</span>
+                <h1>Precision Software & Infrastructure</h1>
+                <h2 id="hero-title">Systems Infrastructure</h2>
+                <p id="hero-desc">Enterprise-grade stability for your software ecosystems. We manage the servers, security protocols, and uptime so you can focus entirely on scaling your business without hardware liability.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn">Initiate Project</a>
+                    <a href="#services" class="btn btn-outline">Explore Capabilities</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <header class="section-header">
+                    <h2>The Stratus Ecosystem</h2>
+                    <p>A four-pillar approach to digital dominance, bridging hardware stability with scalable software deployment.</p>
+                </header>
+                <div class="tabs-container">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" data-tab="tab-infra">1. Infrastructure</button>
+                        <button class="tab-btn" data-tab="tab-eng">2. Engineering</button>
+                        <button class="tab-btn" data-tab="tab-scale">3. Performance Scaling</button>
+                        <button class="tab-btn" data-tab="tab-seo">4. Digital Presence</button>
+                    </div>
+                    <div id="tab-infra" class="tab-panel active">
+                        <div class="tab-content-grid">
+                            <div class="tab-desc">
+                                <h3>Managed Systems Infrastructure</h3>
+                                <p>We remove the technical liability of server management from your operations. Stratus Net provisions, secures, and maintains high-availability cloud environments tailored precisely to your software's resource requirements.</p>
+                                <a href="/infrastructure.html" class="btn-link">Explore Architecture Specs &rarr;</a>
+                            </div>
+                            <div class="tech-stack">
+                                <h4>Environment Capabilities</h4>
+                                <ul class="tech-list">
+                                    <li>Managed Cloud VPS</li>
+                                    <li>Containerization (Docker)</li>
+                                    <li>Automated SSL Deployment</li>
+                                    <li>DDoS Protection & WAF</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-eng" class="tab-panel">
+                        <div class="tab-content-grid">
+                            <div class="tab-desc">
+                                <h3>Full-Stack Application Build</h3>
+                                <p>We don't build standard brochure websites; we engineer data-driven applications. Using modern component-based architecture, we deliver platforms that load instantly and scale seamlessly.</p>
+                                <a href="/engineering.html" class="btn-link">Explore Build Processes &rarr;</a>
+                            </div>
+                            <div class="tech-stack">
+                                <h4>Development Core</h4>
+                                <ul class="tech-list">
+                                    <li>React / Vue.js Frontends</li>
+                                    <li>Node.js / Python Backends</li>
+                                    <li>REST & GraphQL APIs</li>
+                                    <li>CI/CD Deployment Pipelines</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-scale" class="tab-panel">
+                        <div class="tab-content-grid">
+                            <div class="tab-desc">
+                                <h3>Data-Driven Performance Scaling</h3>
+                                <p>Traffic is irrelevant without conversion architecture. We deploy highly targeted Google and Meta advertising structures backed by rigorous server-side tracking to ensure accurate attribution.</p>
+                                <a href="/performance.html" class="btn-link">Explore Growth Models &rarr;</a>
+                            </div>
+                            <div class="tech-stack">
+                                <h4>Analytics & Acquisition</h4>
+                                <ul class="tech-list">
+                                    <li>Server-Side Tagging (GTM)</li>
+                                    <li>Conversion API Integrations</li>
+                                    <li>Google Ads Architecture</li>
+                                    <li>Meta Business Ecosystems</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-seo" class="tab-panel">
+                        <div class="tab-content-grid">
+                            <div class="tab-desc">
+                                <h3>Authoritative Digital Presence</h3>
+                                <p>Organic search visibility requires structural engineering, not just keywords. We execute deep technical SEO audits, implement advanced schema markup, and optimize server response times.</p>
+                                <a href="/presence.html" class="btn-link">Explore SEO Structures &rarr;</a>
+                            </div>
+                            <div class="tech-stack">
+                                <h4>Optimization Standards</h4>
+                                <ul class="tech-list">
+                                    <li>Advanced Schema Markup</li>
+                                    <li>Core Web Vitals Tuning</li>
+                                    <li>Local Entity Optimization</li>
+                                    <li>Dynamic Content Strategy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">...</section>
+        <section id="contact">...</section>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Tab Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanels.forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+
+            // Animation Logic
+            const canvas = document.getElementById('network-canvas');
+            const ctx = canvas.getContext('2d');
+            const mouse = { x: null, y: null };
+            const NAVY = '10, 28, 53';
+            let particles = [];
+            window.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.radius = 2.5;
+                }
+                update() {
+                    if (mouse.x !== null) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        if (Math.sqrt(dx * dx + dy * dy) < 300) { this.vx += dx * 0.0001; this.vy += dy * 0.0001; }
+                    }
+                    this.x += this.vx; this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fillStyle = `rgb(${NAVY})`; ctx.fill(); }
+            }
+            function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+            window.addEventListener('resize', resize);
+            resize();
+            for (let i = 0; i < 40; i++) particles.push(new Particle());
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 180) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(${NAVY}, ${0.12 - dist / 1500})`;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
+    </script>
+</body>
+</html>

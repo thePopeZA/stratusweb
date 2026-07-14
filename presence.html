@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Digital Presence | Stratus Net</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Stratus Net builds authoritative digital presence for businesses in South Africa, Australia, the US, and Europe. Technical SEO, schema markup, Core Web Vitals, and local search visibility.">
+    <meta name="keywords" content="digital presence South Africa, technical SEO Johannesburg, local SEO Gauteng, Google Business Profile South Africa, Core Web Vitals optimisation">
+    <link rel="canonical" href="https://stratusnet.co.za/presence.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ── Header fix ── */
+        header nav .logo { color: var(--primary-navy); }
+
+        /* ── Page hero ── */
+        .page-hero {
+            background: var(--primary-navy);
+            padding: 9rem 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            right: -120px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(0,210,255,0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(0,210,255,0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .page-hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .breadcrumb {
+            font-size: 0.72rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            max-width: 720px;
+        }
+        .page-hero h1 span { color: var(--accent-cyan); }
+        .page-hero .sub {
+            color: rgba(255,255,255,0.55);
+            font-size: 1.1rem;
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-ghost {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .btn-ghost:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        /* ── Shared ── */
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .eyebrow {
+            font-size: 0.72rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            max-width: 640px;
+        }
+        .section-sub {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 580px;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ── Visibility problem ── */
+        #problem {
+            padding: 7rem 0;
+            background: var(--bg-white);
+        }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .problem-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .problem-text h2 span { color: var(--accent-cyan); }
+        .problem-text p {
+            color: var(--text-light);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+
+        /* Reality check cards */
+        .reality-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .reality-card {
+            background: var(--bg-gray);
+            border-radius: 6px;
+            padding: 1.4rem 1.6rem;
+            border-left: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .reality-card:hover { border-left-color: var(--accent-cyan); }
+        .reality-card .rc-label {
+            font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+        .reality-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.97rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        .reality-card p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── What we do ── */
+        #what {
+            padding: 7rem 0;
+            background: var(--bg-gray);
+        }
+        .what-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .what-card {
+            background: var(--bg-white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(10,28,53,0.04);
+        }
+        .what-card:hover {
+            border-bottom-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(10,28,53,0.08);
+        }
+        .what-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0,210,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.3rem;
+            font-size: 1.4rem;
+        }
+        .what-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+        .what-card p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* ── Compound growth ── */
+        #compound {
+            padding: 7rem 0;
+            background: var(--primary-navy);
+        }
+        .compound-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .compound-inner .eyebrow { color: var(--accent-cyan); }
+        .compound-inner .section-title { color: #fff; max-width: 700px; }
+        .compound-inner .section-sub { color: #94A3B8; max-width: 620px; }
+        .timeline {
+            margin-top: 3.5rem;
+            position: relative;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(0,210,255,0.2);
+        }
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+        .timeline-dot {
+            width: 56px;
+            height: 56px;
+            background: rgba(0,210,255,0.1);
+            border: 1px solid rgba(0,210,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .timeline-content { padding-top: 0.8rem; }
+        .timeline-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+        .timeline-content p {
+            color: #94A3B8;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* ── Built-in advantage ── */
+        #advantage {
+            padding: 7rem 0;
+            background: var(--bg-white);
+        }
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .advantage-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .advantage-text h2 span { color: var(--accent-cyan); }
+        .advantage-text p {
+            color: var(--text-light);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .check-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0 2rem;
+        }
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 0.9rem;
+            font-size: 0.97rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .check-list li::before {
+            content: '✓';
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .check-list li strong { color: var(--primary-navy); }
+        .score-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .score-card {
+            background: var(--bg-gray);
+            border-radius: 8px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s;
+        }
+        .score-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 8px 24px rgba(10,28,53,0.08);
+        }
+        .score-card .score {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .score-card .score-label {
+            font-size: 0.78rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--primary-navy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+        .score-card .score-sub {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ── AI strip ── */
+        #ai-strip {
+            padding: 5rem 0;
+            background: var(--primary-navy);
+        }
+        .ai-strip-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+        .ai-strip-inner h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.9rem;
+            color: #fff;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+        .ai-strip-inner h2 span { color: var(--accent-cyan); }
+        .ai-strip-inner p {
+            color: #94A3B8;
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0;
+        }
+
+        /* ── CTA ── */
+        #cta {
+            padding: 7rem 0;
+            background: var(--bg-gray);
+            text-align: center;
+        }
+        .cta-inner {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .cta-inner h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            color: var(--primary-navy);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        .cta-inner p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .cta-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Footer ── */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 0.75rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.83rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-cyan); }
+
+        /* ── Mobile ── */
+        @media (max-width: 992px) {
+            .problem-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .what-grid { grid-template-columns: repeat(2, 1fr); }
+            .advantage-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .ai-strip-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .page-hero h1 { font-size: 2.4rem; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                height: 100vh; width: 80%;
+                max-width: 300px;
+                background-color: var(--bg-white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -10px 0 30px rgba(10,28,53,0.1);
+                transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                z-index: 1000; gap: 2rem;
+            }
+            .nav-links.active { right: 0; }
+            .what-grid { grid-template-columns: 1fr; }
+            .score-cards { grid-template-columns: 1fr; }
+            .page-hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="/" class="logo" aria-label="Stratus Net Home">
+                <div class="logo-arc" aria-hidden="true"></div>
+                Stratus
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/#services">What We Do</a></li>
+                <li><a href="/#about">Why Stratus</a></li>
+                <li><a href="infrastructure.html" style="color:var(--accent-cyan);">Get a Quote</a></li>
+                <li><a href="/#contact">Start a Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- ── HERO ── -->
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <span class="breadcrumb">What We Do → Digital Presence</span>
+            <h1>If Google Can't Find You,<br><span>Your Customers Can't</span> Either.</h1>
+            <p class="sub">A well-built website is the foundation. A visible one is the business. We engineer digital presence that compounds over time — ranking higher, loading faster, and converting better month after month.</p>
+            <div class="hero-btns">
+                <a href="/#contact" class="btn" style="background:var(--accent-cyan);color:var(--primary-navy);border-color:var(--accent-cyan);">Audit My Presence</a>
+                <a href="#what" class="btn-ghost">See What We Do &darr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── THE PROBLEM ── -->
+    <section id="problem">
+        <div class="section-inner">
+            <div class="problem-grid">
+                <div class="problem-text">
+                    <span class="eyebrow">The Reality</span>
+                    <h2>Most Websites Are<br><span>Invisible</span> by Default.</h2>
+                    <p>Building a website and launching it is the easy part. Getting it found by the right people — consistently, organically, without paying for every click — is where most businesses fall short.</p>
+                    <p>Digital presence isn't about posting more content or stuffing keywords. It's a technical discipline. Page speed, schema markup, crawlability, mobile performance, Core Web Vitals — these are engineering problems, not marketing ones.</p>
+                    <p>And because we built your site, we can fix them properly — not work around someone else's code.</p>
+                </div>
+                <div class="reality-cards">
+                    <div class="reality-card">
+                        <span class="rc-label">Problem 01</span>
+                        <h4>Slow Load Times Kill Rankings</h4>
+                        <p>Google measures Core Web Vitals. A site that loads in 4 seconds ranks below one that loads in 1.2. We engineer for speed from the ground up.</p>
+                    </div>
+                    <div class="reality-card">
+                        <span class="rc-label">Problem 02</span>
+                        <h4>No Schema = No Rich Results</h4>
+                        <p>Without structured data, your site won't qualify for star ratings, FAQ snippets, or knowledge panel features. We implement schema as part of the build.</p>
+                    </div>
+                    <div class="reality-card">
+                        <span class="rc-label">Problem 03</span>
+                        <h4>Local Businesses Are Invisible Online</h4>
+                        <p>If your Google Business Profile isn't optimised, you're not appearing in map results. That's the highest-converting traffic you're leaving on the table.</p>
+                    </div>
+                    <div class="reality-card">
+                        <span class="rc-label">Problem 04</span>
+                        <h4>International Sites Need Local Signals</h4>
+                        <p>Targeting AU, US, or EU markets from SA requires deliberate hreflang, CDN configuration, and market-specific content. We handle all of it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WHAT WE DO ── -->
+    <section id="what">
+        <div class="section-inner">
+            <span class="eyebrow">What We Do</span>
+            <h2 class="section-title">Presence Engineering,<br>Not Just SEO.</h2>
+            <p class="section-sub">We treat digital presence as an engineering discipline — not a content calendar. Every element is measurable, every change is deliberate, and everything compounds over time.</p>
+
+            <div class="what-grid">
+                <div class="what-card">
+                    <div class="what-icon">🔬</div>
+                    <h3>Technical SEO Audit</h3>
+                    <p>A full crawl of your site identifying every issue hurting your rankings — broken links, duplicate content, crawl errors, missing meta tags, and more. Delivered as a prioritised fix list, not a jargon report.</p>
+                </div>
+                <div class="what-card">
+                    <div class="what-icon">⚡</div>
+                    <h3>Core Web Vitals</h3>
+                    <p>Google's performance scoring affects your search ranking directly. We optimise LCP, CLS, and INP — the three metrics Google uses to measure real-world page experience.</p>
+                </div>
+                <div class="what-card">
+                    <div class="what-icon">🗂️</div>
+                    <h3>Schema & Structured Data</h3>
+                    <p>We implement JSON-LD schema markup so Google understands exactly what your business is, what you offer, and where you operate — unlocking rich results in search.</p>
+                </div>
+                <div class="what-card">
+                    <div class="what-icon">📍</div>
+                    <h3>Local Search Visibility</h3>
+                    <p>Google Business Profile setup and optimisation, local citation building, and review strategy for businesses that need to rank in their city, region, or country.</p>
+                </div>
+                <div class="what-card">
+                    <div class="what-icon">🌐</div>
+                    <h3>International SEO</h3>
+                    <p>Targeting multiple markets from a single domain requires hreflang tags, geo-targeting configuration, and market-specific content strategy. We do it properly.</p>
+                </div>
+                <div class="what-card">
+                    <div class="what-icon">📋</div>
+                    <h3>Content Architecture</h3>
+                    <p>Site structure, internal linking, and content hierarchy that tells Google exactly what your most important pages are — and makes sure they rank accordingly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── COMPOUND GROWTH ── -->
+    <section id="compound">
+        <div class="compound-inner">
+            <span class="eyebrow">How It Builds</span>
+            <h2 class="section-title" style="color:#fff;">Organic Presence<br>Compounds. Ads Don't.</h2>
+            <p class="section-sub" style="color:#94A3B8; margin-bottom: 3.5rem;">Paid ads stop the moment you stop paying. Organic presence built on a well-engineered foundation keeps delivering — and gets stronger every month.</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">M1–2</div>
+                    <div class="timeline-content">
+                        <h3>Foundation — Fix What's Broken</h3>
+                        <p>Technical audit, speed optimisation, schema implementation, Google Business Profile. This is the work that unblocks everything else. Results start appearing in search console within weeks.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">M3–4</div>
+                    <div class="timeline-content">
+                        <h3>Structure — Build the Architecture</h3>
+                        <p>Content hierarchy, internal linking, keyword mapping. Google starts understanding what your site is about and who it should show it to. Rankings begin to move.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">M5–6</div>
+                    <div class="timeline-content">
+                        <h3>Visibility — Rankings Take Hold</h3>
+                        <p>Target keywords ranking on page one. Organic traffic increasing month-on-month. Local map pack appearances for relevant searches. The compounding effect begins.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">M6+</div>
+                    <div class="timeline-content">
+                        <h3>Authority — The Moat Builds</h3>
+                        <p>Established rankings become harder for competitors to displace. Every new piece of content, every new page, every new backlink adds to a foundation that's already working. This is where organic presence pays off indefinitely.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── BUILT-IN ADVANTAGE ── -->
+    <section id="advantage">
+        <div class="section-inner">
+            <div class="advantage-grid">
+                <div class="advantage-text">
+                    <span class="eyebrow">The Stratus Advantage</span>
+                    <h2>We Built the Site.<br><span>We Own the Stack.</span></h2>
+                    <p>When a separate SEO agency finds a speed problem on your site, they raise a ticket and wait for your developer to fix it — sometimes weeks later. When we find a problem, we fix it in the same session.</p>
+                    <p>No coordination overhead. No blame-shifting. No waiting. Just faster results.</p>
+                    <ul class="check-list">
+                        <li><strong>Same-day fixes.</strong> We don't raise tickets. We fix it.</li>
+                        <li><strong>Server-level access.</strong> Caching, CDN, compression — all under our control.</li>
+                        <li><strong>Code-level SEO.</strong> Schema baked into the build, not bolted on after.</li>
+                        <li><strong>One invoice.</strong> Build, hosting, SEO — no separate agency relationships.</li>
+                        <li><strong>Global reach.</strong> SA · AU · US · EU — we configure for every market.</li>
+                    </ul>
+                    <a href="/#contact" class="btn">Get a Presence Audit</a>
+                </div>
+                <div class="score-cards">
+                    <div class="score-card">
+                        <div class="score">100</div>
+                        <div class="score-label">Performance</div>
+                        <div class="score-sub">Core Web Vitals target score on every site we build.</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score">100</div>
+                        <div class="score-label">SEO Score</div>
+                        <div class="score-sub">Lighthouse SEO audit target on every deployment.</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score">Days</div>
+                        <div class="score-label">To First Fix</div>
+                        <div class="score-sub">Not weeks. We find the problem and fix it immediately.</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score">1</div>
+                        <div class="score-label">Team. All Of It.</div>
+                        <div class="score-sub">Build, host, SEO, ads — one team, no handoffs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── AI STRIP ── -->
+    <section id="ai-strip">
+        <div class="ai-strip-inner">
+            <div>
+                <span class="eyebrow" style="color:var(--accent-cyan);">Built Differently</span>
+                <h2>We Use <span>AI</span> to Audit Faster<br>and Fix Smarter.</h2>
+                <p>AI-assisted auditing means we identify technical SEO issues, content gaps, and performance bottlenecks faster than any manual process. You get a comprehensive fix list — and the fixes implemented — in days, not weeks.</p>
+            </div>
+            <div style="flex-shrink:0;">
+                <a href="/#contact" class="btn" style="background:var(--accent-cyan);color:var(--primary-navy);border-color:var(--accent-cyan);white-space:nowrap;">Audit My Site &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section id="cta">
+        <div class="cta-inner">
+            <span class="eyebrow" style="text-align:center; display:block;">Ready to Be Found?</span>
+            <h2>Let's See Where You Stand.</h2>
+            <p>Send us your URL. We'll run a technical audit and tell you exactly what's hurting your rankings, what's fixable quickly, and what a proper presence strategy looks like for your business.</p>
+            <div class="cta-btns">
+                <a href="/#contact" class="btn">Get a Free Audit</a>
+                <a href="infrastructure.html" class="btn btn-outline">See Pricing &amp; Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="justify-content:center; color:var(--bg-white); margin-bottom:1rem;">
+            <div class="logo-arc" aria-hidden="true"></div>
+            Stratus
+        </div>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="engineering.html">We Build It</a>
+            <a href="performance.html">We Grow It</a>
+            <a href="infrastructure.html">Get a Quote</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            <a href="https://payment.stratusnet.co.za">Pay an Invoice</a>
+        </div>
+        <p style="color:#64748B;font-size:0.85rem;margin:0;">&copy; 2026 Stratus Net (Pty) Ltd &nbsp;|&nbsp; Reg. 2016/418098/07 &nbsp;|&nbsp; Gauteng, South Africa</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (toggle && navLinks) {
+        toggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen);
+        });
+    }
+});
+</script>
+
+</body>
+</html>

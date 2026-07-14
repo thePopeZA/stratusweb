@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Terms & Conditions | Stratus Net</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Terms and Conditions of Service for Stratus Net (Pty) Ltd — hosting, web development, web applications, and digital advertising.">
+    <link rel="canonical" href="https://stratusnet.co.za/terms.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ── Page-specific overrides ── */
+
+        /* Fix logo-arc for sub-pages (overrides the quarter-arc in style.css) */
+        .logo-arc {
+            width: 22px;
+            height: 22px;
+            border: 3px solid var(--accent-cyan);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* On sub-pages the header logo text needs to be navy (white bg header) */
+        header nav .logo { color: var(--primary-navy); }
+
+        /* Page hero strip */
+        .page-hero {
+            background: var(--primary-navy);
+            padding: 8rem 0 3.5rem; /* top clears fixed header */
+            text-align: center;
+        }
+        .page-hero .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.6rem;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -1px;
+        }
+        .page-hero .meta {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.88rem;
+        }
+
+        /* Two-column doc layout */
+        .doc-layout {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            gap: 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem 7rem;
+            align-items: start;
+        }
+
+        /* Sticky TOC */
+        .toc {
+            position: sticky;
+            top: 100px;
+        }
+        .toc-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            border-left: 2px solid #E2E8F0;
+            padding-left: 1rem;
+        }
+        .toc ul li { margin-bottom: 0.55rem; }
+        .toc ul li a {
+            color: var(--text-light);
+            font-size: 0.83rem;
+            transition: color 0.2s;
+            display: block;
+            line-height: 1.4;
+        }
+        .toc ul li a:hover { color: var(--primary-navy); }
+
+        /* Doc content */
+        .doc-content section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 110px;
+        }
+        .doc-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+            display: inline-block;
+            letter-spacing: -0.3px;
+        }
+        .doc-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: var(--primary-navy);
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .doc-content p {
+            color: var(--text-light);
+            font-size: 0.96rem;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+        .doc-content ul {
+            margin: 0.5rem 0 1.2rem 1.2rem;
+        }
+        .doc-content ul li {
+            margin-bottom: 0.55rem;
+            font-size: 0.96rem;
+            color: var(--text-light);
+            line-height: 1.65;
+        }
+        .doc-content ul li::marker { color: var(--accent-cyan); }
+        .doc-content a { color: var(--primary-navy); font-weight: 600; }
+        .doc-content a:hover { color: var(--accent-cyan); }
+
+        /* Callout box */
+        .callout {
+            background: var(--bg-gray);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        .callout strong { color: var(--primary-navy); }
+        .callout a { color: var(--primary-navy); font-weight: 600; }
+
+        /* Footer links row */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-cyan); }
+
+        /* Timestamp */
+        .doc-timestamp {
+            font-size: 0.78rem;
+            color: #94A3B8;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .doc-layout {
+                grid-template-columns: 1fr;
+                padding: 2rem 1.2rem 4rem;
+                gap: 2rem;
+            }
+            .toc { position: static; }
+            .page-hero h1 { font-size: 1.9rem; }
+            .page-hero { padding: 7rem 1.2rem 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="/" class="logo" aria-label="Stratus Net Home">
+                <div class="logo-arc" aria-hidden="true"></div>
+                Stratus
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/#services">What We Do</a></li>
+                <li><a href="/#about">Why Stratus</a></li>
+                <li><a href="infrastructure.html" style="color:var(--accent-cyan);">Get a Quote</a></li>
+                <li><a href="/#contact">Start a Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="page-hero">
+    <span class="breadcrumb">Legal</span>
+    <h1>Terms &amp; Conditions</h1>
+    <p class="meta">Effective Date: 29 June 2026 &nbsp;&bull;&nbsp; Stratus Net (Pty) Ltd &nbsp;&bull;&nbsp; Reg. 2016/418098/07</p>
+</div>
+
+<div class="doc-layout">
+
+    <aside class="toc" aria-label="Table of contents">
+        <p class="toc-title">Contents</p>
+        <ul>
+            <li><a href="#s1">1. Parties &amp; Agreement</a></li>
+            <li><a href="#s2">2. Services Offered</a></li>
+            <li><a href="#s3">3. Payment Terms</a></li>
+            <li><a href="#s4">4. Cancellation</a></li>
+            <li><a href="#s5">5. Refund Policy</a></li>
+            <li><a href="#s6">6. Delivery</a></li>
+            <li><a href="#s7">7. Client Obligations</a></li>
+            <li><a href="#s8">8. Intellectual Property</a></li>
+            <li><a href="#s9">9. Limitation of Liability</a></li>
+            <li><a href="#s10">10. Governing Law</a></li>
+            <li><a href="#s11">11. Amendments</a></li>
+            <li><a href="#s12">12. Contact</a></li>
+        </ul>
+    </aside>
+
+    <main class="doc-content" id="main-content">
+
+        <section id="s1">
+            <h2>1. Parties and Agreement</h2>
+            <p>These Terms and Conditions ("Agreement") constitute a legally binding contract between <strong>Stratus Net (Pty) Ltd</strong>, registration number 2016/418098/07, with its principal place of business at 30 Mitchell Street, Meyerton, Gauteng, 1961, South Africa ("Stratus Net", "we", "us", or "our"), and any person or entity ("Client", "you", or "your") who accesses our website at <a href="https://stratusnet.co.za">stratusnet.co.za</a>, uses our payment portal at <a href="https://payment.stratusnet.co.za">payment.stratusnet.co.za</a>, or engages our services.</p>
+            <p>By accessing our website, submitting an order, making a payment, or signing a service agreement, you confirm that you have read, understood, and agree to be bound by this Agreement.</p>
+        </section>
+
+        <section id="s2">
+            <h2>2. Services Offered</h2>
+            <p>Stratus Net provides the following digital services to individuals and businesses:</p>
+            <ul>
+                <li><strong>Web Hosting</strong> — managed shared, VPS, and dedicated hosting solutions on South African infrastructure</li>
+                <li><strong>Website Design &amp; Development</strong> — custom websites, landing pages, and multi-page corporate sites</li>
+                <li><strong>Web Application Development</strong> — bespoke web-based software, portals, client dashboards, and custom tools</li>
+                <li><strong>Digital Advertising</strong> — Google Ads management, social media advertising, SEO campaigns, and performance marketing</li>
+                <li><strong>Domain Registration &amp; Management</strong> — domain registration, transfers, DNS configuration, and renewals</li>
+                <li><strong>Email Hosting &amp; Configuration</strong> — business email setup, migration, and ongoing management</li>
+            </ul>
+            <p>Specific deliverables, timelines, pricing, and scope for each engagement are set out in the applicable Service Agreement, Proposal, or Quote accepted by the Client.</p>
+        </section>
+
+        <section id="s3">
+            <h2>3. Payment Terms</h2>
+
+            <h3>3.1 Payment Portal</h3>
+            <p>All payments are processed securely through <a href="https://payment.stratusnet.co.za">payment.stratusnet.co.za</a>, powered by PayFast. By making a payment, you agree to PayFast's terms and conditions in addition to this Agreement.</p>
+
+            <h3>3.2 Monthly Recurring Services</h3>
+            <p>Hosting, email hosting, domain management, digital advertising management, and similar recurring services are billed monthly in advance. Invoices are issued on or before the first business day of each calendar month and are payable within 7 days of issue.</p>
+
+            <h3>3.3 Website &amp; Application Development — Financed Packages</h3>
+            <div class="callout">
+                <strong>Important:</strong> Website design, web application development, and software development packages offered on a monthly payment plan are structured as <strong>12-month finance arrangements</strong>. These payments represent the amortised cost of the service delivered upfront and are not month-to-month subscriptions. The full outstanding balance becomes immediately due and payable upon early termination by the Client.
+            </div>
+
+            <h3>3.4 Once-Off Projects</h3>
+            <p>Once-off projects are subject to the payment schedule set out in the applicable proposal or quote, typically comprising a deposit of 50% upon acceptance and the balance prior to or upon delivery.</p>
+
+            <h3>3.5 Late Payments</h3>
+            <p>Invoices not settled within the agreed payment period will attract interest at the rate of 2% per month on the overdue balance. Stratus Net reserves the right to suspend services without notice if an account is overdue by more than 14 days, and to terminate services if the account remains unpaid after 30 days. Reactivation fees may apply.</p>
+
+            <h3>3.6 Disputed Invoices</h3>
+            <p>If you dispute an invoice, you must notify us in writing within 7 days of the invoice date, specifying the nature of the dispute. Undisputed portions of an invoice remain payable by the original due date.</p>
+        </section>
+
+        <section id="s4">
+            <h2>4. Cancellation and Termination</h2>
+
+            <h3>4.1 Recurring Services (Hosting, Advertising, Email, Domains)</h3>
+            <p>Either party may cancel a monthly recurring service by providing no less than <strong>30 calendar days' written notice</strong> to the other party. Notice must be submitted in writing via email to <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>. The service will remain active and billable for the full 30-day notice period. No pro-rata refunds are issued for the notice period.</p>
+
+            <h3>4.2 Website &amp; Web Application Development — Financed Packages</h3>
+            <div class="callout">
+                <strong>No early exit:</strong> Website design and web application development packages structured as 12-month finance arrangements may not be cancelled mid-term without penalty. In the event of early cancellation by the Client, the <strong>full outstanding balance of the 12-month package becomes immediately due and payable</strong>. No partial refunds are applicable.
+            </div>
+
+            <h3>4.3 Once-Off Projects</h3>
+            <p>Once a once-off project has commenced, the deposit is non-refundable. If the Client cancels a project after commencement, all work completed to date will be invoiced at the agreed project rate and the balance due will be payable within 7 days.</p>
+
+            <h3>4.4 Termination for Cause</h3>
+            <p>Stratus Net reserves the right to terminate this Agreement immediately and without notice if the Client:</p>
+            <ul>
+                <li>Fails to make payment as required and does not remedy the default within 7 days of written notice</li>
+                <li>Uses our services for any unlawful, fraudulent, or abusive purpose</li>
+                <li>Violates any applicable law, including the Electronic Communications and Transactions Act 25 of 2002 (ECT Act) or the Protection of Personal Information Act 4 of 2013 (POPIA)</li>
+                <li>Engages in activities that damage the reputation, infrastructure, or operations of Stratus Net</li>
+            </ul>
+        </section>
+
+        <section id="s5">
+            <h2>5. Refund Policy</h2>
+            <p>Stratus Net's services are rendered on a subscription or project basis. The following refund terms apply:</p>
+            <ul>
+                <li><strong>Monthly recurring services:</strong> No refunds are issued for any portion of the current or notice-period billing cycle.</li>
+                <li><strong>Financed website/app packages (12-month):</strong> No refunds. The outstanding contract balance is payable in full upon early termination.</li>
+                <li><strong>Once-off project deposits:</strong> Non-refundable once a project has commenced.</li>
+                <li><strong>Advertising spend:</strong> Third-party advertising spend (Google, Meta, etc.) paid to Stratus Net for onward disbursement is non-refundable once submitted to the relevant platform.</li>
+                <li><strong>Domain registrations and renewals:</strong> Non-refundable once processed with the relevant registry.</li>
+            </ul>
+            <p>If you believe you have been incorrectly charged, please contact us at <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a> within 7 days of the charge.</p>
+        </section>
+
+        <section id="s6">
+            <h2>6. Delivery of Services</h2>
+            <p>Digital services are delivered electronically. No physical delivery is applicable. Estimated timelines for project-based work are set out in the relevant proposal or service agreement. Stratus Net will make reasonable efforts to meet agreed timelines, but delays caused by Client feedback, third-party dependencies, or circumstances beyond our control do not constitute a breach of this Agreement.</p>
+            <p>Hosting and recurring services are activated within 1 to 3 business days of receipt of first payment unless otherwise agreed.</p>
+        </section>
+
+        <section id="s7">
+            <h2>7. Client Obligations</h2>
+            <p>The Client agrees to:</p>
+            <ul>
+                <li>Provide accurate, complete, and up-to-date information required for service delivery</li>
+                <li>Respond promptly to requests for content, approvals, or feedback during project engagements</li>
+                <li>Ensure that all content, images, text, and materials provided to Stratus Net are owned by the Client or that the Client holds the necessary rights and licences to use such materials</li>
+                <li>Not use Stratus Net's services or infrastructure to host, distribute, or transmit unlawful, defamatory, infringing, or harmful content</li>
+                <li>Maintain the confidentiality of any login credentials provided</li>
+            </ul>
+        </section>
+
+        <section id="s8">
+            <h2>8. Intellectual Property</h2>
+            <p>Unless otherwise agreed in writing:</p>
+            <ul>
+                <li>All intellectual property in deliverables developed by Stratus Net vests in Stratus Net until full payment has been received, at which point ownership transfers to the Client.</li>
+                <li>Stratus Net retains the right to display completed work in its portfolio unless the Client expressly requests otherwise in writing.</li>
+                <li>Any third-party software, themes, plugins, or libraries incorporated into a project remain subject to their respective licences.</li>
+                <li>Content, materials, and assets provided by the Client remain the property of the Client.</li>
+            </ul>
+        </section>
+
+        <section id="s9">
+            <h2>9. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by South African law:</p>
+            <ul>
+                <li>Stratus Net's total liability to the Client shall not exceed the total fees paid by the Client in the 3 months preceding the event giving rise to the claim.</li>
+                <li>Stratus Net shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of revenue, loss of data, loss of business, or loss of goodwill.</li>
+                <li>Stratus Net does not warrant that hosting services will be uninterrupted or error-free, and makes no guarantee regarding uptime beyond what is specified in any applicable SLA.</li>
+            </ul>
+        </section>
+
+        <section id="s10">
+            <h2>10. Governing Law and Disputes</h2>
+            <p>This Agreement is governed by and construed in accordance with the laws of the Republic of South Africa. Any dispute arising from this Agreement shall first be referred to good-faith negotiation between the parties. If unresolved within 30 days, the dispute shall be submitted to mediation or arbitration in terms of the Arbitration Act 42 of 1965, as amended, before any court proceedings are initiated.</p>
+        </section>
+
+        <section id="s11">
+            <h2>11. Amendments</h2>
+            <p>Stratus Net reserves the right to amend these Terms and Conditions at any time. Clients will be notified of material changes via email or through a notice on <a href="https://stratusnet.co.za">stratusnet.co.za</a>. Continued use of our services after notification of changes constitutes acceptance of the amended terms.</p>
+        </section>
+
+        <section id="s12">
+            <h2>12. Contact Details</h2>
+            <div class="callout">
+                <strong>Stratus Net (Pty) Ltd</strong><br>
+                30 Mitchell Street, Meyerton, Gauteng, 1961, South Africa<br>
+                Reg. 2016/418098/07<br><br>
+                <strong>Website:</strong> <a href="https://stratusnet.co.za">stratusnet.co.za</a><br>
+                <strong>Payment Portal:</strong> <a href="https://payment.stratusnet.co.za">payment.stratusnet.co.za</a><br>
+                <strong>Email:</strong> <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            </div>
+        </section>
+
+        <p class="doc-timestamp">Last updated: 29 June 2026</p>
+
+    </main>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-arc" aria-hidden="true"></div>
+            Stratus
+        </div>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="engineering.html">We Build It</a>
+            <a href="performance.html">We Grow It</a>
+            <a href="presence.html">Digital Presence</a>
+            <a href="infrastructure.html">Get a Quote</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
+            <a href="https://payment.stratusnet.co.za">Pay an Invoice</a>
+        </div>
+        <p>&copy; 2026 Stratus Net (Pty) Ltd &nbsp;|&nbsp; Reg. 2016/418098/07 &nbsp;|&nbsp; Gauteng, South Africa</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

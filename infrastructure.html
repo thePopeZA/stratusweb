@@ -1066,8 +1066,10 @@ let trackingActive = false;
 
 function schedulePopup(e, productId) {
     cancelPopup();
+    const startX = e.clientX;
+    const startY = e.clientY;
     popupTimer = setTimeout(() => {
-        showProductPopup(productId);
+        showProductPopup(productId, startX, startY);
     }, 500);
 }
 
@@ -1078,7 +1080,7 @@ function cancelPopup() {
     closeProductPopup();
 }
 
-function showProductPopup(productId) {
+function showProductPopup(productId, mx, my) {
     closeProductPopup();
 
     const p = productDataMap[productId];
@@ -1119,7 +1121,12 @@ function showProductPopup(productId) {
     activePopup = popup;
     trackingActive = true;
 
-    requestAnimationFrame(() => popup.classList.add('show'));
+    requestAnimationFrame(() => {
+        popup.classList.add('show');
+        if (mx !== undefined && my !== undefined) {
+            positionPopup(mx, my);
+        }
+    });
 }
 
 function positionPopup(mx, my) {

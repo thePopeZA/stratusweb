@@ -1066,11 +1066,7 @@ let trackingActive = false;
 
 function schedulePopup(e, productId) {
     cancelPopup();
-    const startX = e.clientX;
-    const startY = e.clientY;
-    popupTimer = setTimeout(() => {
-        showProductPopup(productId, startX, startY);
-    }, 500);
+    showProductPopup(productId, e.clientX, e.clientY);
 }
 
 function cancelPopup() {

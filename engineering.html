@@ -439,6 +439,33 @@
             .cta-inner h2 { font-size: 1.9rem; }
         }
     </style>
+<style id="stratus-nav">
+/* Stratus canonical nav — dropdown (desktop) + accordion drawer (mobile) */
+.nav-links{align-items:center}
+.nav-links>li{position:relative}
+.nav-services-toggle{background:none;border:0;font:inherit;color:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;padding:0}
+.nav-caret{font-size:.72em;transition:transform .2s ease}
+.nav-dropdown{position:absolute;top:100%;left:0;min-width:288px;list-style:none;margin:.7rem 0 0;padding:.5rem;background:var(--bg-white,#fff);border:1px solid rgba(10,28,53,.08);border-radius:12px;box-shadow:0 20px 44px rgba(10,28,53,.16);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:1001}
+.nav-services:hover .nav-dropdown,.nav-services:focus-within .nav-dropdown,.nav-services.open .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-services:hover .nav-caret,.nav-services.open .nav-caret{transform:rotate(180deg)}
+.nav-dropdown a{display:flex;flex-direction:column;gap:2px;padding:.7rem .85rem;border-radius:8px;text-decoration:none;color:var(--text-dark,#0a1c35)}
+.nav-dropdown a:hover{background:rgba(10,28,53,.05)}
+.dd-title{font-weight:700;font-size:.95rem}
+.dd-sub{font-size:.8rem;color:var(--text-muted,#5b6b7c)}
+.nav-dropdown a[aria-current] .dd-title{color:var(--accent-cyan,#00b4d8)}
+.nav-services.active>.nav-services-toggle{color:var(--accent-cyan,#00b4d8)}
+.nav-cta{background:var(--accent-cyan,#00b4d8);color:#fff!important;padding:.6rem 1.1rem;border-radius:8px;font-weight:700;text-decoration:none}
+.nav-cta:hover{filter:brightness(1.06)}
+@media(max-width:768px){
+  .nav-links{justify-content:flex-start!important;padding-top:5rem;gap:1.25rem!important;overflow-y:auto}
+  .nav-services{width:100%;text-align:center}
+  .nav-services-toggle{font-size:1.1rem;justify-content:center;width:100%}
+  .nav-dropdown{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;min-width:0;background:transparent;max-height:0;overflow:hidden;padding:0;margin:0;transition:max-height .25s ease}
+  .nav-services.open .nav-dropdown{max-height:420px;margin:.5rem 0}
+  .nav-dropdown a{align-items:center;text-align:center}
+  .nav-cta{display:inline-block;margin-top:.25rem}
+}
+</style>
 </head>
 <body>
 
@@ -453,10 +480,17 @@
                 <span class="hamburger"></span>
             </button>
             <ul class="nav-links">
-                <li><a href="/#services">What We Do</a></li>
+                <li class="nav-services active">
+                    <button type="button" class="nav-services-toggle" aria-expanded="false">Services<span class="nav-caret" aria-hidden="true">&#9662;</span></button>
+                    <ul class="nav-dropdown">
+                        <li><a href="engineering.html" aria-current="page"><span class="dd-title">We Build It</span><span class="dd-sub">Websites, Web Apps &amp; Custom Software</span></a></li>
+                        <li><a href="performance.html"><span class="dd-title">We Grow It</span><span class="dd-sub">SEO, Ads &amp; Digital Presence</span></a></li>
+                        <li><a href="infrastructure.html"><span class="dd-title">We Run It</span><span class="dd-sub">Hosting, Email &amp; Infrastructure</span></a></li>
+                    </ul>
+                </li>
                 <li><a href="/#about">Why Stratus</a></li>
-                <li><a href="infrastructure.html" style="color:var(--accent-cyan);">Get a Quote</a></li>
-                <li><a href="/#contact">Start a Project</a></li>
+                <li><a href="/#ai-callout">How We Work</a></li>
+                <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
             </ul>
         </nav>
     </div>
@@ -657,7 +691,7 @@
             <a href="engineering.html">We Build It</a>
             <a href="performance.html">We Grow It</a>
             <a href="presence.html">Digital Presence</a>
-            <a href="infrastructure.html">Get a Quote</a>
+            <a href="/#contact">Get a Quote</a>
             <a href="terms.html">Terms &amp; Conditions</a>
             <a href="privacy.html">Privacy Policy</a>
             <a href="mailto:info@stratusnet.co.za">info@stratusnet.co.za</a>
@@ -668,19 +702,34 @@
 </footer>
 
 <script src="js/script.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    if (toggle && navLinks) {
-        toggle.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('active');
-            toggle.classList.toggle('active', isOpen);
-            toggle.setAttribute('aria-expanded', isOpen);
-        });
-    }
-});
-</script>
 
+
+<script id="stratus-nav-js">
+(function(){
+  var toggle=document.querySelector('.mobile-menu-toggle');
+  var nav=document.querySelector('.nav-links');
+  function closeDrawer(){ if(nav){nav.classList.remove('active');} if(toggle){toggle.classList.remove('active');toggle.setAttribute('aria-expanded','false');} }
+  if(toggle&&nav){
+    toggle.addEventListener('click',function(){
+      var open=nav.classList.toggle('active');
+      toggle.classList.toggle('active',open);
+      toggle.setAttribute('aria-expanded',String(open));
+    });
+  }
+  var svc=document.querySelector('.nav-services');
+  var svcBtn=svc&&svc.querySelector('.nav-services-toggle');
+  if(svcBtn){
+    svcBtn.addEventListener('click',function(){
+      // Accordion only on mobile; desktop uses hover/focus.
+      if(window.matchMedia('(max-width:768px)').matches){
+        var open=svc.classList.toggle('open');
+        svcBtn.setAttribute('aria-expanded',String(open));
+      }
+    });
+  }
+  // A real navigation link closes the drawer (the Services button is not a link).
+  if(nav){ nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',closeDrawer); }); }
+})();
+</script>
 </body>
 </html>

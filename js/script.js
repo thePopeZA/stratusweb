@@ -57,27 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startSlider();
     }
 
-    // --- MOBILE MENU LOGIC ---
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const navItems = document.querySelectorAll('.nav-links a');
-
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            menuToggle.setAttribute('aria-expanded', menuToggle.classList.contains('active'));
-        });
-
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }  
-
     // --- FORM SUCCESS STATE HANDLER ---
     // 1. Check the URL for the success flag
     const urlParams = new URLSearchParams(window.location.search);

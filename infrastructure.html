@@ -1677,7 +1677,11 @@ async function submitSignature() {
         const data = await res.json();
 
         if (data.success) {
-            // Signature logged — now proceed to PayFast
+            // Signature logged — now proceed to PayFast. Read everything off
+            // pendingPayment BEFORE closeSignModal() nulls it: the old order read
+            // pendingPayment.summary *after* closing, so it threw a TypeError that
+            // the catch below masked as "Network error" — signing went nowhere.
+            const orderSummary = pendingPayment.summary;
             closeSignModal();
             const form = document.createElement('form');
             form.method = 'POST';
@@ -1685,7 +1689,7 @@ async function submitSignature() {
             const fields = {
                 bundle:        bundleItemsJson(currentBundle.monthly || []),
                 mode:          'recurring',
-                order_summary: pendingPayment.summary,
+                order_summary: orderSummary,
                 bundle_ref:    bundleRef,
                 client_name:   name,
                 client_email:  email,

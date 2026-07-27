@@ -862,7 +862,12 @@ const PRODUCTS_API = 'https://payment.stratusnet.co.za/api/products.php';
 const PRICING_API  = 'https://payment.stratusnet.co.za/api/pricing.php';
 const SIGN_API     = 'https://payment.stratusnet.co.za/sign.php';
 const CLAUDE_API   = 'https://payment.stratusnet.co.za/api/claude.php'; // PHP proxy — keeps API key server-side
-const CHECKOUT_URL = 'https://payment.stratusnet.co.za/checkout.php';
+// buy.php prices the bundle SERVER-SIDE from products.db — the browser sends only
+// product ids + qty, never an amount, so the total can't be tampered.
+const CHECKOUT_URL = 'https://payment.stratusnet.co.za/buy.php';
+function bundleItemsJson(items){
+    return JSON.stringify((items||[]).map(function(i){ return { id: i.id, qty: i.qty || 1 }; }));
+}
 
 // ── State ─────────────────────────────────────────────────────────────────
 let mode                = 'ai';
@@ -992,6 +997,8 @@ function renderDirectCatalogue() {
                 includes: p.includes || [],
                 excludes: p.excludes || [],
                 billing_note: p.billing_note || '',
+                unit:     price,          // effective unit price (used only to recover qty)
+                perUser:  hasQty,
             };
 
             html += `
@@ -1226,6 +1233,7 @@ function buildDirectBundle() {
 
         const item = {
             id,
+            qty,                    // real quantity, so buy.php prices it correctly server-side
             name: qty > 1 ? `${name} (×${qty})` : name,
             price: total,
             note: qty > 1 ? `${qty} users × R${price.toLocaleString('en-ZA')}` : (note || ''),
@@ -1451,6 +1459,17 @@ async function startConversation() {
 // BUNDLE RENDERING (shared by AI + Direct paths)
 // ════════════════════════════════════════════════════════════════════════════
 function renderBundle(bundle) {
+    // Ensure every item has a real qty so buy.php prices it correctly server-side.
+    // Direct mode already sets qty; AI bundles carry only a baked price, so recover
+    // qty for per-user products from price / unit-price.
+    ['once_off','monthly','deposit'].forEach(function(g){
+        (bundle[g]||[]).forEach(function(i){
+            if (i.qty && i.qty > 0) return;
+            var d = productDataMap[i.id];
+            i.qty = (d && d.perUser && d.unit > 0) ? Math.max(1, Math.round(i.price / d.unit)) : 1;
+        });
+    });
+    currentBundle = bundle;
     bundleSection.style.display = 'block';
     bundleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -1572,15 +1591,18 @@ function escJs(str) {
 // ONCE-OFF PAYMENT (no signing needed)
 // ════════════════════════════════════════════════════════════════════════════
 function proceedToPayment(mode, amount, summary) {
+    // Send the product ids + qty for this mode — buy.php sums the price server-side.
+    const items = mode === 'once_off'
+        ? [...(currentBundle.once_off||[]), ...(currentBundle.deposit||[])]
+        : (currentBundle.monthly||[]);
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = CHECKOUT_URL;
     const fields = {
-        total_amount: amount,
-        monthly_commitment: 0,
+        bundle:        bundleItemsJson(items),
+        mode:          mode,
         order_summary: summary,
-        billing_mode: mode,
-        bundle_ref: bundleRef,
+        bundle_ref:    bundleRef,
     };
     Object.entries(fields).forEach(([k,v]) => {
         const inp = document.createElement('input');
@@ -1661,13 +1683,12 @@ async function submitSignature() {
             form.method = 'POST';
             form.action = CHECKOUT_URL;
             const fields = {
-                total_amount:       pendingPayment.amount,
-                monthly_commitment: pendingPayment.amount,
-                order_summary:      pendingPayment.summary,
-                billing_mode:       'recurring',
-                bundle_ref:         bundleRef,
-                client_name:        name,
-                client_email:       email,
+                bundle:        bundleItemsJson(currentBundle.monthly || []),
+                mode:          'recurring',
+                order_summary: pendingPayment.summary,
+                bundle_ref:    bundleRef,
+                client_name:   name,
+                client_email:  email,
             };
             Object.entries(fields).forEach(([k,v]) => {
                 const inp = document.createElement('input');

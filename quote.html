@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>Get a Website Quote | Stratus</title>
 <meta name="description" content="Answer a few quick questions and get an instant estimate for your new website from Stratus.">
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -11,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:light;
   --navy:#0A1C35;
   --cyan:#00D2FF;
   --text-dark:#1A2B44;
@@ -101,8 +103,8 @@ textarea{resize:vertical;min-height:70px}
 .two-fld{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:520px){.two-fld{grid-template-columns:1fr}}
 .inline-toggle{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--text-dark);cursor:pointer;margin-bottom:12px;user-select:none}
-.inline-toggle .tick{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff;font-size:11px}
-.inline-toggle.on .tick{background:var(--cyan);border-color:var(--cyan)}
+.inline-toggle .tick{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent;font-size:11px}
+.inline-toggle.on .tick{background:var(--cyan);border-color:var(--cyan);color:#fff}
 
 /* ---- colour swatches ---- */
 .swatches{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
@@ -341,7 +343,7 @@ function optCard(o, selected, {round=false, showPrice=true}={}){
   const desc  = o.desc ? `<span class="d">${o.desc}</span>` : "";
   const note  = o.note ? `<span class="d note">${o.note}</span>` : "";
   return `<div class="opt ${round?'round':''} ${selected?'selected':''}" data-id="${o.id}">
-      <div class="row"><span class="tick">&#10003;</span><span class="t">${o.label} ${badge}</span>${price}</div>
+      <div class="row"><span class="tick">${selected?'&#10003;':''}</span><span class="t">${o.label} ${badge}</span>${price}</div>
       ${desc}${note}
     </div>`;
 }

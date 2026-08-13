@@ -79,6 +79,7 @@ h1,h2,h3,.wordmark,.eyebrow{font-family:'Montserrat',sans-serif;color:var(--navy
 .opt:hover{border-color:#B9E9F5}
 .opt .t{font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:8px}
 .opt .d{color:var(--text-light);font-size:.82rem}
+.opt .d.note{color:var(--cyan);font-weight:600}
 .opt .p{margin-left:auto;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--navy);font-size:.9rem;white-space:nowrap}
 .opt .row{display:flex;align-items:center;gap:8px}
 .opt.selected{border-color:var(--cyan);background:var(--cyan-wash);box-shadow:0 0 0 3px rgba(0,210,255,.12)}
@@ -273,12 +274,12 @@ const esc  = s => (s||"").replace(/[<>&]/g,c=>({ "<":"&lt;",">":"&gt;","&":"&amp
 /* ---- build the form from CONFIG ---- */
 function optCard(o, selected, {round=false, showPrice=true}={}){
   const badge = o.recommended ? `<span class="badge">Recommended</span>` : "";
-  const price = showPrice && o.price ? `<span class="p">+${rand(o.price)}${o.monthly?"/mo":""}</span>`
-              : (o.note ? `<span class="p" style="color:var(--cyan)">${o.note}</span>` : "");
+  const price = (showPrice && o.price) ? `<span class="p">+${rand(o.price)}${o.monthly?"/mo":""}</span>` : "";
   const desc  = o.desc ? `<span class="d">${o.desc}</span>` : "";
+  const note  = o.note ? `<span class="d note">${o.note}</span>` : "";
   return `<div class="opt ${round?'round':''} ${selected?'selected':''}" data-id="${o.id}">
       <div class="row"><span class="tick">&#10003;</span><span class="t">${o.label} ${badge}</span>${price}</div>
-      ${desc}
+      ${desc}${note}
     </div>`;
 }
 

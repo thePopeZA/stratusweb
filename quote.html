@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get a Website Quote | Stratus</title>
+<meta name="description" content="Answer a few quick questions and get an instant estimate for your new website from Stratus.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1C35;
+  --cyan:#00D2FF;
+  --text-dark:#1A2B44;
+  --text-light:#64748B;
+  --white:#FFFFFF;
+  --gray:#F8FAFC;
+  --line:#E2E8F1;          /* navy-biased neutral border */
+  --line-soft:#EDF1F7;
+  --cyan-wash:#E6FAFF;
+  --shadow:0 1px 2px rgba(10,28,53,.04),0 8px 24px rgba(10,28,53,.06);
+  --shadow-lg:0 12px 40px rgba(10,28,53,.14);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text-dark);
+  background:var(--gray);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.wordmark,.eyebrow{font-family:'Montserrat',sans-serif;color:var(--navy)}
+
+/* ---- top bar ---- */
+.topbar{
+  background:var(--navy);
+  color:var(--white);
+  padding:14px 24px;
+}
+.topbar .inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.logo-arc{width:20px;height:20px;flex-shrink:0}
+.wordmark{color:var(--white);font-weight:700;font-size:1.25rem;letter-spacing:-.5px}
+.topbar .tag{margin-left:auto;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-family:'Montserrat',sans-serif;font-weight:600}
+
+/* ---- hero ---- */
+.hero{background:var(--navy);color:var(--white);padding:34px 24px 90px;text-align:center}
+.hero .eyebrow{color:var(--cyan);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:14px}
+.hero h1{color:var(--white);font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.12;text-wrap:balance;font-weight:700}
+.hero p{color:#AEBED4;max-width:520px;margin:14px auto 0;font-size:1.02rem}
+
+/* ---- layout ---- */
+.wrap{max-width:1080px;margin:-60px auto 0;padding:0 20px 60px;display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
+@media(max-width:880px){.wrap{grid-template-columns:1fr;margin-top:-60px}}
+
+/* ---- question cards ---- */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+.card .q{display:flex;gap:12px;align-items:baseline;margin-bottom:4px}
+.num{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--cyan);font-size:.9rem;min-width:22px}
+.card h2{font-size:1.08rem;font-weight:700}
+.hint{color:var(--text-light);font-size:.86rem;margin:2px 0 16px 34px}
+@media(max-width:520px){.hint{margin-left:0}}
+.body{margin-left:34px}
+@media(max-width:520px){.body{margin-left:0}}
+
+/* ---- option chips / cards ---- */
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.pills{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+@media(max-width:520px){.opts.two{grid-template-columns:1fr}}
+.opt{
+  position:relative;display:flex;flex-direction:column;gap:2px;
+  border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;cursor:pointer;
+  background:var(--white);transition:border-color .15s,background .15s,box-shadow .15s;
+}
+.opt:hover{border-color:#B9E9F5}
+.opt .t{font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.opt .d{color:var(--text-light);font-size:.82rem}
+.opt .p{margin-left:auto;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--navy);font-size:.9rem;white-space:nowrap}
+.opt .row{display:flex;align-items:center;gap:8px}
+.opt.selected{border-color:var(--cyan);background:var(--cyan-wash);box-shadow:0 0 0 3px rgba(0,210,255,.12)}
+.opt .tick{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);flex-shrink:0;display:grid;place-items:center;color:var(--white);font-size:11px;transition:all .15s}
+.opt.round .tick{border-radius:50%}
+.opt.selected .tick{background:var(--cyan);border-color:var(--cyan)}
+.badge{background:var(--cyan);color:var(--navy);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-family:'Montserrat',sans-serif}
+
+/* ---- text inputs ---- */
+label.fld{display:block;margin-bottom:12px}
+label.fld:last-child{margin-bottom:0}
+.fld span{display:block;font-size:.82rem;font-weight:600;color:var(--text-dark);margin-bottom:5px}
+input[type=text],input[type=email],input[type=tel],textarea{
+  width:100%;font-family:'Inter',sans-serif;font-size:.95rem;color:var(--text-dark);
+  border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--gray);transition:border-color .15s,background .15s;
+}
+input:focus,textarea:focus{outline:none;border-color:var(--cyan);background:var(--white);box-shadow:0 0 0 3px rgba(0,210,255,.12)}
+textarea{resize:vertical;min-height:70px}
+.two-fld{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two-fld{grid-template-columns:1fr}}
+.inline-toggle{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--text-dark);cursor:pointer;margin-bottom:12px;user-select:none}
+.inline-toggle .tick{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff;font-size:11px}
+.inline-toggle.on .tick{background:var(--cyan);border-color:var(--cyan)}
+
+/* ---- estimate panel ---- */
+.aside{position:sticky;top:20px}
+@media(max-width:880px){.aside{position:static}}
+.estimate{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-lg)}
+.estimate .lbl{color:var(--cyan);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;font-family:'Montserrat',sans-serif}
+.big{font-family:'Montserrat',sans-serif;font-weight:700;font-size:2.5rem;line-height:1;margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.big .cur{font-size:1.3rem;color:var(--cyan);vertical-align:top;margin-right:2px}
+.sub{color:#AEBED4;font-size:.85rem}
+.monthly-line{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);display:flex;align-items:baseline;justify-content:space-between}
+.monthly-line b{font-family:'Montserrat',sans-serif;font-size:1.35rem;color:var(--white);font-variant-numeric:tabular-nums}
+.monthly-line small{color:#AEBED4;font-size:.8rem}
+.breakdown{margin-top:16px;font-size:.82rem;color:#CDD8E8;max-height:none}
+.breakdown .li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px dashed rgba(255,255,255,.1)}
+.breakdown .li:last-child{border-bottom:none}
+.breakdown .li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff}
+.deposit{margin-top:14px;background:rgba(0,210,255,.12);border:1px solid rgba(0,210,255,.3);border-radius:10px;padding:10px 12px;font-size:.82rem;color:#EAF9FF}
+.deposit b{color:var(--cyan)}
+.cta{display:block;width:100%;margin-top:16px;background:var(--cyan);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;border:none;border-radius:11px;padding:15px;cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:center}
+.cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,210,255,.35)}
+.cta:disabled{background:#41586F;color:#8DA2B8;cursor:not-allowed;transform:none;box-shadow:none}
+.cta-note{text-align:center;color:#8DA2B8;font-size:.75rem;margin-top:9px}
+.disclaimer{color:var(--text-light);font-size:.76rem;text-align:center;margin-top:18px;line-height:1.5}
+
+/* ---- thank-you ---- */
+.done{display:none;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:34px 26px;text-align:center;box-shadow:var(--shadow)}
+.done.show{display:block}
+.done .ok{width:56px;height:56px;border-radius:50%;background:var(--cyan-wash);color:var(--cyan);display:grid;place-items:center;margin:0 auto 14px;font-size:26px}
+.done h2{font-size:1.3rem;margin-bottom:8px}
+.done p{color:var(--text-light);max-width:400px;margin:0 auto}
+
+footer{text-align:center;color:var(--text-light);font-size:.8rem;padding:26px 20px 40px}
+footer a{color:var(--navy);text-decoration:none;font-weight:600}
+.err{color:#D64545;font-size:.8rem;margin-top:8px;display:none}
+.err.show{display:block}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="inner">
+    <svg class="logo-arc" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21 A18 18 0 0 1 21 3" stroke="#00D2FF" stroke-width="4" stroke-linecap="round"/></svg>
+    <span class="wordmark">Stratus</span>
+    <span class="tag">Website Quote</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">Free · No obligation · 60 seconds</div>
+  <h1>Let&rsquo;s price your new website</h1>
+  <p>Answer a few quick questions and watch your estimate build in real time. Happy with it? Send it straight to us on WhatsApp.</p>
+</section>
+
+<div class="wrap">
+  <!-- LEFT: questions -->
+  <form id="form" novalidate>
+    <div id="questions"></div>
+    <div class="err" id="err">Please add your name and a WhatsApp number or email so we can send your quote.</div>
+  </form>
+
+  <!-- RIGHT: live estimate -->
+  <aside class="aside">
+    <div class="estimate" id="estimate">
+      <div class="lbl">Your estimate</div>
+      <div class="big"><span id="onceoff">—</span></div>
+      <div class="sub">estimated once-off build</div>
+      <div class="monthly-line" id="monthlyLine" style="display:none">
+        <small>Then per month</small>
+        <b id="monthly"></b>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
+      <div class="deposit" id="depositBox" style="display:none">Start your build with a <b><span id="deposit"></span></b> deposit.</div>
+      <button type="button" class="cta" id="cta">Get my quote on WhatsApp</button>
+      <div class="cta-note">Opens WhatsApp with your brief ready to send</div>
+      <div class="disclaimer">This is a guide estimate. We&rsquo;ll confirm your final quote before any work starts.</div>
+    </div>
+  </aside>
+</div>
+
+<div class="wrap" style="margin-top:0;grid-template-columns:1fr">
+  <div class="done" id="done">
+    <div class="ok">&#10003;</div>
+    <h2>Nice one &mdash; your brief is ready</h2>
+    <p>WhatsApp should have opened with everything filled in. Just hit send and we&rsquo;ll be in touch with your final quote. If it didn&rsquo;t open, scroll up and tap the button again.</p>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="/">Stratus</a> &middot; stratusnet.co.za
+</footer>
+
+<script>
+/* =============================================================================
+   STRATUS — WEBSITE QUOTE TOOL  ·  PRICING & QUESTIONS  (edit this block only)
+   -----------------------------------------------------------------------------
+   • Every price is in Rand. Change any number, save the file, and push.
+   • "monthly:true"  = charged per month.   Leave it off = once-off.
+   • "recommended:true" pre-ticks the item and shows a RECOMMENDED badge.
+   • Add or remove an item just by editing the lists below — the page rebuilds
+     itself. Nothing else needs changing.
+   ========================================================================== */
+const CONFIG = {
+
+  // Where the finished quote gets sent. Your Stratus WhatsApp, international
+  // format, no "+" or spaces (27 then the number without the leading 0).
+  whatsapp: "27827962629",
+  email:    "info@stratusnet.co.za",   // fallback if they'd rather email
+
+  depositPercent: 50,   // shown as "start with a R___ deposit". Set 0 to hide.
+
+  // 1) What kind of website  (pick one — sets the base price)
+  websiteTypes: [
+    { id:"onepage",  label:"One-page site",  desc:"A single scrolling page — a smart starter",     price:1500 },
+    { id:"standard", label:"Standard site",  desc:"Around 3–5 pages (home, about, services, contact)", price:3500 },
+    { id:"larger",   label:"Larger site",    desc:"6+ pages or more detailed content",             price:6500 },
+    { id:"shop",     label:"Online shop",    desc:"Sell products with a cart & checkout",           price:9500 },
+  ],
+
+  // 2) Domain & hosting  (pick one)
+  domainOptions: [
+    { id:"have_both",   label:"Yes — I have both",        price:0 },
+    { id:"domain_only", label:"I have a domain only",     price:0 },
+    { id:"need",        label:"No — sort it out for me",  price:0, note:"Covered by your monthly plan" },
+  ],
+
+  // 3) Logo  (pick one)
+  logoOptions: [
+    { id:"have", label:"Yes, I have a logo",       price:0 },
+    { id:"need", label:"No — design one for me",   price:850 },
+  ],
+
+  // 4) Add-ons / specific requirements  (tick any — once-off)
+  addons: [
+    { id:"forms",     label:"Contact & enquiry forms",       price:450 },
+    { id:"booking",   label:"Online booking / appointments", price:1800 },
+    { id:"panel",     label:"Client login / control panel",  price:2500 },
+    { id:"quoting",   label:"Online quoting tool",           price:2200 },
+    { id:"payments",  label:"Take payments online",          price:1600 },
+    { id:"blog",      label:"Blog / news section",           price:900 },
+    { id:"gallery",   label:"Photo gallery / portfolio",     price:700 },
+    { id:"multilang", label:"More than one language",        price:1500 },
+  ],
+
+  // 5) After-build services  (tick any)
+  services: [
+    { id:"hosting", label:"Managed hosting & maintenance", desc:"We keep it online, updated & backed up", price:449, monthly:true, recommended:true },
+    { id:"email",   label:"Business email setup",          desc:"you@yourbusiness.co.za",                 price:350, monthly:false },
+    { id:"seo",     label:"SEO / Google ranking",          desc:"Help customers find you on Google",      price:750, monthly:true },
+    { id:"content", label:"Monthly content updates",       desc:"We make your changes each month",        price:500, monthly:true },
+    { id:"gbp",     label:"Google Business profile setup",  desc:"Map pin, hours, photos",                 price:400, monthly:false },
+  ],
+};
+/* ============================ END OF PRICING ============================== */
+
+
+/* ---- state ---- */
+const state = {
+  type:null, domain:null, logo:null,
+  addons:new Set(), services:new Set(),
+  useLogoColours:false, colours:"", industry:"", refs:"", other:"",
+  name:"", business:"", phone:"", clientEmail:""
+};
+// pre-tick recommended services
+CONFIG.services.forEach(s=>{ if(s.recommended) state.services.add(s.id); });
+
+const rand = n => "R" + Number(n).toLocaleString("en-ZA");
+const esc  = s => (s||"").replace(/[<>&]/g,c=>({ "<":"&lt;",">":"&gt;","&":"&amp;" }[c]));
+
+/* ---- build the form from CONFIG ---- */
+function optCard(o, selected, {round=false, showPrice=true}={}){
+  const badge = o.recommended ? `<span class="badge">Recommended</span>` : "";
+  const price = showPrice && o.price ? `<span class="p">+${rand(o.price)}${o.monthly?"/mo":""}</span>`
+              : (o.note ? `<span class="p" style="color:var(--cyan)">${o.note}</span>` : "");
+  const desc  = o.desc ? `<span class="d">${o.desc}</span>` : "";
+  return `<div class="opt ${round?'round':''} ${selected?'selected':''}" data-id="${o.id}">
+      <div class="row"><span class="tick">&#10003;</span><span class="t">${o.label} ${badge}</span>${price}</div>
+      ${desc}
+    </div>`;
+}
+
+function render(){
+  const q = document.getElementById("questions");
+  q.innerHTML = `
+    ${section(1,"What kind of website do you need?","Not sure? Pick the closest — we&rsquo;ll refine it together.",
+      `<div class="opts two" data-group="type">${CONFIG.websiteTypes.map(o=>optCard(o,state.type===o.id)).join("")}</div>`)}
+
+    ${section(2,"Do you have a domain &amp; hosting?","Your web address (e.g. yourbiz.co.za) and where the site lives.",
+      `<div class="opts pills" data-group="domain">${CONFIG.domainOptions.map(o=>optCard(o,state.domain===o.id,{showPrice:false})).join("")}</div>`)}
+
+    ${section(3,"Do you have a logo?","",
+      `<div class="opts two" data-group="logo">${CONFIG.logoOptions.map(o=>optCard(o,state.logo===o.id)).join("")}</div>`)}
+
+    ${section(4,"Brand colours","Any colours you love? Or we&rsquo;ll pull them straight from your logo.",
+      `<label class="inline-toggle ${state.useLogoColours?'on':''}" id="colToggle"><span class="tick">&#10003;</span> Use the colours from my logo</label>
+       <label class="fld" id="colField" style="${state.useLogoColours?'display:none':''}"><span>Colours you&rsquo;d like</span><input type="text" id="colours" placeholder="e.g. navy blue &amp; a warm orange" value="${esc(state.colours)}"></label>`)}
+
+    ${section(5,"What do you do?","Your industry / trade — so the site speaks your customers&rsquo; language.",
+      `<label class="fld"><input type="text" id="industry" placeholder="e.g. Plumber, hair salon, electrician, guest house…" value="${esc(state.industry)}"></label>`)}
+
+    ${section(6,"Websites you like","Paste a few links of other sites that do what you do (or that you just like the look of).",
+      `<label class="fld"><textarea id="refs" placeholder="https://…&#10;https://…">${esc(state.refs)}</textarea></label>`)}
+
+    ${section(7,"Add-ons &amp; specific requirements","Tick anything you&rsquo;d like. Skip what you don&rsquo;t need.",
+      `<div class="opts" data-group="addons">${CONFIG.addons.map(o=>optCard(o,state.addons.has(o.id),{round:true})).join("")}</div>`)}
+
+    ${section(8,"After-build services","Keeping your site healthy and growing once it&rsquo;s live.",
+      `<div class="opts" data-group="services">${CONFIG.services.map(o=>optCard(o,state.services.has(o.id),{round:true})).join("")}</div>`)}
+
+    ${section(9,"Anything else?","Special requests, deadlines, ideas — tell us here.",
+      `<label class="fld"><textarea id="other" placeholder="Anything on your mind…">${esc(state.other)}</textarea></label>`)}
+
+    ${section("&#9993;","Where should we send your quote?","",
+      `<div class="two-fld">
+         <label class="fld"><span>Your name *</span><input type="text" id="name" placeholder="First name" value="${esc(state.name)}"></label>
+         <label class="fld"><span>Business name</span><input type="text" id="business" placeholder="Your business" value="${esc(state.business)}"></label>
+       </div>
+       <div class="two-fld">
+         <label class="fld"><span>WhatsApp number *</span><input type="tel" id="phone" placeholder="082 123 4567" value="${esc(state.phone)}"></label>
+         <label class="fld"><span>Email</span><input type="email" id="clientEmail" placeholder="you@email.com" value="${esc(state.clientEmail)}"></label>
+       </div>`)}
+  `;
+  wire();
+  calc();
+}
+
+function section(num,title,hint,inner){
+  return `<div class="card">
+    <div class="q"><span class="num">${num}</span><h2>${title}</h2></div>
+    ${hint?`<p class="hint">${hint}</p>`:""}
+    <div class="body">${inner}</div>
+  </div>`;
+}
+
+/* ---- wire up interactions ---- */
+function wire(){
+  document.querySelectorAll('[data-group] .opt').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const group = el.closest('[data-group]').dataset.group;
+      const id = el.dataset.id;
+      if(group==='type')   state.type = id;
+      if(group==='domain') state.domain = id;
+      if(group==='logo')   state.logo = id;
+      if(group==='addons'){ state.addons.has(id)?state.addons.delete(id):state.addons.add(id); }
+      if(group==='services'){ state.services.has(id)?state.services.delete(id):state.services.add(id); }
+      render();
+    });
+  });
+  const ct = document.getElementById('colToggle');
+  if(ct) ct.addEventListener('click',()=>{ state.useLogoColours=!state.useLogoColours; render(); });
+
+  bindText('colours','colours'); bindText('industry','industry'); bindText('refs','refs');
+  bindText('other','other'); bindText('name','name'); bindText('business','business');
+  bindText('phone','phone'); bindText('clientEmail','clientEmail');
+}
+function bindText(elId,key){
+  const el=document.getElementById(elId);
+  if(el) el.addEventListener('input',e=>{ state[key]=e.target.value; if(key==='name'||key==='phone'||key==='clientEmail') validateLight(); });
+}
+
+/* ---- pricing ---- */
+function lineItems(){
+  const items=[];
+  const t = CONFIG.websiteTypes.find(x=>x.id===state.type);
+  if(t) items.push({label:t.label, price:t.price, monthly:false});
+  const lg = CONFIG.logoOptions.find(x=>x.id===state.logo);
+  if(lg && lg.price) items.push({label:"Logo design", price:lg.price, monthly:false});
+  CONFIG.addons.forEach(a=>{ if(state.addons.has(a.id)) items.push({label:a.label, price:a.price, monthly:false}); });
+  CONFIG.services.forEach(s=>{ if(state.services.has(s.id)) items.push({label:s.label, price:s.price, monthly:!!s.monthly}); });
+  return items;
+}
+function calc(){
+  const items=lineItems();
+  const once = items.filter(i=>!i.monthly).reduce((s,i)=>s+i.price,0);
+  const month= items.filter(i=>i.monthly).reduce((s,i)=>s+i.price,0);
+
+  document.getElementById('onceoff').innerHTML = once? `<span class="cur">R</span>${once.toLocaleString("en-ZA")}` : "—";
+  const ml=document.getElementById('monthlyLine');
+  if(month){ ml.style.display='flex'; document.getElementById('monthly').textContent = rand(month)+"/mo"; }
+  else ml.style.display='none';
+
+  const bd=document.getElementById('breakdown');
+  bd.innerHTML = items.length ? items.map(i=>`<div class="li"><span>${i.label}</span><span>${rand(i.price)}${i.monthly?"/mo":""}</span></div>`).join("")
+    : `<div class="li" style="border:none;color:#8DA2B8">Start choosing above to see your price build up…</div>`;
+
+  const dep=document.getElementById('depositBox');
+  if(CONFIG.depositPercent>0 && once>0){
+    dep.style.display='block';
+    document.getElementById('deposit').textContent = rand(Math.round(once*CONFIG.depositPercent/100));
+  } else dep.style.display='none';
+}
+
+/* ---- validation ---- */
+function hasContact(){ return state.name.trim() && (state.phone.trim() || state.clientEmail.trim()); }
+function validateLight(){ if(hasContact()) document.getElementById('err').classList.remove('show'); }
+
+/* ---- build WhatsApp message & submit ---- */
+function summary(){
+  const t  = CONFIG.websiteTypes.find(x=>x.id===state.type);
+  const dm = CONFIG.domainOptions.find(x=>x.id===state.domain);
+  const lg = CONFIG.logoOptions.find(x=>x.id===state.logo);
+  const items=lineItems();
+  const once = items.filter(i=>!i.monthly).reduce((s,i)=>s+i.price,0);
+  const month= items.filter(i=>i.monthly).reduce((s,i)=>s+i.price,0);
+  const colours = state.useLogoColours ? "Use my logo's colours" : (state.colours||"—");
+  const L=[];
+  L.push("*NEW WEBSITE QUOTE — Stratus*"); L.push("");
+  L.push("*From:* "+(state.name||"—")+(state.business?(" ("+state.business+")"):""));
+  L.push("*WhatsApp:* "+(state.phone||"—"));
+  if(state.clientEmail) L.push("*Email:* "+state.clientEmail);
+  L.push("");
+  L.push("*Website:* "+(t?t.label:"—"));
+  L.push("*Domain/hosting:* "+(dm?dm.label:"—"));
+  L.push("*Logo:* "+(lg?lg.label:"—"));
+  L.push("*Colours:* "+colours);
+  L.push("*Industry:* "+(state.industry||"—"));
+  if(state.refs)  L.push("*Sites they like:* "+state.refs.replace(/\n/g,", "));
+  const ad=CONFIG.addons.filter(a=>state.addons.has(a.id)).map(a=>a.label);
+  L.push("*Add-ons:* "+(ad.length?ad.join(", "):"none"));
+  const sv=CONFIG.services.filter(s=>state.services.has(s.id)).map(s=>s.label+(s.monthly?" (monthly)":""));
+  L.push("*After-build:* "+(sv.length?sv.join(", "):"none"));
+  if(state.other) L.push("*Notes:* "+state.other);
+  L.push("");
+  L.push("*Estimated once-off:* "+rand(once));
+  if(month) L.push("*Estimated monthly:* "+rand(month)+"/mo");
+  return L.join("\n");
+}
+
+document.getElementById('cta').addEventListener('click',()=>{
+  if(!hasContact()){
+    document.getElementById('err').classList.add('show');
+    document.getElementById('err').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  const msg = encodeURIComponent(summary());
+  window.open("https://wa.me/"+CONFIG.whatsapp+"?text="+msg, "_blank");
+  document.getElementById('done').classList.add('show');
+  document.getElementById('done').scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+render();
+</script>
+</body>
+</html>

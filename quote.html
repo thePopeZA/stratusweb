@@ -256,9 +256,10 @@ const CONFIG = {
   geoEndpoint: "https://get.geojs.io/v1/ip/country.json",   // free, returns {"country":"ZA"}
   currencies: {
     ZAR: { symbol:"R",  rate:1,     round:1,  locale:"en-ZA" },   // base: keep rate 1, round 1
-    USD: { symbol:"$",  rate:0.055, round:5,  locale:"en-US" },
-    EUR: { symbol:"€",  rate:0.051, round:5,  locale:"en-IE" },
-    AUD: { symbol:"A$", rate:0.084, round:5,  locale:"en-AU" },
+    // Rates = live mid + ~6% cushion for the client's card forex fee (updated 13 Aug 2026).
+    USD: { symbol:"$",  rate:0.066, round:5,  locale:"en-US" },
+    EUR: { symbol:"€",  rate:0.057, round:5,  locale:"en-IE" },
+    AUD: { symbol:"A$", rate:0.093, round:5,  locale:"en-AU" },
   },
   // Country codes that see EUR. Anything not here and not ZA/AU falls to USD.
   europe: "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE GB CH NO IS LI AD MC SM VA UA RS BA ME MK AL MD BY GI FO GG JE IM XK",

@@ -53,8 +53,8 @@ h1,h2,h3,.wordmark,.eyebrow{font-family:'Montserrat',sans-serif;color:var(--navy
 .hero p{color:#AEBED4;max-width:520px;margin:14px auto 0;font-size:1.02rem}
 
 /* ---- layout ---- */
-.wrap{max-width:1080px;margin:-60px auto 0;padding:0 20px 60px;display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
-@media(max-width:880px){.wrap{grid-template-columns:1fr;margin-top:-60px}}
+.wrap{max-width:1080px;margin:-60px auto 0;padding:0 20px 60px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+@media(max-width:880px){.wrap{grid-template-columns:minmax(0,1fr);margin-top:-60px}}
 
 /* ---- question cards ---- */
 .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
@@ -67,17 +67,17 @@ h1,h2,h3,.wordmark,.eyebrow{font-family:'Montserrat',sans-serif;color:var(--navy
 @media(max-width:520px){.body{margin-left:0}}
 
 /* ---- option chips / cards ---- */
-.opts{display:grid;gap:10px}
-.opts.two{grid-template-columns:1fr 1fr}
+.opts{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+.opts.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opts.pills{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-@media(max-width:520px){.opts.two{grid-template-columns:1fr}}
+@media(max-width:520px){.opts.two{grid-template-columns:minmax(0,1fr)}}
 .opt{
-  position:relative;display:flex;flex-direction:column;gap:2px;
+  position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;
   border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;cursor:pointer;
   background:var(--white);transition:border-color .15s,background .15s,box-shadow .15s;
 }
 .opt:hover{border-color:#B9E9F5}
-.opt .t{font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.opt .t{font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
 .opt .d{color:var(--text-light);font-size:.82rem}
 .opt .d.note{color:var(--cyan);font-weight:600}
 .opt .p{margin-left:auto;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--navy);font-size:.9rem;white-space:nowrap}

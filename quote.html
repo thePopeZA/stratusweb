@@ -236,6 +236,7 @@ const CONFIG = {
   // format, no "+" or spaces (27 then the number without the leading 0).
   whatsapp: "27827962629",
   email:    "info@stratusnet.co.za",   // fallback if they'd rather email
+  uploadEndpoint: "/upload.php",       // where an uploaded logo is stored (same site)
 
   depositPercent: 50,   // shown as "start with a R___ deposit". Set 0 to hide.
 
@@ -290,7 +291,7 @@ const state = {
   type:null, domain:null, logo:null,
   addons:new Set(), services:new Set(),
   colours:[], useLogoColours:false, coloursLater:false,
-  logoFileName:"", logoPreview:"",
+  logoFileName:"", logoPreview:"", logoFile:null,
   industry:"", refs:"", other:"",
   name:"", business:"", phone:"", clientEmail:""
 };
@@ -316,15 +317,15 @@ function uploadInner(){
   if(state.logoPreview){
     return `<div class="logo-preview">
         <img src="${state.logoPreview}" alt="Your logo">
-        <div><b>${esc(state.logoFileName)}</b><span>Looks good &mdash; you&rsquo;ll attach it in the WhatsApp chat</span></div>
+        <div><b>${esc(state.logoFileName)}</b><span>Looks good &mdash; it&rsquo;ll be sent with your quote</span></div>
         <button type="button" class="remove-logo" id="removeLogo">Change</button>
       </div>`;
   }
   return `<label class="dropzone" for="logoFile">
       <input type="file" id="logoFile" accept="image/*" hidden>
       <span class="dz-ic">&#128247;</span>
-      <span class="dz-t">Tap to choose your logo</span>
-      <span class="dz-d">PNG, JPG or SVG &middot; you&rsquo;ll attach it in the chat when WhatsApp opens</span>
+      <span class="dz-t">Tap to upload your logo</span>
+      <span class="dz-d">PNG, JPG or SVG &middot; sent straight to us with your quote</span>
     </label>`;
 }
 
@@ -418,13 +419,14 @@ function wire(){
   const lf=document.getElementById('logoFile');
   if(lf) lf.addEventListener('change',e=>{
     const f=e.target.files[0]; if(!f) return;
-    if(f.size>6*1024*1024){ alert('That image is a bit large (max 6MB). Try a smaller one, or send it on WhatsApp.'); return; }
+    if(f.size>8*1024*1024){ alert('That image is a bit large (max 8MB). Try a smaller one, or send it on WhatsApp.'); return; }
+    state.logoFile=f;
     const r=new FileReader();
     r.onload=ev=>{ state.logoPreview=ev.target.result; state.logoFileName=f.name; render(); };
     r.readAsDataURL(f);
   });
   const rl=document.getElementById('removeLogo');
-  if(rl) rl.addEventListener('click',()=>{ state.logoPreview=""; state.logoFileName=""; render(); });
+  if(rl) rl.addEventListener('click',()=>{ state.logoPreview=""; state.logoFileName=""; state.logoFile=null; render(); });
 
   bindText('industry','industry'); bindText('refs','refs');
   bindText('other','other'); bindText('name','name'); bindText('business','business');
@@ -472,7 +474,7 @@ function hasContact(){ return state.name.trim() && (state.phone.trim() || state.
 function validateLight(){ if(hasContact()) document.getElementById('err').classList.remove('show'); }
 
 /* ---- build WhatsApp message & submit ---- */
-function summary(){
+function summary(logoUrl){
   const t  = CONFIG.websiteTypes.find(x=>x.id===state.type);
   const dm = CONFIG.domainOptions.find(x=>x.id===state.domain);
   const lg = CONFIG.logoOptions.find(x=>x.id===state.logo);
@@ -492,7 +494,10 @@ function summary(){
   L.push("*Website:* "+(t?t.label:"—"));
   L.push("*Domain/hosting:* "+(dm?dm.label:"—"));
   let logoLine = lg?lg.label:"—";
-  if(state.logo==="have" && state.logoFileName) logoLine += " — attaching “"+state.logoFileName+"” in this chat";
+  if(state.logo==="have"){
+    if(logoUrl)                logoLine += " — "+logoUrl;
+    else if(state.logoFileName) logoLine += " — attaching “"+state.logoFileName+"” in this chat";
+  }
   L.push("*Logo:* "+logoLine);
   L.push("*Colours:* "+colours);
   L.push("*Industry:* "+(state.industry||"—"));
@@ -508,17 +513,32 @@ function summary(){
   return L.join("\n");
 }
 
-document.getElementById('cta').addEventListener('click',()=>{
+async function submitQuote(){
   if(!hasContact()){
     document.getElementById('err').classList.add('show');
     document.getElementById('err').scrollIntoView({behavior:'smooth',block:'center'});
     return;
   }
-  const msg = encodeURIComponent(summary());
-  window.open("https://wa.me/"+CONFIG.whatsapp+"?text="+msg, "_blank");
+  const btn=document.getElementById('cta');
+  let logoUrl="";
+  // If they attached a logo, upload it first so it rides in the brief as a link.
+  if(state.logo==="have" && state.logoFile){
+    const label=btn.textContent; btn.disabled=true; btn.textContent="Uploading your logo…";
+    try{
+      const fd=new FormData(); fd.append("logo", state.logoFile);
+      const res=await fetch(CONFIG.uploadEndpoint,{method:"POST",body:fd});
+      const j=await res.json().catch(()=>({}));
+      if(res.ok && j.url) logoUrl=j.url;   // failure? fall back to attach-in-chat, never block the quote
+    }catch(e){}
+    btn.disabled=false; btn.textContent=label;
+  }
+  const wa="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(summary(logoUrl));
+  const win=window.open(wa,"_blank");
+  if(!win) window.location.href=wa;   // popup blocked (common on mobile) → same tab
   document.getElementById('done').classList.add('show');
   document.getElementById('done').scrollIntoView({behavior:'smooth',block:'center'});
-});
+}
+document.getElementById('cta').addEventListener('click',submitQuote);
 
 render();
 </script>

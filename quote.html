@@ -134,7 +134,9 @@ input[type=color].sw-input::-webkit-color-swatch-wrapper{padding:0}
 .aside{position:sticky;top:20px}
 @media(max-width:880px){.aside{position:static}}
 .estimate{background:var(--navy);color:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-lg)}
-.estimate .lbl{color:var(--cyan);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;font-family:'Montserrat',sans-serif}
+.estimate .lbl{color:var(--cyan);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;font-family:'Montserrat',sans-serif;display:flex;align-items:center;justify-content:space-between}
+.cur-sel{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:7px;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:0;padding:3px 6px;cursor:pointer}
+.cur-sel option{color:#0A1C35}
 .big{font-family:'Montserrat',sans-serif;font-weight:700;font-size:2.5rem;line-height:1;margin:8px 0 2px;font-variant-numeric:tabular-nums}
 .big .cur{font-size:1.3rem;color:var(--cyan);vertical-align:top;margin-right:2px}
 .sub{color:#AEBED4;font-size:.85rem}
@@ -192,7 +194,7 @@ footer a{color:var(--navy);text-decoration:none;font-weight:600}
   <!-- RIGHT: live estimate -->
   <aside class="aside">
     <div class="estimate" id="estimate">
-      <div class="lbl">Your estimate</div>
+      <div class="lbl">Your estimate <select id="curSel" class="cur-sel" aria-label="Currency"></select></div>
       <div class="big"><span id="onceoff">—</span></div>
       <div class="sub">estimated once-off build</div>
       <div class="monthly-line" id="monthlyLine" style="display:none">
@@ -239,6 +241,24 @@ const CONFIG = {
   uploadEndpoint: "/upload.php",       // where an uploaded logo is stored (same site)
 
   depositPercent: 50,   // shown as "start with a R___ deposit". Set 0 to hide.
+
+  // ── CURRENCY ───────────────────────────────────────────────────────────────
+  // Prices above are in RAND. Overseas visitors see them in their own currency,
+  // auto-picked from their IP:  South Africa → ZAR · Australia → AUD ·
+  // Europe → EUR · everyone else (incl. USA) → USD.
+  // Each currency converts the Rand price with ONE number, `rate`, then rounds
+  // to `round`. Tune `rate` until the numbers look right — set it ABOVE the real
+  // exchange rate to charge a premium overseas. Visitors can also switch by hand.
+  defaultCurrency: "ZAR",
+  geoEndpoint: "https://get.geojs.io/v1/ip/country.json",   // free, returns {"country":"ZA"}
+  currencies: {
+    ZAR: { symbol:"R",  rate:1,     round:1,  locale:"en-ZA" },   // base: keep rate 1, round 1
+    USD: { symbol:"$",  rate:0.055, round:5,  locale:"en-US" },
+    EUR: { symbol:"€",  rate:0.051, round:5,  locale:"en-IE" },
+    AUD: { symbol:"A$", rate:0.084, round:5,  locale:"en-AU" },
+  },
+  // Country codes that see EUR. Anything not here and not ZA/AU falls to USD.
+  europe: "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE GB CH NO IS LI AD MC SM VA UA RS BA ME MK AL MD BY GI FO GG JE IM XK",
 
   // 1) What kind of website  (pick one — sets the base price)
   websiteTypes: [
@@ -290,6 +310,7 @@ const CONFIG = {
 const state = {
   type:null, domain:null, logo:null,
   addons:new Set(), services:new Set(),
+  currency:CONFIG.defaultCurrency,
   colours:[], useLogoColours:false, coloursLater:false,
   logoFileName:"", logoPreview:"", logoFile:null,
   industry:"", refs:"", other:"",
@@ -298,13 +319,24 @@ const state = {
 // pre-tick recommended services
 CONFIG.services.forEach(s=>{ if(s.recommended) state.services.add(s.id); });
 
-const rand = n => "R" + Number(n).toLocaleString("en-ZA");
+/* ---- currency helpers (see CONFIG.currencies) ---- */
+function cur(){ return CONFIG.currencies[state.currency] || CONFIG.currencies[CONFIG.defaultCurrency]; }
+function cvt(zar){ const c=cur(), s=c.round||1; return Math.round((zar*c.rate)/s)*s; }   // convert + round
+function fmt(zar){ return cvt(zar).toLocaleString(cur().locale); }                       // number only
+function money(zar){ return cur().symbol + fmt(zar); }                                   // symbol + number
+function currencyFor(cc){
+  cc=(cc||"").toUpperCase();
+  if(cc==="ZA") return "ZAR";
+  if(cc==="AU") return "AUD";
+  if(CONFIG.europe.split(" ").includes(cc)) return "EUR";
+  return "USD";   // USA + everyone else
+}
 const esc  = s => (s||"").replace(/[<>&]/g,c=>({ "<":"&lt;",">":"&gt;","&":"&amp;" }[c]));
 
 /* ---- build the form from CONFIG ---- */
 function optCard(o, selected, {round=false, showPrice=true}={}){
   const badge = o.recommended ? `<span class="badge">Recommended</span>` : "";
-  const price = (showPrice && o.price) ? `<span class="p">+${rand(o.price)}${o.monthly?"/mo":""}</span>` : "";
+  const price = (showPrice && o.price) ? `<span class="p">+${money(o.price)}${o.monthly?"/mo":""}</span>` : "";
   const desc  = o.desc ? `<span class="d">${o.desc}</span>` : "";
   const note  = o.note ? `<span class="d note">${o.note}</span>` : "";
   return `<div class="opt ${round?'round':''} ${selected?'selected':''}" data-id="${o.id}">
@@ -453,19 +485,19 @@ function calc(){
   const once = items.filter(i=>!i.monthly).reduce((s,i)=>s+i.price,0);
   const month= items.filter(i=>i.monthly).reduce((s,i)=>s+i.price,0);
 
-  document.getElementById('onceoff').innerHTML = once? `<span class="cur">R</span>${once.toLocaleString("en-ZA")}` : "—";
+  document.getElementById('onceoff').innerHTML = once? `<span class="cur">${cur().symbol}</span>${fmt(once)}` : "—";
   const ml=document.getElementById('monthlyLine');
-  if(month){ ml.style.display='flex'; document.getElementById('monthly').textContent = rand(month)+"/mo"; }
+  if(month){ ml.style.display='flex'; document.getElementById('monthly').textContent = money(month)+"/mo"; }
   else ml.style.display='none';
 
   const bd=document.getElementById('breakdown');
-  bd.innerHTML = items.length ? items.map(i=>`<div class="li"><span>${i.label}</span><span>${rand(i.price)}${i.monthly?"/mo":""}</span></div>`).join("")
+  bd.innerHTML = items.length ? items.map(i=>`<div class="li"><span>${i.label}</span><span>${money(i.price)}${i.monthly?"/mo":""}</span></div>`).join("")
     : `<div class="li" style="border:none;color:#8DA2B8">Start choosing above to see your price build up…</div>`;
 
   const dep=document.getElementById('depositBox');
   if(CONFIG.depositPercent>0 && once>0){
     dep.style.display='block';
-    document.getElementById('deposit').textContent = rand(Math.round(once*CONFIG.depositPercent/100));
+    document.getElementById('deposit').textContent = money(Math.round(once*CONFIG.depositPercent/100));
   } else dep.style.display='none';
 }
 
@@ -508,8 +540,8 @@ function summary(logoUrl){
   L.push("*After-build:* "+(sv.length?sv.join(", "):"none"));
   if(state.other) L.push("*Notes:* "+state.other);
   L.push("");
-  L.push("*Estimated once-off:* "+rand(once));
-  if(month) L.push("*Estimated monthly:* "+rand(month)+"/mo");
+  L.push("*Estimated once-off:* "+money(once)+" "+state.currency);
+  if(month) L.push("*Estimated monthly:* "+money(month)+"/mo "+state.currency);
   return L.join("\n");
 }
 
@@ -540,7 +572,32 @@ async function submitQuote(){
 }
 document.getElementById('cta').addEventListener('click',submitQuote);
 
+/* ---- currency: build the switcher, then auto-detect from the visitor's IP ---- */
+function syncCurrencyUI(){
+  const sel=document.getElementById('curSel');
+  if(sel) sel.value=state.currency;
+  render();   // rebuild the form's +prices; render() also refreshes the estimate
+}
+async function detectCurrency(){
+  try{
+    const r=await fetch(CONFIG.geoEndpoint,{cache:"no-store"});
+    const j=await r.json();
+    const code=currencyFor(j.country||j.country_code||"");
+    if(CONFIG.currencies[code] && code!==state.currency){ state.currency=code; syncCurrencyUI(); }
+  }catch(e){ /* offline / blocked → keep the default currency */ }
+}
+function initCurrency(){
+  const sel=document.getElementById('curSel');
+  if(sel){
+    sel.innerHTML=Object.keys(CONFIG.currencies).map(k=>`<option value="${k}">${k}</option>`).join("");
+    sel.value=state.currency;
+    sel.addEventListener('change',()=>{ state.currency=sel.value; syncCurrencyUI(); });
+  }
+  detectCurrency();
+}
+
 render();
+initCurrency();
 </script>
 </body>
 </html>

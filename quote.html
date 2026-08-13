@@ -104,6 +104,32 @@ textarea{resize:vertical;min-height:70px}
 .inline-toggle .tick{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff;font-size:11px}
 .inline-toggle.on .tick{background:var(--cyan);border-color:var(--cyan)}
 
+/* ---- colour swatches ---- */
+.swatches{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.swatch{position:relative;display:inline-flex}
+input[type=color].sw-input{width:54px;height:46px;border:1.5px solid var(--line);border-radius:11px;padding:3px;background:var(--white);cursor:pointer}
+input[type=color].sw-input::-webkit-color-swatch{border:none;border-radius:7px}
+input[type=color].sw-input::-webkit-color-swatch-wrapper{padding:0}
+.sw-x{position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;border:2px solid var(--white);background:var(--navy);color:#fff;font-size:12px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.add-swatch{border:1.5px dashed var(--line);background:var(--gray);color:var(--text-light);border-radius:11px;height:46px;padding:0 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:500;transition:border-color .15s,color .15s}
+.add-swatch:hover{border-color:var(--cyan);color:var(--navy)}
+.sw-full{color:var(--text-light);font-size:.85rem}
+
+/* ---- logo upload ---- */
+.upload-wrap{margin-top:12px}
+.dropzone{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;border:1.5px dashed var(--line);border-radius:12px;padding:24px 18px;cursor:pointer;background:var(--gray);transition:border-color .15s,background .15s}
+.dropzone:hover{border-color:var(--cyan);background:var(--cyan-wash)}
+.dz-ic{font-size:26px}
+.dz-t{font-weight:600;color:var(--navy);font-size:.95rem}
+.dz-d{color:var(--text-light);font-size:.8rem;max-width:340px}
+.logo-preview{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--white)}
+.logo-preview img{width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid var(--line-soft);background:var(--gray);flex-shrink:0}
+.logo-preview div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.logo-preview b{color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logo-preview span{color:var(--text-light);font-size:.8rem}
+.remove-logo{border:1.5px solid var(--line);background:var(--white);border-radius:9px;padding:9px 13px;cursor:pointer;font-size:.82rem;color:var(--navy);font-weight:600;flex-shrink:0}
+.remove-logo:hover{border-color:var(--cyan)}
+
 /* ---- estimate panel ---- */
 .aside{position:sticky;top:20px}
 @media(max-width:880px){.aside{position:static}}
@@ -230,8 +256,9 @@ const CONFIG = {
 
   // 3) Logo  (pick one)
   logoOptions: [
-    { id:"have", label:"Yes, I have a logo",       price:0 },
-    { id:"need", label:"No — design one for me",   price:850 },
+    { id:"have",  label:"Yes, I have a logo",             price:0 },
+    { id:"later", label:"I have one, not with me now",    price:0, note:"You can send it later" },
+    { id:"need",  label:"No — design one for me",         price:850 },
   ],
 
   // 4) Add-ons / specific requirements  (tick any — once-off)
@@ -262,7 +289,9 @@ const CONFIG = {
 const state = {
   type:null, domain:null, logo:null,
   addons:new Set(), services:new Set(),
-  useLogoColours:false, colours:"", industry:"", refs:"", other:"",
+  colours:[], useLogoColours:false, coloursLater:false,
+  logoFileName:"", logoPreview:"",
+  industry:"", refs:"", other:"",
   name:"", business:"", phone:"", clientEmail:""
 };
 // pre-tick recommended services
@@ -283,6 +312,22 @@ function optCard(o, selected, {round=false, showPrice=true}={}){
     </div>`;
 }
 
+function uploadInner(){
+  if(state.logoPreview){
+    return `<div class="logo-preview">
+        <img src="${state.logoPreview}" alt="Your logo">
+        <div><b>${esc(state.logoFileName)}</b><span>Looks good &mdash; you&rsquo;ll attach it in the WhatsApp chat</span></div>
+        <button type="button" class="remove-logo" id="removeLogo">Change</button>
+      </div>`;
+  }
+  return `<label class="dropzone" for="logoFile">
+      <input type="file" id="logoFile" accept="image/*" hidden>
+      <span class="dz-ic">&#128247;</span>
+      <span class="dz-t">Tap to choose your logo</span>
+      <span class="dz-d">PNG, JPG or SVG &middot; you&rsquo;ll attach it in the chat when WhatsApp opens</span>
+    </label>`;
+}
+
 function render(){
   const q = document.getElementById("questions");
   q.innerHTML = `
@@ -293,11 +338,16 @@ function render(){
       `<div class="opts pills" data-group="domain">${CONFIG.domainOptions.map(o=>optCard(o,state.domain===o.id,{showPrice:false})).join("")}</div>`)}
 
     ${section(3,"Do you have a logo?","",
-      `<div class="opts two" data-group="logo">${CONFIG.logoOptions.map(o=>optCard(o,state.logo===o.id)).join("")}</div>`)}
+      `<div class="opts pills" data-group="logo">${CONFIG.logoOptions.map(o=>optCard(o,state.logo===o.id)).join("")}</div>
+       <div class="upload-wrap" id="uploadWrap" style="${state.logo==='have'?'':'display:none'}">${uploadInner()}</div>`)}
 
-    ${section(4,"Brand colours","Any colours you love? Or we&rsquo;ll pull them straight from your logo.",
-      `<label class="inline-toggle ${state.useLogoColours?'on':''}" id="colToggle"><span class="tick">&#10003;</span> Use the colours from my logo</label>
-       <label class="fld" id="colField" style="${state.useLogoColours?'display:none':''}"><span>Colours you&rsquo;d like</span><input type="text" id="colours" placeholder="e.g. navy blue &amp; a warm orange" value="${esc(state.colours)}"></label>`)}
+    ${section(4,"Brand colours","Pick up to three colours &mdash; or use your logo&rsquo;s, or send them later.",
+      `<div class="swatches" id="swatches" style="${(state.useLogoColours||state.coloursLater)?'display:none':''}">
+         ${state.colours.map((c,i)=>`<span class="swatch"><input type="color" class="sw-input" data-i="${i}" value="${c}"><button type="button" class="sw-x" data-i="${i}" aria-label="Remove colour">&times;</button></span>`).join("")}
+         ${(state.colours.length<3)?`<button type="button" class="add-swatch" id="addSwatch">+ Add a colour</button>`:`<span class="sw-full">Three&rsquo;s the max &#128077;</span>`}
+       </div>
+       <label class="inline-toggle ${state.useLogoColours?'on':''}" data-tog="useLogoColours"><span class="tick">&#10003;</span> Use the colours from my logo</label>
+       <label class="inline-toggle ${state.coloursLater?'on':''}" data-tog="coloursLater"><span class="tick">&#10003;</span> I&rsquo;ll send my colours later</label>`)}
 
     ${section(5,"What do you do?","Your industry / trade — so the site speaks your customers&rsquo; language.",
       `<label class="fld"><input type="text" id="industry" placeholder="e.g. Plumber, hair salon, electrician, guest house…" value="${esc(state.industry)}"></label>`)}
@@ -350,10 +400,33 @@ function wire(){
       render();
     });
   });
-  const ct = document.getElementById('colToggle');
-  if(ct) ct.addEventListener('click',()=>{ state.useLogoColours=!state.useLogoColours; render(); });
+  // colours: mutually-exclusive toggles
+  document.querySelectorAll('[data-tog]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const k=el.dataset.tog;
+      state[k]=!state[k];
+      if(state[k]){ if(k==='useLogoColours') state.coloursLater=false; else state.useLogoColours=false; }
+      render();
+    });
+  });
+  const add=document.getElementById('addSwatch');
+  if(add) add.addEventListener('click',()=>{ if(state.colours.length<3){ state.colours.push('#0A1C35'); render(); } });
+  document.querySelectorAll('.sw-x').forEach(b=>b.addEventListener('click',()=>{ state.colours.splice(+b.dataset.i,1); render(); }));
+  document.querySelectorAll('.sw-input').forEach(inp=>inp.addEventListener('input',e=>{ state.colours[+e.target.dataset.i]=e.target.value; }));
 
-  bindText('colours','colours'); bindText('industry','industry'); bindText('refs','refs');
+  // logo upload (preview only — the file is attached in WhatsApp)
+  const lf=document.getElementById('logoFile');
+  if(lf) lf.addEventListener('change',e=>{
+    const f=e.target.files[0]; if(!f) return;
+    if(f.size>6*1024*1024){ alert('That image is a bit large (max 6MB). Try a smaller one, or send it on WhatsApp.'); return; }
+    const r=new FileReader();
+    r.onload=ev=>{ state.logoPreview=ev.target.result; state.logoFileName=f.name; render(); };
+    r.readAsDataURL(f);
+  });
+  const rl=document.getElementById('removeLogo');
+  if(rl) rl.addEventListener('click',()=>{ state.logoPreview=""; state.logoFileName=""; render(); });
+
+  bindText('industry','industry'); bindText('refs','refs');
   bindText('other','other'); bindText('name','name'); bindText('business','business');
   bindText('phone','phone'); bindText('clientEmail','clientEmail');
 }
@@ -406,7 +479,10 @@ function summary(){
   const items=lineItems();
   const once = items.filter(i=>!i.monthly).reduce((s,i)=>s+i.price,0);
   const month= items.filter(i=>i.monthly).reduce((s,i)=>s+i.price,0);
-  const colours = state.useLogoColours ? "Use my logo's colours" : (state.colours||"—");
+  let colours = "—";
+  if(state.useLogoColours)      colours = "Use my logo's colours";
+  else if(state.coloursLater)   colours = "Will send colours later";
+  else if(state.colours.length) colours = state.colours.join(", ");
   const L=[];
   L.push("*NEW WEBSITE QUOTE — Stratus*"); L.push("");
   L.push("*From:* "+(state.name||"—")+(state.business?(" ("+state.business+")"):""));
@@ -415,7 +491,9 @@ function summary(){
   L.push("");
   L.push("*Website:* "+(t?t.label:"—"));
   L.push("*Domain/hosting:* "+(dm?dm.label:"—"));
-  L.push("*Logo:* "+(lg?lg.label:"—"));
+  let logoLine = lg?lg.label:"—";
+  if(state.logo==="have" && state.logoFileName) logoLine += " — attaching “"+state.logoFileName+"” in this chat";
+  L.push("*Logo:* "+logoLine);
   L.push("*Colours:* "+colours);
   L.push("*Industry:* "+(state.industry||"—"));
   if(state.refs)  L.push("*Sites they like:* "+state.refs.replace(/\n/g,", "));

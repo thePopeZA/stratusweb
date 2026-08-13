@@ -254,6 +254,7 @@ const CONFIG = {
   // exchange rate to charge a premium overseas. Visitors can also switch by hand.
   defaultCurrency: "ZAR",
   geoEndpoint: "https://get.geojs.io/v1/ip/country.json",   // free, returns {"country":"ZA"}
+  fxEndpoint: "/fx.json",   // live rates refreshed daily; falls back to the rates below
   currencies: {
     ZAR: { symbol:"R",  rate:1,     round:1,  locale:"en-ZA" },   // base: keep rate 1, round 1
     // Rates = live mid + ~6% cushion for the client's card forex fee (updated 13 Aug 2026).
@@ -617,6 +618,13 @@ async function detectCurrency(){
     if(CONFIG.currencies[code] && code!==state.currency){ state.currency=code; syncCurrencyUI(); }
   }catch(e){ /* offline / blocked → keep the default currency */ }
 }
+async function refreshRates(){
+  try{
+    const r=await fetch(CONFIG.fxEndpoint,{cache:"no-store"});
+    const j=await r.json();
+    if(j&&j.rates){ ["USD","EUR","AUD"].forEach(k=>{ if(j.rates[k]>0&&CONFIG.currencies[k]) CONFIG.currencies[k].rate=j.rates[k]; }); syncCurrencyUI(); }
+  }catch(e){ /* keep the built-in rates */ }
+}
 function initCurrency(){
   const sel=document.getElementById('curSel');
   if(sel){
@@ -624,6 +632,7 @@ function initCurrency(){
     sel.value=state.currency;
     sel.addEventListener('change',()=>{ state.currency=sel.value; syncCurrencyUI(); });
   }
+  refreshRates();
   detectCurrency();
 }
 

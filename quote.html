@@ -239,6 +239,7 @@ const CONFIG = {
   whatsapp: "27827962629",
   email:    "info@stratusnet.co.za",   // fallback if they'd rather email
   uploadEndpoint: "/upload.php",       // where an uploaded logo is stored (same site)
+  quoteSaveEndpoint: "https://payment.stratusnet.co.za/quote-save.php",  // saves quotes for one-click invoicing
 
   depositPercent: 50,   // shown as "start with a R___ deposit". Set 0 to hide.
 
@@ -564,6 +565,33 @@ async function submitQuote(){
     }catch(e){}
     btn.disabled=false; btn.textContent=label;
   }
+  // Save the quote to the payment app so you can invoice it in one click.
+  try{
+    const items=lineItems();
+    const onceZar =items.filter(i=>!i.monthly).reduce((s,i)=>s+i.price,0);
+    const monthZar=items.filter(i=>i.monthly).reduce((s,i)=>s+i.price,0);
+    const t=CONFIG.websiteTypes.find(x=>x.id===state.type),
+          dm=CONFIG.domainOptions.find(x=>x.id===state.domain),
+          lg=CONFIG.logoOptions.find(x=>x.id===state.logo);
+    let colours="—";
+    if(state.useLogoColours)      colours="Use my logo's colours";
+    else if(state.coloursLater)   colours="Send later";
+    else if(state.colours.length) colours=state.colours.join(", ");
+    const payload={
+      name:state.name, business:state.business, phone:state.phone, email:state.clientEmail,
+      currency:state.currency, once_off_zar:onceZar, monthly_zar:monthZar,
+      once_off_shown:cvt(onceZar), monthly_shown:cvt(monthZar),
+      website_type:t?t.label:"", domain:dm?dm.label:"", logo:lg?lg.label:"", logo_url:logoUrl,
+      colours:colours, industry:state.industry, refs:state.refs, notes:state.other,
+      addons:CONFIG.addons.filter(a=>state.addons.has(a.id)).map(a=>a.label),
+      services:CONFIG.services.filter(s=>state.services.has(s.id)).map(s=>s.label+(s.monthly?" (monthly)":"")),
+      line_items:items.map(i=>({label:i.label, zar:i.price, monthly:!!i.monthly}))
+    };
+    const body=JSON.stringify(payload);
+    if(navigator.sendBeacon) navigator.sendBeacon(CONFIG.quoteSaveEndpoint, body);
+    else fetch(CONFIG.quoteSaveEndpoint,{method:"POST",body:body,keepalive:true}).catch(()=>{});
+  }catch(e){}
+
   const wa="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(summary(logoUrl));
   const win=window.open(wa,"_blank");
   if(!win) window.location.href=wa;   // popup blocked (common on mobile) → same tab

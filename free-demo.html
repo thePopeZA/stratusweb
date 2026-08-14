@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free demo · Stratus Net</title>
+<meta name="description" content="Tell us your business name and we'll build you a free demo of your own website — no cost, no commitment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A1C35;--navy2:#0d2547;--cyan:#00D2FF;--ink:#1A2B44;--line:rgba(255,255,255,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#fff;min-height:100vh;
+    background:radial-gradient(900px 480px at 85% -10%,rgba(0,210,255,.18),transparent 60%),
+      linear-gradient(135deg,var(--navy),var(--navy2) 55%,var(--navy));
+    display:flex;align-items:center;justify-content:center;padding:22px}
+  .card{width:100%;max-width:440px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-weight:800;
+    font-size:24px;margin-bottom:26px}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
+  h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(28px,7vw,38px);line-height:1.1;margin-bottom:12px}
+  h1 .cy{color:var(--cyan)}
+  .sub{color:#cfe0f2;font-size:16px;line-height:1.5;margin-bottom:26px}
+  label{display:block;font-size:13px;font-weight:600;color:#9fb4cc;margin:0 0 6px 2px}
+  input{width:100%;padding:14px 15px;border-radius:11px;border:1px solid var(--line);
+    background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:16px;margin-bottom:16px;outline:none}
+  input:focus{border-color:var(--cyan);background:rgba(255,255,255,.1)}
+  input::placeholder{color:#7f93ab}
+  .cta{width:100%;border:0;border-radius:12px;background:var(--cyan);color:#06182f;
+    font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;padding:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px}
+  .cta:active{transform:translateY(1px)}
+  .note{text-align:center;color:#7f93ab;font-size:13px;margin-top:12px}
+  .err{color:#ff9b9b;font-size:13.5px;margin:-6px 0 14px 2px;display:none}
+  .foot{margin-top:26px;color:#6f849c;font-size:12.5px;text-align:center;line-height:1.5}
+  .foot b{color:#cfe0f2;font-weight:600}
+  .done{display:none;text-align:center}
+  .done .tick{width:64px;height:64px;border-radius:50%;background:rgba(0,210,255,.15);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:32px}
+</style></head>
+<body>
+<div class="card">
+  <div class="brand"><span class="dot"></span>Stratus</div>
+
+  <div id="form">
+    <h1>See your website — <span class="cy">free</span>.</h1>
+    <p class="sub">Tell us your business name and we'll build you a real demo of your own website. No cost, no commitment — just see what it could look like.</p>
+    <label for="biz">Your business name</label>
+    <input id="biz" type="text" placeholder="e.g. The Sandton Barber" autocomplete="organization">
+    <label for="phone">WhatsApp number</label>
+    <input id="phone" type="tel" placeholder="082 123 4567" autocomplete="tel">
+    <div class="err" id="err">Please add your business name and WhatsApp number.</div>
+    <button class="cta" id="cta">Build my free demo →</button>
+    <div class="note">Opens WhatsApp with your request ready to send</div>
+  </div>
+
+  <div class="done" id="done">
+    <div class="tick">✓</div>
+    <h1>On its way.</h1>
+    <p class="sub">WhatsApp should have opened with your request filled in — just hit send, and we'll build your demo and send you the link. If it didn't open, scroll up and tap the button again.</p>
+  </div>
+
+  <div class="foot">Built, designed and managed by <b>Stratus Net</b> — a small boutique software house.<br>Live in days · honest pricing · no agency invoice.</div>
+</div>
+<script>
+  // Requests land in the Stratus WhatsApp inbox (+27 64 882 2718), where we build
+  // the demo and send back the link.
+  var STRATUS_WA = "27648822718";
+  var biz = document.getElementById('biz'), phone = document.getElementById('phone'),
+      err = document.getElementById('err');
+  document.getElementById('cta').addEventListener('click', function(){
+    var b = biz.value.trim(), p = phone.value.trim();
+    if (!b || !p) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    var msg = "Hi Stratus 👋 I'd like my free website demo.\nBusiness: " + b + "\nWhatsApp: " + p;
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+    window.location.href = "https://wa.me/" + STRATUS_WA + "?text=" + encodeURIComponent(msg);
+  });
+</script>
+</body></html>

@@ -43,9 +43,13 @@ h1,h2,h3,.wordmark,.eyebrow,.step-title{font-family:'Montserrat',sans-serif;colo
 /* ---- top bar ---- */
 .topbar{background:var(--navy);color:var(--white);padding:14px 24px}
 .topbar .inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-arc{width:20px;height:20px;flex-shrink:0}
 .wordmark{color:var(--white);font-weight:700;font-size:1.25rem;letter-spacing:-.5px}
-.topbar .tag{margin-left:auto;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-family:'Montserrat',sans-serif;font-weight:600}
+.topbar .tag{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-family:'Montserrat',sans-serif;font-weight:600}
+.topbar .backhome{margin-left:auto;color:var(--white);opacity:.85;text-decoration:none;font-size:.82rem;font-weight:600;white-space:nowrap;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:20px;transition:opacity .2s,background .2s}
+.topbar .backhome:hover{opacity:1;background:rgba(255,255,255,.1)}
+@media(max-width:520px){.topbar .backhome{font-size:0;border:0;padding:6px}.topbar .backhome::before{content:"\2190 Home";font-size:.82rem}}
 
 /* ---- hero ---- */
 .hero{background:radial-gradient(900px 480px at 85% -20%,rgba(0,210,255,.18),transparent 60%),linear-gradient(135deg,var(--navy),var(--navy2) 55%,var(--navy));color:var(--white);padding:38px 24px 96px;text-align:center}
@@ -160,6 +164,47 @@ h1,h2,h3,.wordmark,.eyebrow,.step-title{font-family:'Montserrat',sans-serif;colo
 .plan.selected .choose{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
 .tag-pop{position:absolute;top:-10px;right:14px;background:var(--cyan);color:var(--navy);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-family:'Montserrat',sans-serif;box-shadow:0 3px 10px rgba(0,210,255,.35)}
 
+/* ---- tile spec + "see what you get" detail button ---- */
+.plan .tile-price{margin-top:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;color:var(--navy);white-space:nowrap}
+.plan .detail-btn{margin-top:11px;width:100%;border:1.5px dashed var(--line);background:var(--white);color:var(--text-light);font-family:'Inter',sans-serif;font-weight:600;font-size:.82rem;border-radius:9px;padding:9px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.plan .detail-btn:hover{border-color:var(--cyan);color:var(--navy);background:var(--cyan-wash)}
+
+/* ---- Managed "done for you" standout card ---- */
+.managed-card{position:relative;border:2px solid var(--cyan);border-radius:14px;padding:20px 18px;background:linear-gradient(135deg,#F1FCFF,var(--white));box-shadow:0 6px 20px rgba(0,210,255,.15);cursor:pointer;margin-bottom:6px;transition:box-shadow .15s}
+.managed-card:hover{box-shadow:0 10px 30px rgba(0,210,255,.25)}
+.managed-card.selected{box-shadow:0 0 0 3px rgba(0,210,255,.3),0 10px 30px rgba(0,210,255,.25)}
+.managed-badge{position:absolute;top:-11px;left:20px;background:var(--cyan);color:var(--navy);font-size:.63rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 11px;border-radius:20px;font-family:'Montserrat',sans-serif;box-shadow:0 3px 10px rgba(0,210,255,.35)}
+.managed-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.managed-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;color:var(--navy);line-height:1.2}
+.managed-price{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.35rem;color:var(--navy);white-space:nowrap}
+.managed-price small{font-size:.75rem;font-weight:600;color:var(--text-light)}
+.managed-copy{color:var(--text-dark);font-size:.92rem;margin:9px 0 0;line-height:1.5}
+.managed-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.managed-btns .detail-btn,.managed-btns .choose{margin-top:0;flex:1;min-width:140px}
+.managed-btns .choose{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
+.managed-card.selected .choose{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ---- includes/excludes popup (mobile-friendly centered overlay) ---- */
+.pm-backdrop{position:fixed;inset:0;background:rgba(10,28,53,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.pm-backdrop.show{display:flex}
+.pm-modal{background:var(--white);border-radius:16px;width:430px;max-width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);position:relative;animation:pmIn .22s ease-out}
+@keyframes pmIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pm-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;background:var(--gray);border-radius:50%;font-size:1.3rem;color:var(--text-light);cursor:pointer;line-height:1;display:grid;place-items:center;z-index:1}
+.pm-close:hover{background:var(--line);color:var(--navy)}
+.pm-body{padding:26px 22px 22px}
+.popup-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;color:var(--navy);margin-bottom:2px;padding-bottom:10px;border-bottom:2px solid var(--cyan);display:inline-block}
+.pm-price{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;color:var(--navy);margin:14px 0 2px}
+.pm-price small{font-size:.76rem;color:var(--text-light);font-weight:600}
+.pm-benefit{color:var(--text-light);font-size:.9rem;margin-bottom:2px;line-height:1.5}
+.popup-section-label{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--text-light);margin:18px 0 8px}
+.popup-list{list-style:none;padding:0;margin:0}
+.popup-list li{font-size:.9rem;color:var(--text-dark);padding:4px 0;display:flex;gap:9px;align-items:flex-start;line-height:1.45}
+.popup-list.includes li::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0}
+.popup-list.excludes li::before{content:'✕';color:#94A3B8;font-weight:800;flex-shrink:0}
+.pm-choose{margin-top:22px;width:100%;background:var(--cyan);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.02rem;border:none;border-radius:11px;padding:14px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.pm-choose:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,210,255,.4)}
+.pm-choose.is-selected{background:var(--navy);color:#fff}
+
 /* ---- details form ---- */
 .fld{display:block;margin-bottom:14px}
 .fld span{display:block;font-size:.85rem;font-weight:600;color:var(--text-dark);margin-bottom:6px}
@@ -224,9 +269,12 @@ footer a{color:var(--navy);text-decoration:none;font-weight:600}
 
 <div class="topbar">
   <div class="inner">
-    <svg class="logo-arc" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21 A18 18 0 0 1 21 3" stroke="#00D2FF" stroke-width="4" stroke-linecap="round"/></svg>
-    <span class="wordmark">Stratus</span>
-    <span class="tag">Get Online</span>
+    <a class="brand" href="/" aria-label="Back to Stratus home">
+      <svg class="logo-arc" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21 A18 18 0 0 1 21 3" stroke="#00D2FF" stroke-width="4" stroke-linecap="round"/></svg>
+      <span class="wordmark">Stratus</span>
+      <span class="tag">Get Online</span>
+    </a>
+    <a class="backhome" href="/">&larr; Back to stratusnet.co.za</a>
   </div>
 </div>
 
@@ -289,9 +337,12 @@ footer a{color:var(--navy);text-decoration:none;font-weight:600}
     </div>
     <p class="step-intro"><b>Hosting</b> is where your website lives so it&rsquo;s online 24/7 — like renting the space your shop sits in. Your plan includes everything to keep your site running, and <b>the web address you chose above is included free.</b></p>
     <div class="step-body">
-      <div class="plain"><span class="ic">✅</span><span>Every plan below includes your web address, website hosting and business email. Just pick the size that fits.</span></div>
+      <div class="plain"><span class="ic">✅</span><span>Every plan below includes your web address, website hosting and business email. Just pick the size that fits — tap <b>“See what you get”</b> on any plan to check the details first.</span></div>
 
-      <div class="plan-group-lbl">Everyday plans <span>— great for most small businesses</span></div>
+      <div class="plan-group-lbl">Prefer not to lift a finger? <span>— we do everything for you</span></div>
+      <div id="planManaged"></div>
+
+      <div class="plan-group-lbl second">Or manage it yourself <span>— great for most small businesses</span></div>
       <div class="plans" id="plansEveryday"></div>
 
       <div class="plan-group-lbl second">For bigger sites <span>— more power and space</span></div>
@@ -339,6 +390,14 @@ footer a{color:var(--navy);text-decoration:none;font-weight:600}
 
 </div>
 
+<!-- ============ PLAN DETAILS POPUP (includes / excludes) ============ -->
+<div class="pm-backdrop" id="pmBackdrop" role="dialog" aria-modal="true" aria-labelledby="pmName">
+  <div class="pm-modal">
+    <button class="pm-close" id="pmClose" aria-label="Close">×</button>
+    <div class="pm-body" id="pmBody"></div>
+  </div>
+</div>
+
 <!-- ============ WHAT HAPPENS AFTER ============ -->
 <div class="after" id="afterStrip">
   <div class="after-card">
@@ -364,16 +423,48 @@ const CONFIG = {
   orderEndpoint:  "https://payment.stratusnet.co.za/api/order-hosting.php",
 
   // Hosting plans. price is ZAR/month. group: "everyday" or "bigger".
+  // includes/excludes lifted verbatim from the Stratus products catalogue
+  // (infrastructure.html's live products API). "Domain registration" is dropped
+  // from the hosting excludes here because on THIS page the web address is bundled.
   plans: [
-    { id:"silver",     name:"Silver Hosting",     price:250, benefit:"Perfect for a simple business site", group:"everyday" },
-    { id:"gold",       name:"Gold Hosting",       price:299, benefit:"A bit more room to grow", group:"everyday", popular:true },
-    { id:"platinum",   name:"Platinum Hosting",   price:349, benefit:"For busier sites with more traffic", group:"everyday" },
-    { id:"bronzepro",  name:"Bronze Pro Hosting", price:450, benefit:"Extra power and resources", group:"everyday" },
-    { id:"silverpro",  name:"Silver Pro Hosting", price:599, benefit:"More muscle for a growing site", group:"bigger" },
-    { id:"goldpro",    name:"Gold Pro Hosting",   price:799, benefit:"Serious performance for heavy sites", group:"bigger" },
-    { id:"vps",        name:"Cloud VPS Hosting",  price:900, benefit:"Your own dedicated server space", group:"bigger" },
+    { id:"silver",     name:"Silver Hosting",     price:250, benefit:"Perfect for a simple business site", group:"everyday",
+      includes:["2GB storage","50 POP/IMAP email accounts","1 MySQL database","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"gold",       name:"Gold Hosting",       price:299, benefit:"A bit more room to grow", group:"everyday", popular:true,
+      includes:["3GB storage","75 POP/IMAP email accounts","1 MySQL database","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"platinum",   name:"Platinum Hosting",   price:349, benefit:"For busier sites with more traffic", group:"everyday",
+      includes:["4GB storage","200 POP/IMAP email accounts","5 MySQL databases","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"bronzepro",  name:"Bronze Pro Hosting", price:450, benefit:"Extra power and resources", group:"everyday",
+      includes:["8GB storage","500 POP/IMAP email accounts","20 MySQL databases","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"silverpro",  name:"Silver Pro Hosting", price:599, benefit:"More muscle for a growing site", group:"bigger",
+      includes:["10GB storage","2,000 POP/IMAP email accounts","100 MySQL databases","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"goldpro",    name:"Gold Pro Hosting",   price:799, benefit:"Serious performance for heavy sites", group:"bigger",
+      includes:["20GB storage","5,000 POP/IMAP email accounts","200 MySQL databases","Free SSL certificate","Daily backups","Uptime monitoring","cPanel control panel","Unlimited traffic"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
+    { id:"vps",        name:"Cloud VPS Hosting",  price:900, benefit:"Your own dedicated server space", group:"bigger",
+      includes:["Dedicated CPU & RAM","SAN-backed storage","Root access","Free SSL certificate","Daily backups","24/7 monitoring","Deployment support","Priority support"],
+      excludes:["Microsoft 365 mailboxes","Website design & build","SEO or advertising"] },
   ],
+
+  // Managed "done for you" option — its own standout card. Also a real, selectable
+  // plan (drives Step 3 + the order POST exactly like a hosting tile).
+  // includes/excludes from the catalogue's "Stratus Managed Website"; excludes authored
+  // (none listed in the catalogue) to set expectations on big custom work.
+  managed: {
+    id:"managed", name:"Stratus Managed Website", price:449, group:"managed",
+    tagline:"Everything, one monthly fee — we do the lot",
+    copy:"Don’t want to lift a finger? We build it, host it, run your email and look after everything — one simple monthly price, cancel anytime.",
+    includes:["We design & build your website","Fast, secure hosting","Your web address (domain) included","Business email set up for you","Updates & support whenever you need it","Security, backups & monitoring","No contract — cancel anytime"],
+    excludes:["Large custom development or e-commerce (quoted separately)"],
+  },
 };
+// Managed plan lives in the same lookup so the summary + order POST treat it
+// identically to a hosting tile.
+CONFIG.plans.push(CONFIG.managed);
 
 /* ---- state ---- */
 const state = { domain:null, plan:null, searching:false };
@@ -515,14 +606,36 @@ function planCard(p){
       </div>
       <div class="benefit">${esc(p.benefit)}</div>
       <span class="incl">✓ Domain included</span>
-      <button type="button" class="choose">${sel?'Selected ✓':'Choose'}</button>
+      <button type="button" class="detail-btn" data-detail="${p.id}">🔍 See what you get</button>
+      <button type="button" class="choose">${sel?'Selected ✓':'Choose this plan'}</button>
+    </div>`;
+}
+function managedCard(){
+  const p = CONFIG.managed;
+  const sel = state.plan === p.id;
+  return `<div class="managed-card${sel?' selected':''}" data-plan="${p.id}">
+      <span class="managed-badge">✨ Done for you</span>
+      <div class="managed-top">
+        <span class="managed-name">${esc(p.name)}</span>
+        <span class="managed-price">${money(p.price)}<small>/mo</small></span>
+      </div>
+      <p class="managed-copy">${esc(p.copy)}</p>
+      <div class="managed-btns">
+        <button type="button" class="detail-btn" data-detail="${p.id}">🔍 See what’s included</button>
+        <button type="button" class="choose">${sel?'Selected ✓':'Choose Managed'}</button>
+      </div>
     </div>`;
 }
 function renderPlans(){
+  $("planManaged").innerHTML   = managedCard();
   $("plansEveryday").innerHTML = CONFIG.plans.filter(p=>p.group==="everyday").map(planCard).join("");
   $("plansBigger").innerHTML   = CONFIG.plans.filter(p=>p.group==="bigger").map(planCard).join("");
-  document.querySelectorAll(".plan").forEach(el=>{
+  // Card body = select. The detail button opens the popup WITHOUT selecting.
+  document.querySelectorAll(".plan, .managed-card").forEach(el=>{
     el.addEventListener("click", ()=> selectPlan(el.dataset.plan));
+  });
+  document.querySelectorAll("[data-detail]").forEach(el=>{
+    el.addEventListener("click", e=>{ e.stopPropagation(); openDetail(el.dataset.detail); });
   });
 }
 function selectPlan(id){
@@ -533,11 +646,38 @@ function selectPlan(id){
   updateStepsBar();
   $("step3").scrollIntoView({behavior:"smooth", block:"start"});
 }
+
+/* ---- includes/excludes popup (does NOT select the plan) ---- */
+const pmBackdrop = $("pmBackdrop"), pmBody = $("pmBody");
+function listHtml(items, kind){
+  if(!items || !items.length) return "";
+  const label = kind==="includes" ? "What’s included" : "Not included";
+  return `<div class="popup-section-label">${label}</div>
+    <ul class="popup-list ${kind}">${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+}
+function openDetail(id){
+  const p = planObj(id);
+  if(!p) return;
+  const sel = state.plan === p.id;
+  pmBody.innerHTML =
+    `<div class="popup-name" id="pmName">${esc(p.name)}</div>
+     <div class="pm-price">${money(p.price)}<small>/mo</small></div>
+     <div class="pm-benefit">${esc(p.tagline || p.benefit || "")}</div>
+     ${listHtml(p.includes, "includes")}
+     ${listHtml(p.excludes, "excludes")}
+     <button type="button" class="pm-choose${sel?' is-selected':''}" id="pmChoose">${sel?'Selected ✓ — continue':'Choose this plan →'}</button>`;
+  $("pmChoose").addEventListener("click", ()=>{ closeDetail(); selectPlan(p.id); });
+  pmBackdrop.classList.add("show");
+}
+function closeDetail(){ pmBackdrop.classList.remove("show"); }
+$("pmClose").addEventListener("click", closeDetail);
+pmBackdrop.addEventListener("click", e=>{ if(e.target===pmBackdrop) closeDetail(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && pmBackdrop.classList.contains("show")) closeDetail(); });
 function unlockStep2(){ $("step2").classList.remove("locked"); }
 function unlockStep3(){ $("step3").classList.remove("locked"); }
 
 /* ============ SUMMARY ============ */
-function planObj(){ return CONFIG.plans.find(p=>p.id===state.plan); }
+function planObj(id){ return CONFIG.plans.find(p=>p.id===(id||state.plan)); }
 function updateSummary(){
   const p = planObj();
   const sp = $("sumPlan"), sd = $("sumDomain"), st = $("sumTotal");

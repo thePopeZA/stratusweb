@@ -2,3 +2,5 @@ vendor/
 .env
 uploads/
 fx.json
+# Personnel sites (personal data — server-only, never commit)
+personnel/

@@ -70,20 +70,18 @@
 
     // Proactive engagement: after greeting, nudge every 15s until the visitor engages or leaves.
     var NUDGES = [
-      "Not sure where to start? Just tell me your business type — I'll point you to the right package. 😊",
-      "Fun fact: you're chatting with the exact thing we build — an AI front desk. Yours could greet <b>your</b> customers 24/7.",
-      "Want a price? I can send you to our instant bundle builder — scope it, see the cost, sign up, done.",
-      "Still here? Pop your question in below, or WhatsApp us on <b>+27 82 796 2629</b> — a real human, fast."
+      { at: 18000, msg: "Quick one — what does your business do? Tell me and I'll say exactly what you'd need and what it costs. 😊" },
+      { at: 55000, msg: "No rush at all. Whenever you're ready I can get you online from <b>R50/month</b>, or put you straight through to Jürgen on WhatsApp." }
     ];
     function clearNudges() { for (var i = 0; i < nudgeTimers.length; i++) clearTimeout(nudgeTimers[i]); nudgeTimers = []; }
     function startNudges() {
       clearNudges();
-      NUDGES.forEach(function (msg, i) {
+      NUDGES.forEach(function (n) {
         nudgeTimers.push(setTimeout(function () {
           if (engaged || !panel.classList.contains('st-open')) return;
           var tp = typing();
-          nudgeTimers.push(setTimeout(function () { tp.remove(); if (!engaged && panel.classList.contains('st-open')) botRich(msg); }, 900));
-        }, 15000 * (i + 1)));
+          nudgeTimers.push(setTimeout(function () { tp.remove(); if (!engaged && panel.classList.contains('st-open')) botRich(n.msg); }, 900));
+        }, n.at));
       });
     }
 
@@ -116,6 +114,9 @@
     inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
     var cb = chips.querySelectorAll('button');
     for (var i = 0; i < cb.length; i++) cb[i].addEventListener('click', function () { send(this.getAttribute('data-q')); });
+
+    // Let other buttons on the page open Stratos (e.g. the nav "Get a Quote").
+    window.openStratos = function () { open(false); };
 
     // Auto-open once per browser session, a moment after the page settles.
     try {

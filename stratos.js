@@ -112,8 +112,9 @@
     var cb = chips.querySelectorAll('button');
     for (var i = 0; i < cb.length; i++) cb[i].addEventListener('click', function () { send(this.getAttribute('data-q')); });
 
-    // Let other buttons on the page open Stratos (e.g. the nav "Get a Quote").
+    // Let other buttons on the page open/close Stratos (e.g. the nav "Get a Quote").
     window.openStratos = function () { open(false); };
+    window.toggleStratos = function () { panel.classList.contains('st-open') ? close() : open(false); };
 
     // Auto-open once per browser session, a moment after the page settles.
     try {

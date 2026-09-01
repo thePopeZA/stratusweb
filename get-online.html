@@ -120,7 +120,7 @@ var host = null, dom = { id:'', price:0, name:'' };
 
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function priceOf(p){ return Math.round(p.effective_price != null ? p.effective_price : p.price_zar); }
-function incOf(p){ try { var a = JSON.parse(p.includes||'[]'); return Array.isArray(a)?a:[]; } catch(e){ return []; } }
+function incOf(p){ var v = p.includes; if (Array.isArray(v)) return v; try { var a = JSON.parse(v||'[]'); return Array.isArray(a)?a:[]; } catch(e){ return []; } }
 
 function planCard(p){
   var inc = incOf(p).slice(0,4).map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('');

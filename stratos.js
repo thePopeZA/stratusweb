@@ -57,30 +57,73 @@
     var style = document.createElement('style'); style.textContent = CSS; document.head.appendChild(style);
     var wrap = document.createElement('div'); wrap.innerHTML = HTML; document.body.appendChild(wrap);
 
-    var hist = [], busy = false, greeted = false;
+    var hist = [], busy = false, greeted = false, engaged = false, nudgeTimers = [];
     var panel = document.getElementById('st-panel'), body = document.getElementById('st-body');
     var inp = document.getElementById('st-in'), chips = document.getElementById('st-chips');
 
-    function bubble(t, who) { var d = document.createElement('div'); d.className = 'st-m ' + who; d.textContent = t; body.appendChild(d); body.scrollTop = body.scrollHeight; }
-    function open() { panel.classList.add('st-open'); if (!greeted) { greeted = true; bubble("Hi, I'm Stratos 👋 the AI front desk for Stratus. Ask me about websites, hosting, or getting your own AI assistant like me — or tell me what your business does.", 'st-bot'); } inp.focus(); }
-    function close() { panel.classList.remove('st-open'); }
+    function el(c) { var d = document.createElement('div'); d.className = c; return d; }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function fmt(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); }
+    function bubble(t, who) { var d = el('st-m ' + who); d.textContent = t; body.appendChild(d); body.scrollTop = body.scrollHeight; } // user + safe
+    function botRich(html) { var d = el('st-m st-bot'); d.innerHTML = html; body.appendChild(d); body.scrollTop = body.scrollHeight; } // our scripted / formatted AI
+    function typing() { var d = el('st-tp'); d.innerHTML = '<span></span><span></span><span></span>'; body.appendChild(d); body.scrollTop = body.scrollHeight; return d; }
+
+    // Proactive engagement: after greeting, nudge every 15s until the visitor engages or leaves.
+    var NUDGES = [
+      "Not sure where to start? Just tell me your business type — I'll point you to the right package. 😊",
+      "Fun fact: you're chatting with the exact thing we build — an AI front desk. Yours could greet <b>your</b> customers 24/7.",
+      "Want a price? I can send you to our instant bundle builder — scope it, see the cost, sign up, done.",
+      "Still here? Pop your question in below, or WhatsApp us on <b>+27 82 796 2629</b> — a real human, fast."
+    ];
+    function clearNudges() { for (var i = 0; i < nudgeTimers.length; i++) clearTimeout(nudgeTimers[i]); nudgeTimers = []; }
+    function startNudges() {
+      clearNudges();
+      NUDGES.forEach(function (msg, i) {
+        nudgeTimers.push(setTimeout(function () {
+          if (engaged || !panel.classList.contains('st-open')) return;
+          var tp = typing();
+          nudgeTimers.push(setTimeout(function () { tp.remove(); if (!engaged && panel.classList.contains('st-open')) botRich(msg); }, 900));
+        }, 15000 * (i + 1)));
+      });
+    }
+
+    function greet() {
+      if (greeted) return; greeted = true;
+      botRich("Hi, I'm <b>Stratos</b> 👋 — the AI front desk for <b>Stratus Net</b>.");
+      setTimeout(function () {
+        botRich("Here's what we do, quickly:<br>🌐 Custom websites &amp; online shops<br>☁️ Hosting, domains &amp; business email<br>🤖 AI front desks like me — 24/7 on your site<br>📈 Google &amp; Meta ads, SEO &amp; branding<br><br>Tell me what your business needs and I'll point you the right way — or ask me anything.");
+      }, 750);
+      startNudges();
+    }
+    function open(auto) { panel.classList.add('st-open'); greet(); if (!auto) inp.focus(); }
+    function close() { panel.classList.remove('st-open'); clearNudges(); }
+
     function send(text) {
       if (busy) return; text = (text || inp.value).trim(); if (!text) return;
+      engaged = true; clearNudges();
       inp.value = ''; chips.style.display = 'none';
       bubble(text, 'st-me'); hist.push({ role: 'user', content: text }); busy = true;
-      var tp = document.createElement('div'); tp.className = 'st-tp'; tp.innerHTML = '<span></span><span></span><span></span>';
-      body.appendChild(tp); body.scrollTop = body.scrollHeight;
+      var tp = typing();
       fetch('/chat.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: hist }) })
         .then(function (r) { return r.json(); })
-        .then(function (j) { tp.remove(); var reply = j.reply || "Sorry, I had a hiccup — try me again?"; bubble(reply, 'st-bot'); hist.push({ role: 'assistant', content: reply }); busy = false; })
-        .catch(function () { tp.remove(); bubble("Sorry, I couldn't reach the desk just now — please try again, or WhatsApp us on +27 82 796 2629.", 'st-bot'); busy = false; });
+        .then(function (j) { tp.remove(); var reply = j.reply || "Sorry, I had a hiccup — try me again?"; botRich(fmt(reply)); hist.push({ role: 'assistant', content: reply }); busy = false; })
+        .catch(function () { tp.remove(); botRich("Sorry, I couldn't reach the desk just now — please try again, or WhatsApp us on <b>+27 82 796 2629</b>."); busy = false; });
     }
-    document.getElementById('st-fab').addEventListener('click', function () { panel.classList.contains('st-open') ? close() : open(); });
+
+    document.getElementById('st-fab').addEventListener('click', function () { panel.classList.contains('st-open') ? close() : open(false); });
     document.getElementById('st-x').addEventListener('click', close);
     document.getElementById('st-send').addEventListener('click', function () { send(); });
     inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
     var cb = chips.querySelectorAll('button');
     for (var i = 0; i < cb.length; i++) cb[i].addEventListener('click', function () { send(this.getAttribute('data-q')); });
+
+    // Auto-open once per browser session, a moment after the page settles.
+    try {
+      if (!sessionStorage.getItem('st_opened')) {
+        sessionStorage.setItem('st_opened', '1');
+        setTimeout(function () { if (!panel.classList.contains('st-open')) open(true); }, 2500);
+      }
+    } catch (e) { setTimeout(function () { open(true); }, 2500); }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -42,7 +42,7 @@ THE ANGLE: "First World Products, Third World Prices." World-class work at South
 PRICING (South African Rand — these are GUIDES; for an exact number send them to the instant quote tool at /quote.html):
 - One-page site R1 500 · Standard 3–5 page site R3 500 · Larger 6+ page site R6 500 · Online shop R9 500.
 - Logo design R850 (if they need one).
-- Managed hosting & maintenance R449/month · Business email setup R350 · SEO R750/month · Monthly content updates R500/month.
+- Hosting from R250/month · Business email setup R350 · SEO R750/month · Monthly content updates R500/month.
 - Popular add-ons: online booking R1 800 · take payments online R1 600 · client login/panel R2 500 · online quoting tool R2 200.
 - The AI front desk (an assistant like me) is a monthly add-on — for an exact figure, invite them to chat to the team on WhatsApp.
 

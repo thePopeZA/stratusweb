@@ -8,11 +8,12 @@
 header('Content-Type: application/json');
 header('X-Robots-Tag: noindex');
 
-$KEY = null; $WS = null; $RESEND = null;
+$KEY = null; $WS = null; $RESEND = null; $QTOKEN = null;
 foreach (@file(__DIR__ . '/../private/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $ln) {
     if (strpos($ln, 'ANTHROPIC_API_KEY=') === 0)       { $KEY = trim(substr($ln, 18), " \"'"); }
     if (strpos($ln, 'ANTHROPIC_WORKSPACE_ID=') === 0)  { $WS  = trim(substr($ln, 23), " \"'"); }
     if (strpos($ln, 'RESEND_API_KEY=') === 0)          { $RESEND = trim(substr($ln, 15), " \"'"); }
+    if (strpos($ln, 'STRATOS_QUOTE_TOKEN=') === 0)     { $QTOKEN = trim(substr($ln, 20), " \"'"); }
 }
 
 /** Log a lead + email Jürgen when Stratos decides a human is needed. */
@@ -38,6 +39,39 @@ function stratos_notify($summary, $messages, $reply, $dir, $resendKey) {
         CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $resendKey, 'Content-Type: application/json'],
         CURLOPT_TIMEOUT => 15]);
     curl_exec($ch); curl_close($ch);
+}
+
+/** Create a real QT-#### quote via the payment app, then email Jürgen to review + send it. */
+function stratos_quote($data, $token, $resendKey) {
+    $ch = curl_init('https://payment.stratusnet.co.za/api/create-quote.php');
+    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'X-Stratos-Token: ' . $token],
+        CURLOPT_TIMEOUT => 25]);
+    $res = curl_exec($ch); $code = curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close($ch);
+    $q = json_decode((string)$res, true);
+    if ($code !== 200 || empty($q['ok'])) return null;
+    if ($resendKey) {
+        $who = trim(($data['client_name'] ?? '') . ' · ' . ($data['business'] ?? ''), ' ·');
+        $items = '';
+        foreach (($data['line_items'] ?? []) as $li) { $items .= '  • ' . ($li['label'] ?? '') . ' — R' . ($li['amount'] ?? 0) . " (ex VAT)\n"; }
+        if (!empty($data['monthly_fee'])) $items .= '  • Monthly: R' . $data['monthly_fee'] . "/mo (ex VAT)\n";
+        $body = "Stratos drafted a quote from a website chat. REVIEW the prices & VAT in admin, then send it.\n\n"
+              . "Customer: " . $who . "\n"
+              . (empty($data['client_email']) ? '' : ("Email: " . $data['client_email'] . "\n"))
+              . (empty($data['client_phone']) ? '' : ("Phone: " . $data['client_phone'] . "\n"))
+              . (empty($data['client_vat_number']) ? '' : ("VAT no: " . $data['client_vat_number'] . "\n"))
+              . "\nItems:\n" . $items
+              . "\nQuote " . ($q['ref'] ?? '?') . "\nView / send:  " . ($q['view_url'] ?? '')
+              . "\nPDF:  " . ($q['pdf_url'] ?? '') . "\n\n— Stratos · stratusnet.co.za";
+        $payload = ['from' => 'Stratus Net <noreply@stratusnet.co.za>', 'to' => ['jurgsw@gmail.com'],
+                    'subject' => '📝 Stratos quote ' . ($q['ref'] ?? '') . ' — ' . mb_substr($who, 0, 60), 'text' => $body];
+        $c = curl_init('https://api.resend.com/emails');
+        curl_setopt_array($c, [CURLOPT_RETURNTRANSFER => true, CURLOPT_POST => true, CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $resendKey, 'Content-Type: application/json'], CURLOPT_TIMEOUT => 15]);
+        curl_exec($c); curl_close($c);
+    }
+    return $q;
 }
 if (!$KEY) { http_response_code(503); echo json_encode(['error' => 'not configured']); exit; }
 
@@ -93,6 +127,11 @@ WHEN TO BRING IN JÜRGEN (the owner):
 If the visitor is ready to buy or sign up, asks to speak to a person, shares their contact details (name / phone / email), commits to a package, or has a need you can't fully resolve — then at the VERY END of your reply add ONE line in EXACTLY this format (the visitor will NOT see it — it is stripped out before display):
 [[HANDOFF: who they are + what they need, in one short line]]
 Only add it for a genuine lead worth the owner's time. Never mention this line, and never tell the visitor you're notifying anyone — just keep helping warmly and, where useful, say the team will follow up.
+
+BUILDING A QUOTE (you can do this for real — it creates an actual quote in Stratus's system):
+Use this when someone wants a written quote/proposal for a **website build or a bigger custom package** (NOT for plain cheap hosting — send those to Get Online). First gather, conversationally: their **name** (required), **business name**, **email**, and **VAT number** if they have one, plus a clear list of exactly what they want. Map it to real line items from the pricing above. Then at the VERY END of your reply add ONE line in EXACTLY this format (the visitor will NOT see it — it is stripped out):
+[[QUOTE: {"client_name":"Jane Smith","business":"Smith Plumbing","client_email":"jane@example.com","client_vat_number":"","line_items":[{"label":"Standard website (3-5 pages)","amount":3500},{"label":"Logo design","amount":850}],"monthly_fee":250,"notes":""}]]
+JSON rules: line_items are the ONE-OFF pieces, amounts in Rand EXCLUDING VAT (VAT is added automatically); monthly_fee is the monthly hosting/service in Rand ex-VAT (0 if none); omit fields you don't have. Only emit it once you actually have their name AND a clear list of what they want — never with guessed items. After emitting it, warmly tell the visitor you've put their quote together and that Jürgen will send it over shortly. Never show the visitor the [[QUOTE...]] line.
 SYS;
 
 $payload = ['model' => 'claude-haiku-4-5-20251001', 'max_tokens' => 340, 'system' => $SYSTEM, 'messages' => $clean];
@@ -109,6 +148,14 @@ $res = curl_exec($ch); $code = curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close
 $j = json_decode((string)$res, true);
 $reply = $j['content'][0]['text'] ?? null;
 if ($code === 200 && $reply) {
+    // Quote: model emits [[QUOTE: {json}]] once it has gathered enough to draft one.
+    if (preg_match('/\[\[\s*QUOTE:\s*(\{.*\})\s*\]\]/is', $reply, $qm)) {
+        $reply = trim(str_replace($qm[0], '', $reply));
+        $qdata = json_decode($qm[1], true);
+        if (is_array($qdata) && !empty($qdata['client_name']) && !empty($qdata['line_items']) && $QTOKEN) {
+            stratos_quote($qdata, $QTOKEN, $RESEND);
+        }
+    }
     // Handoff: model appends [[HANDOFF: ...]] when a human is needed. Strip it, act on it.
     $handoff = null;
     if (preg_match('/\[\[\s*HANDOFF:\s*(.+?)\]\]/is', $reply, $mm)) {

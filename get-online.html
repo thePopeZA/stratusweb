@@ -6,7 +6,7 @@
 <title>Get Online — Domain + Hosting | Stratus Net</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0A1C35;--navy2:#12294a;--cyan:#00D2FF;--ink:#243B53;--muted:#627D98;--line:#E3E8EF;--bg:#EEF1F4;--white:#fff;--radius:12px}
+  :root{--navy:#0A1C35;--cyan:#00D2FF;--ink:#243B53;--muted:#627D98;--line:#E3E8EF;--bg:#EEF1F4;--white:#fff;--radius:12px;--ok:#12b76a;--taken:#c0392b}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:var(--navy);text-decoration:none}
@@ -19,10 +19,36 @@
   .hero h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(28px,5vw,42px);color:var(--navy);margin:0 0 10px;line-height:1.1}
   .hero p{font-size:17px;color:var(--muted);margin:0}
   .step{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;margin-bottom:20px;box-shadow:0 1px 4px rgba(10,28,53,.05)}
-  .step-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .step-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
   .step-n{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Montserrat';font-weight:700;font-size:15px;flex:none}
   .step-h h2{font-family:'Montserrat',sans-serif;font-weight:700;font-size:19px;color:var(--navy);margin:0}
   .grp-lbl{font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:20px 0 12px}
+  /* domain search */
+  .dsearch{display:flex;gap:8px}
+  .dsearch input{flex:1;padding:13px 15px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+  .dsearch input:focus{border-color:var(--cyan)}
+  .dsearch button{flex:none;background:var(--navy);color:#fff;border:none;font-family:'Montserrat';font-weight:700;font-size:15px;padding:0 24px;border-radius:8px;cursor:pointer}
+  .dsearch button:disabled{opacity:.6;cursor:wait}
+  .dhint{font-size:13px;color:var(--muted);margin:8px 2px 0}
+  .dmsg{font-size:14px;color:#b26a00;margin-top:10px;display:none}
+  .dmsg.show{display:block}
+  .dresults{margin-top:14px;display:none;flex-direction:column;gap:10px}
+  .dresults.show{display:flex}
+  .dom{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:10px;padding:14px 16px}
+  .dom.avail{cursor:pointer}
+  .dom.avail:hover{border-color:#9fd9ec}
+  .dom.sel{border-color:var(--cyan);box-shadow:0 6px 18px rgba(0,210,255,.16)}
+  .dom.taken{opacity:.6}
+  .dom .dn{font-family:'Montserrat';font-weight:700;color:var(--navy);font-size:16px;flex:1;word-break:break-all}
+  .dom .dstat{font-size:13px;font-weight:700}
+  .dom .dstat.ok{color:var(--ok)}
+  .dom .dstat.no{color:var(--taken)}
+  .dom .dprice{font-size:13px;color:var(--muted);min-width:66px;text-align:right}
+  .dom .dpick{font-size:13px;font-weight:700;color:var(--cyan)}
+  .dom.sel .dpick{color:var(--ok)}
+  .haveone{margin-top:10px;font-size:14px}
+  .haveone label{display:inline-flex;gap:8px;align-items:center;cursor:pointer;color:var(--ink)}
+  /* hosting plans */
   .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .plan{position:relative;border:2px solid var(--line);border-radius:10px;padding:18px 16px;cursor:pointer;transition:border-color .2s,box-shadow .2s;background:#fff}
   .plan:hover{border-color:#9fd9ec}
@@ -31,15 +57,9 @@
   .plan .pr{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;color:var(--navy);margin:6px 0 2px}
   .plan .pr span{font-size:13px;font-weight:600;color:var(--muted)}
   .plan ul{list-style:none;padding:0;margin:10px 0 0;font-size:12.5px;color:var(--muted);line-height:1.7}
-  .plan ul li::before{content:"✓ ";color:#12b76a;font-weight:700}
+  .plan ul li::before{content:"✓ ";color:var(--ok);font-weight:700}
   .plan .tick{position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent;font-size:12px}
   .plan.sel .tick{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
-  .doms{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
-  .dom{border:2px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;text-align:center;transition:border-color .2s}
-  .dom.sel{border-color:var(--cyan);box-shadow:0 6px 18px rgba(0,210,255,.16)}
-  .dom .dn{font-family:'Montserrat';font-weight:700;color:var(--navy);font-size:16px}
-  .dom .dp{font-size:13px;color:var(--muted);margin-top:3px}
-  .domname{margin-top:14px}
   label.fld{display:block;font-size:13px;font-weight:600;color:var(--ink);margin:0 0 6px}
   input[type=text],input[type=email]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:15px;color:var(--ink);outline:none}
   input:focus{border-color:var(--cyan)}
@@ -57,7 +77,9 @@
   .err{color:#c0392b;font-size:14px;margin-top:10px;display:none}
   .note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
   .loading{color:var(--muted);font-size:14px;padding:10px 2px}
-  @media(max-width:760px){.plans{grid-template-columns:1fr 1fr}.doms{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+  .spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:760px){.plans{grid-template-columns:1fr 1fr}.row2{grid-template-columns:1fr}}
   @media(max-width:480px){.plans{grid-template-columns:1fr}}
 </style>
 </head>
@@ -70,27 +92,30 @@
 <div class="wrap">
   <div class="hero">
     <h1>Get online in minutes</h1>
-    <p>Pick a plan, grab a domain, and you're live. From just <strong>R50/month</strong>.</p>
+    <p>Grab your domain, pick a plan, and you're live. From just <strong>R50/month</strong>.</p>
   </div>
 
-  <!-- Step 1: hosting -->
+  <!-- Step 1: domain -->
   <div class="step">
-    <div class="step-h"><div class="step-n">1</div><h2>Choose your hosting</h2></div>
+    <div class="step-h"><div class="step-n">1</div><h2>Find your domain</h2></div>
+    <div class="dsearch">
+      <input type="text" id="domInput" placeholder="yourbusiness" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button id="domBtn">Search</button>
+    </div>
+    <div class="dhint">Type your business name — we'll check <strong>.co.za</strong> (+R20/mo) and <strong>.com</strong> (+R30/mo) live.</div>
+    <div class="dmsg" id="domMsg"></div>
+    <div class="dresults" id="domResults"></div>
+    <div class="haveone"><label><input type="radio" name="haveDomain" id="haveDomain"> I already have a domain</label></div>
+  </div>
+
+  <!-- Step 2: hosting -->
+  <div class="step">
+    <div class="step-h"><div class="step-n">2</div><h2>Choose your hosting</h2></div>
     <div class="grp-lbl">Basic — get online cheaply</div>
     <div class="plans" id="plans-basic"><div class="loading">Loading plans…</div></div>
     <div class="grp-lbl">Managed — more power for serious sites</div>
     <div class="plans" id="plans-managed"></div>
     <p class="fine">Basic email is <strong>POP3 only</strong>. Need IMAP or a full mailbox? You can add a <strong>Microsoft 365 / Exchange account from R99/month</strong> — just ask us or mention it at sign-up. Storage on the big managed plans is flexible — we'll sort it to fit.</p>
-  </div>
-
-  <!-- Step 2: domain -->
-  <div class="step">
-    <div class="step-h"><div class="step-n">2</div><h2>Add your domain</h2></div>
-    <div class="doms" id="doms"><div class="loading">Loading domains…</div></div>
-    <div class="domname">
-      <label class="fld" for="domain">Domain name you'd like (we'll confirm availability)</label>
-      <input type="text" id="domain" placeholder="e.g. mybakery" autocomplete="off">
-    </div>
   </div>
 
   <!-- Step 3: your details -->
@@ -105,42 +130,99 @@
   </div>
 
   <div class="summary">
-    <div><div class="lbl" id="sumLabel">Choose a plan…</div><div class="tot">R<span id="tot">0</span><small>/month</small></div></div>
+    <div><div class="lbl" id="sumLabel">Pick a domain &amp; a plan…</div><div class="tot">R<span id="tot">0</span><small>/month</small></div></div>
     <button class="btn" id="go" disabled>Get online &rarr;</button>
   </div>
   <div class="note">Secure monthly billing via PayFast. Your total is calculated on our server — you're never overcharged.</div>
 </div>
 
 <script>
+var SEARCH_API   = 'https://payment.stratusnet.co.za/api/domain-search.php';
 var PRODUCTS_API = 'https://payment.stratusnet.co.za/api/products.php';
 var SIGN_API     = 'https://payment.stratusnet.co.za/sign.php';
 var CHECKOUT_URL = 'https://payment.stratusnet.co.za/buy.php';
+// The two TLDs we sell here, mapped to their monthly products.
+var TLD = { 'co.za': { id:'domain-coza-monthly', price:20 }, 'com': { id:'domain-com-monthly', price:30 } };
 
-var host = null, dom = { id:'', price:0, name:'' };
+var host = null;                 // chosen hosting {id,price,name}
+var dom  = { id:'', price:0, name:'' };  // chosen domain product
+var domainName = '';             // the actual domain string (e.g. mybakery.co.za)
 
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function priceOf(p){ return Math.round(p.effective_price != null ? p.effective_price : p.price_zar); }
-function incOf(p){ var v = p.includes; if (Array.isArray(v)) return v; try { var a = JSON.parse(v||'[]'); return Array.isArray(a)?a:[]; } catch(e){ return []; } }
-
-function planCard(p){
-  var inc = incOf(p).slice(0,4).map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('');
-  return '<div class="plan" data-id="'+esc(p.id)+'" data-price="'+priceOf(p)+'" data-name="'+esc(p.name)+'">'
-       + '<div class="tick">&#10003;</div>'
-       + '<div class="nm">'+esc(p.name)+'</div>'
-       + '<div class="pr">R'+priceOf(p)+'<span>/mo</span></div>'
-       + '<ul>'+inc+'</ul></div>';
-}
-function domCard(p){
-  var short = esc(String(p.name).replace(/\s*Domain\s*/i,''));
-  return '<div class="dom" data-id="'+esc(p.id)+'" data-price="'+priceOf(p)+'" data-name="'+esc(short)+' domain">'
-       + '<div class="dn">'+short+'</div><div class="dp">+R'+priceOf(p)+'/mo</div></div>';
-}
+function incOf(p){ var v=p.includes; if(Array.isArray(v)) return v; try{ var a=JSON.parse(v||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 
 function recalc(){
   var t = (host?host.price:0) + dom.price;
   document.getElementById('tot').textContent = t;
-  document.getElementById('sumLabel').textContent = host ? (host.name + (dom.id?(' + '+dom.name):'')) : 'Choose a plan…';
+  var parts = [];
+  if (host) parts.push(host.name);
+  if (dom.id) parts.push(dom.name); else if (document.getElementById('haveDomain').checked) parts.push('your own domain');
+  document.getElementById('sumLabel').textContent = parts.length ? parts.join(' + ') : 'Pick a domain & a plan…';
   document.getElementById('go').disabled = !host;
+}
+
+/* ---------- Step 1: domain search ---------- */
+var domInput = document.getElementById('domInput'), domBtn = document.getElementById('domBtn'),
+    domMsg = document.getElementById('domMsg'), domResults = document.getElementById('domResults'),
+    haveDomain = document.getElementById('haveDomain');
+function msg(t){ domMsg.textContent = t; domMsg.className = 'dmsg show'; }
+function clearMsg(){ domMsg.className = 'dmsg'; }
+
+function pickDomain(el, tld, name){
+  document.querySelectorAll('#domResults .dom').forEach(function(x){ x.classList.remove('sel'); x.querySelector('.dpick') && (x.querySelector('.dpick').textContent = 'Select →'); });
+  el.classList.add('sel'); if(el.querySelector('.dpick')) el.querySelector('.dpick').textContent = 'Selected ✓';
+  haveDomain.checked = false;
+  dom = { id: TLD[tld].id, price: TLD[tld].price, name: name };
+  domainName = name;
+  recalc();
+}
+
+function renderDomains(primary){
+  domResults.innerHTML = '';
+  (primary||[]).forEach(function(d){
+    if (!TLD[d.tld]) return;                       // only show .co.za and .com (what we sell)
+    var avail = d.available === true;
+    var row = document.createElement('div');
+    row.className = 'dom ' + (avail ? 'avail' : 'taken');
+    row.innerHTML = '<span class="dn">' + esc(d.domain) + '</span>'
+      + (avail ? '<span class="dstat ok">✓ Available</span><span class="dprice">+R' + TLD[d.tld].price + '/mo</span><span class="dpick">Select →</span>'
+               : '<span class="dstat no">✗ Taken</span>');
+    if (avail) row.addEventListener('click', function(){ pickDomain(row, d.tld, d.domain); });
+    domResults.appendChild(row);
+  });
+  domResults.className = 'dresults show';
+}
+
+function doSearch(){
+  var q = domInput.value.trim().replace(/^https?:\/\//i,'').replace(/\..*$/,'').replace(/[^a-z0-9-]/gi,'');
+  clearMsg(); domResults.className = 'dresults';
+  if (q.length < 2){ msg('Type at least 2 letters and search.'); return; }
+  domBtn.disabled = true; domBtn.innerHTML = '<span class="spinner"></span>';
+  fetch(SEARCH_API + '?q=' + encodeURIComponent(q), { headers:{ 'Accept':'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d && d.error){ msg('Search is busy right now — please try again in a moment.'); return; }
+      renderDomains(d.primary || []);
+    })
+    .catch(function(){ msg('Search is busy right now — please try again in a moment.'); })
+    .finally(function(){ domBtn.disabled = false; domBtn.textContent = 'Search'; });
+}
+domBtn.addEventListener('click', doSearch);
+domInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); doSearch(); } });
+haveDomain.addEventListener('change', function(){
+  if (haveDomain.checked){
+    document.querySelectorAll('#domResults .dom').forEach(function(x){ x.classList.remove('sel'); });
+    dom = { id:'', price:0, name:'' }; domainName = ''; recalc();
+  }
+});
+
+/* ---------- Step 2: hosting ---------- */
+function planCard(p){
+  var inc = incOf(p).slice(0,4).map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('');
+  return '<div class="plan" data-id="'+esc(p.id)+'" data-price="'+priceOf(p)+'" data-name="'+esc(p.name)+'">'
+       + '<div class="tick">&#10003;</div><div class="nm">'+esc(p.name)+'</div>'
+       + '<div class="pr">R'+priceOf(p)+'<span>/mo</span></div><ul>'+inc+'</ul></div>';
 }
 function bindPlans(){
   document.querySelectorAll('.plan').forEach(function(p){
@@ -152,47 +234,22 @@ function bindPlans(){
     });
   });
 }
-function bindDoms(){
-  document.querySelectorAll('.dom').forEach(function(d){
-    d.addEventListener('click', function(){
-      document.querySelectorAll('.dom').forEach(function(x){ x.classList.remove('sel'); });
-      d.classList.add('sel');
-      dom = { id:d.dataset.id, price:+d.dataset.price, name:d.dataset.name };
-      recalc();
-    });
-  });
-}
-
 fetch(PRODUCTS_API).then(function(r){ return r.json(); }).then(function(d){
-  var products = d.products || [];
-  var hosting = products.filter(function(p){ return p.category==='hosting'; })
-                        .sort(function(a,b){ return priceOf(a)-priceOf(b); });
-  var basic   = hosting.filter(function(p){ return p.subcategory==='basic'; });
+  var hosting = (d.products||[]).filter(function(p){ return p.category==='hosting'; }).sort(function(a,b){ return priceOf(a)-priceOf(b); });
+  var basic = hosting.filter(function(p){ return p.subcategory==='basic'; });
   var managed = hosting.filter(function(p){ return p.subcategory!=='basic'; });
-  document.getElementById('plans-basic').innerHTML   = basic.map(planCard).join('') || '<div class="loading">No basic plans.</div>';
+  document.getElementById('plans-basic').innerHTML = basic.map(planCard).join('') || '<div class="loading">No basic plans.</div>';
   document.getElementById('plans-managed').innerHTML = managed.map(planCard).join('') || '<div class="loading">No managed plans.</div>';
+  bindPlans();
+}).catch(function(){ document.getElementById('plans-basic').innerHTML = '<div class="loading">Couldn\'t load plans — please refresh.</div>'; });
 
-  var domains = products.filter(function(p){ return p.category==='domain-monthly'; })
-                        .sort(function(a,b){ return priceOf(a)-priceOf(b); });
-  document.getElementById('doms').innerHTML = domains.map(domCard).join('')
-      + '<div class="dom" data-id="" data-price="0" data-name=""><div class="dn">I have one</div><div class="dp">+R0</div></div>';
-
-  bindPlans(); bindDoms();
-  // sensible defaults: cheapest basic + cheapest domain
-  var firstPlan = document.querySelector('#plans-basic .plan'); if (firstPlan) firstPlan.click();
-  var firstDom  = document.querySelector('#doms .dom'); if (firstDom) firstDom.click();
-}).catch(function(){
-  document.getElementById('plans-basic').innerHTML = '<div class="loading">Couldn\'t load plans — please refresh, or WhatsApp us on +27 82 796 2629.</div>';
-});
-
+/* ---------- checkout ---------- */
 document.getElementById('go').addEventListener('click', function(){
-  var btn = this, err = document.getElementById('err');
-  err.style.display = 'none';
+  var btn = this, err = document.getElementById('err'); err.style.display = 'none';
   function fail(m){ err.textContent = m; err.style.display = 'block'; }
   if (!host) { return fail('Please choose a hosting plan.'); }
   var name = document.getElementById('name').value.trim();
   var email = document.getElementById('email').value.trim();
-  var domain = document.getElementById('domain').value.trim();
   if (name.length < 3) { return fail('Please enter your full name.'); }
   if (!email || email.indexOf('@') < 0) { return fail('Please enter a valid email address.'); }
   if (!document.getElementById('agree').checked) { return fail('Please agree to the terms to continue.'); }
@@ -201,30 +258,24 @@ document.getElementById('go').addEventListener('click', function(){
   if (dom.id) items.push({ id: dom.id, qty: 1 });
   var total = host.price + dom.price;
   var ref = 'GO-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
-  var summary = host.name + (dom.id ? ' + ' + dom.name : '') + (domain ? ' (' + domain + ')' : '') + ' — R' + total + '/mo';
+  var summary = host.name + (dom.id ? ' + ' + dom.name : (haveDomain.checked ? ' (own domain)' : '')) + ' — R' + total + '/mo';
 
   btn.disabled = true; btn.textContent = 'Setting up…';
-
   var fd = new FormData();
-  fd.append('client_name', name);
-  fd.append('client_email', email);
-  fd.append('bundle_ref', ref);
-  fd.append('bundle_summary', summary);
-  fd.append('bundle_json', JSON.stringify({ monthly: items, domain: domain }));
-  fd.append('monthly_amount', total);
-  fd.append('billing_mode', 'recurring');
-
-  fetch(SIGN_API, { method: 'POST', body: fd })
+  fd.append('client_name', name); fd.append('client_email', email);
+  fd.append('bundle_ref', ref); fd.append('bundle_summary', summary);
+  fd.append('bundle_json', JSON.stringify({ monthly: items, domain: domainName }));
+  fd.append('monthly_amount', total); fd.append('billing_mode', 'recurring');
+  fetch(SIGN_API, { method:'POST', body:fd })
     .then(function(r){ return r.json(); })
     .then(function(data){
-      if (!data || !data.success) { btn.disabled = false; btn.textContent = 'Get online →'; return fail((data && data.error) || 'Could not start sign-up. Please try again.'); }
-      var form = document.createElement('form');
-      form.method = 'POST'; form.action = CHECKOUT_URL;
-      var fields = { bundle: JSON.stringify(items), mode: 'recurring', order_summary: summary, bundle_ref: ref, client_name: name, client_email: email };
-      Object.keys(fields).forEach(function(k){ var i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = fields[k]; form.appendChild(i); });
+      if (!data || !data.success){ btn.disabled=false; btn.textContent='Get online →'; return fail((data&&data.error)||'Could not start sign-up. Please try again.'); }
+      var form = document.createElement('form'); form.method='POST'; form.action=CHECKOUT_URL;
+      var fields = { bundle: JSON.stringify(items), mode:'recurring', order_summary: summary, bundle_ref: ref, client_name: name, client_email: email };
+      Object.keys(fields).forEach(function(k){ var i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=fields[k]; form.appendChild(i); });
       document.body.appendChild(form); form.submit();
     })
-    .catch(function(){ btn.disabled = false; btn.textContent = 'Get online →'; fail('Network error — please try again, or WhatsApp us on +27 82 796 2629.'); });
+    .catch(function(){ btn.disabled=false; btn.textContent='Get online →'; fail('Network error — please try again.'); });
 });
 </script>
 </body>

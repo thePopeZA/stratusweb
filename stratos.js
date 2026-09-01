@@ -25,6 +25,8 @@
     + '#st-body .st-m{max-width:84%;padding:11px 15px;font-size:14.5px;line-height:1.5;border-radius:15px}'
     + '#st-body .st-bot{background:#fff;border:1px solid #E3E8EF;color:#0A1C35;align-self:flex-start;border-bottom-left-radius:4px}'
     + '#st-body .st-me{background:#0A1C35;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}'
+    + '#st-body a{color:#0A6E8C;font-weight:600;text-decoration:underline;word-break:break-word}'
+    + '#st-body .st-me a{color:#8fe6ff}'
     + '#st-body .st-tp{align-self:flex-start;background:#fff;border:1px solid #E3E8EF;border-radius:15px;border-bottom-left-radius:4px;padding:13px 16px;display:flex;gap:5px}'
     + '#st-body .st-tp span{width:7px;height:7px;border-radius:50%;background:#9fb6d4;animation:stBlink 1.2s infinite}'
     + '#st-body .st-tp span:nth-child(2){animation-delay:.2s}#st-body .st-tp span:nth-child(3){animation-delay:.4s}'
@@ -47,7 +49,8 @@
     + '<div id="st-chips">'
     + '<button data-q="I want hosting and a domain name — what are my options?">Hosting &amp; Domain Names</button>'
     + '<button data-q="I need a website for my business">Websites</button>'
-    + '<button data-q="I have a bespoke software project in mind — can Stratus build it?">Bespoke Software</button>'
+    + '<button data-q="I have a bespoke software project in mind">Bespoke Software</button>'
+    + '<button data-q="I want a mobile app built">Mobile Apps</button>'
     + '<button data-q="Tell me about your AI Helpdesk — how does it work and what does it cost?">AI Helpdesk</button>'
     + '<button data-q="What WhatsApp Business tools do you offer?">WhatsApp Business Tools</button>'
     + '</div>'
@@ -65,7 +68,15 @@
 
     function el(c) { var d = document.createElement('div'); d.className = c; return d; }
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-    function fmt(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); }
+    function fmt(s) {
+      var t = esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+      t = t.replace(/\b(https?:\/\/[^\s<)]+|(?:wa\.me|stratusnet\.co\.za)\/[^\s<)]+)/gi, function (m) {
+        var trail = '', mt = m.match(/[.,!?;:]+$/); if (mt) { trail = mt[0]; m = m.slice(0, -trail.length); }
+        var href = /^https?:\/\//i.test(m) ? m : 'https://' + m;
+        return '<a href="' + href + '" target="_blank" rel="noopener">' + m + '</a>' + trail;
+      });
+      return t.replace(/\n/g, '<br>');
+    }
     function bubble(t, who) { var d = el('st-m ' + who); d.textContent = t; body.appendChild(d); body.scrollTop = body.scrollHeight; } // user + safe
     function botRich(html) { var d = el('st-m st-bot'); d.innerHTML = html; body.appendChild(d); body.scrollTop = body.scrollHeight; } // our scripted / formatted AI
     function typing() { var d = el('st-tp'); d.innerHTML = '<span></span><span></span><span></span>'; body.appendChild(d); body.scrollTop = body.scrollHeight; return d; }

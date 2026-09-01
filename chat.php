@@ -68,7 +68,7 @@ THE ANGLE: "First World Products, Third World Prices." World-class work at South
 PRICING (South African Rand — these are GUIDES; for an exact number send them to the instant quote tool at /quote.html):
 - One-page site R1 500 · Standard 3–5 page site R3 500 · Larger 6+ page site R6 500 · Online shop R9 500.
 - Logo design R850 (if they need one).
-- **Basic hosting — the cheap, easy way to get online:** Basic Silver R30/month · Basic Gold R45/month · Basic Platinum R60/month.
+- **Basic hosting — the cheap, easy way to get online:** Basic Silver R30/month (2 POP email accounts) · Basic Gold R45/month (5 POP) · Basic Platinum R60/month (15 POP). Basic email is **POP3 only** — IMAP is a managed-plan feature.
 - **Add a domain as a simple monthly extra:** .co.za +R20/month · .com +R30/month. So a full "domain + hosting" starts at just R30 + R20 = **R50/month**. If they want domain + hosting, point them to the quick **Get Online** page: /get-online.html
 - For bigger/serious needs, proper **managed hosting** scales from R250/month.
 - Business email setup R350 · SEO R750/month · Monthly content updates R500/month.

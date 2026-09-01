@@ -733,7 +733,7 @@
 <main>
     <!-- ── HERO ── -->
     <section id="hero" class="hero-slider" aria-label="Hero">
-        <video class="hero-bg-video" id="heroVid" autoplay muted playsinline preload="auto"></video>
+        <video class="hero-bg-video" id="heroVid" src="/video/hero-code.mp4" autoplay muted loop playsinline preload="auto"></video>
         <div class="hero-bg-tint"></div>
         <div class="slide active"
              data-title="We Build <span>Software</span>"
@@ -1215,22 +1215,8 @@ document.addEventListener('DOMContentLoaded', function () {
   <script>
   (function(){
     var v = document.getElementById('heroVid'); if(!v) return;
-    var clips = ['/video/hero-build.mp4','/video/hero-maker.mp4','/video/hero-code.mp4'];
-    var i = 0;
-    function show(n){
-      i = (n + clips.length) % clips.length;
-      v.style.opacity = 0;
-      setTimeout(function(){
-        v.src = clips[i]; v.load();
-        var p = v.play(); if(p && p.catch) p.catch(function(){});
-        v.style.opacity = 1;
-      }, 450);
-    }
-    v.addEventListener('ended', function(){ show(i + 1); });
-    v.addEventListener('error', function(){ show(i + 1); });
-    v.src = clips[0]; v.load();
-    var pp = v.play(); if(pp && pp.catch) pp.catch(function(){});
     v.style.opacity = 1;
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
   })();
   </script>
   <script defer src="/stratos.js"></script>

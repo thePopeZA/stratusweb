@@ -78,13 +78,16 @@ if (!$KEY) { http_response_code(503); echo json_encode(['error' => 'not configur
 $in = json_decode(file_get_contents('php://input'), true);
 $msgs = is_array($in['messages'] ?? null) ? $in['messages'] : [];
 $clean = [];
-foreach (array_slice($msgs, -12) as $m) {
+foreach (array_slice($msgs, -20) as $m) {
     $role = (($m['role'] ?? '') === 'assistant') ? 'assistant' : 'user';
     $content = trim(mb_substr((string)($m['content'] ?? ''), 0, 900));
     if ($content !== '') $clean[] = ['role' => $role, 'content' => $content];
 }
-if (!$clean || $clean[0]['role'] !== 'user') {
-    echo json_encode(['reply' => "Hi, I'm Stratos 👋 the AI front desk for Stratus. Ask me about websites, hosting, or getting your own AI assistant like me — or say what your business does and I'll point you the right way."]);
+// Anthropic needs the first message to be the user's. After slicing a long chat,
+// drop any leading assistant turns so we NEVER fall back to the greeting mid-conversation.
+while ($clean && $clean[0]['role'] !== 'user') { array_shift($clean); }
+if (!$clean) {
+    echo json_encode(['reply' => "Hi 👋 I'm Stratos. Talk to me — I can help. 😊"]);
     exit;
 }
 

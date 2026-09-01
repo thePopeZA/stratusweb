@@ -55,6 +55,12 @@
         .slide { background: transparent !important; }
         .hero-overlay { position: relative; z-index: 2; pointer-events: none; }
         .hero-overlay * { pointer-events: auto; }
+        #hero { position: relative; overflow: hidden; }
+        .hero-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0; transition: opacity .8s ease; }
+        .hero-bg-tint { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10,28,53,.5) 0%, rgba(10,28,53,.74) 100%); pointer-events: none; }
+        #hero #hero-title { color: #fff; }
+        #hero #hero-desc { color: rgba(255,255,255,.9); }
+        #hero .btn-outline { color: #fff; border-color: rgba(255,255,255,.55); }
 
         /* ── Hero label pill ── */
         .hero-pill {
@@ -725,6 +731,8 @@
 <main>
     <!-- ── HERO ── -->
     <section id="hero" class="hero-slider" aria-label="Hero">
+        <video class="hero-bg-video" id="heroVid" autoplay muted playsinline preload="auto"></video>
+        <div class="hero-bg-tint"></div>
         <div class="slide active"
              data-title="We Build <span>Software</span>"
              data-desc="Websites, web applications, and custom software — engineered from the ground up. We own the full stack so you never have to chase a provider again.">
@@ -1202,6 +1210,27 @@ document.addEventListener('DOMContentLoaded', function () {
   if(nav){ nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',closeDrawer); }); }
 })();
 </script>
+  <script>
+  (function(){
+    var v = document.getElementById('heroVid'); if(!v) return;
+    var clips = ['/video/hero-build.mp4','/video/hero-maker.mp4','/video/hero-code.mp4'];
+    var i = 0;
+    function show(n){
+      i = (n + clips.length) % clips.length;
+      v.style.opacity = 0;
+      setTimeout(function(){
+        v.src = clips[i]; v.load();
+        var p = v.play(); if(p && p.catch) p.catch(function(){});
+        v.style.opacity = 1;
+      }, 450);
+    }
+    v.addEventListener('ended', function(){ show(i + 1); });
+    v.addEventListener('error', function(){ show(i + 1); });
+    v.src = clips[0]; v.load();
+    var pp = v.play(); if(pp && pp.catch) pp.catch(function(){});
+    v.style.opacity = 1;
+  })();
+  </script>
   <script defer src="/stratos.js"></script>
 </body>
 </html>

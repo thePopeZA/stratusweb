@@ -87,10 +87,7 @@
 
     function greet() {
       if (greeted) return; greeted = true;
-      botRich("Hi, I'm <b>Stratos</b> 👋 — the AI front desk for <b>Stratus Net</b>.");
-      setTimeout(function () {
-        botRich("Here's what we do, quickly:<br>🌐 Custom websites &amp; online shops<br>☁️ Hosting, domains &amp; business email<br>🤖 AI front desks like me — 24/7 on your site<br>📈 Google &amp; Meta ads, SEO &amp; branding<br><br>Tell me what your business needs and I'll point you the right way — or ask me anything.");
-      }, 750);
+      botRich("Hi 👋 I'm <b>Stratos</b>. Talk to me — I can help. 😊");
       startNudges();
     }
     function open(auto) { panel.classList.add('st-open'); greet(); if (!auto) inp.focus(); }
